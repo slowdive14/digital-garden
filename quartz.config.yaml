@@ -165,8 +165,9 @@ plugins:
     layout:
       position: left
       priority: 50
+  # Replaced by the custom garden map (custom/GardenMap.tsx, wired in quartz.ts).
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 10

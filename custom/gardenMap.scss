@@ -1,0 +1,230 @@
+// Garden map. Category colors are the validated 3-hue set (all-pairs CVD-safe in
+// both modes) plus a neutral; hubs use ink because they are named by labels.
+
+.garden-map {
+  --gm-hub: var(--dark);
+  --gm-permanent: #1baf7a;
+  --gm-opinion: #eb6834;
+  --gm-clinical: #2a78d6;
+  --gm-other: #a3a39b;
+  --gm-edge: var(--lightgray);
+  --gm-edge-strong: var(--gray);
+  --gm-surface: var(--light);
+  --gm-ink: var(--dark);
+
+  margin: 0 0 2rem;
+}
+
+:root[saved-theme="dark"] .garden-map {
+  --gm-permanent: #199e70;
+  --gm-opinion: #d95926;
+  --gm-clinical: #3987e5;
+  --gm-other: #6e746f;
+  --gm-edge: #3a403b;
+  --gm-edge-strong: var(--gray);
+}
+
+.garden-map[hidden] {
+  display: none;
+}
+
+.garden-map__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.garden-map__frame {
+  position: relative;
+  height: 520px;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: var(--light);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.garden-map--local .garden-map__frame {
+  height: 280px;
+  border-radius: 10px;
+}
+
+.garden-map__canvas {
+  display: block;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.garden-map__tools {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+
+  button {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: var(--light);
+    color: var(--darkgray);
+    font-family: var(--bodyFont);
+    font-size: 0.75rem;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+  }
+}
+
+.garden-map__tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 240px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  font-size: 0.8rem;
+  line-height: 1.45;
+
+  strong {
+    display: block;
+    color: var(--dark);
+    font-weight: 600;
+  }
+
+  span {
+    color: var(--gray);
+  }
+}
+
+.garden-map__topics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.7rem;
+
+  button {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--darkgray);
+    font-family: var(--bodyFont);
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+
+    &[aria-pressed="true"] {
+      border-color: var(--secondary);
+      background: var(--highlight);
+      color: var(--secondary);
+      font-weight: 600;
+    }
+  }
+}
+
+.garden-map__topics-label {
+  margin-right: 0.25rem;
+  color: var(--gray);
+  font-size: 0.8rem;
+}
+
+.garden-map__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--darkgray);
+    font-family: var(--bodyFont);
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &[aria-pressed="true"] {
+      border-color: var(--dark);
+      color: var(--dark);
+      font-weight: 600;
+    }
+  }
+}
+
+.garden-map--local .garden-map__legend button {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+}
+
+.garden-map__swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+}
+
+.garden-map__count {
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+
+.garden-map__more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+// "크게 보기": the map takes the whole viewport.
+.garden-map--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  margin: 0;
+  padding: 1rem;
+  background: var(--light);
+  display: flex;
+  flex-direction: column;
+
+  .garden-map__frame {
+    flex: 1;
+    height: auto;
+  }
+}
+
+:root.garden-map-lock {
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .garden-map__frame {
+    height: 420px;
+  }
+
+  .garden-map--local .garden-map__frame {
+    height: 260px;
+  }
+}

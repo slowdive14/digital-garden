@@ -114,6 +114,13 @@ body[data-slug="index"] {
     color: var(--gray);
   }
 
+  .garden-map-caption {
+    margin: -0.4rem 0 0.9rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
   // Topic hubs as a grid of quiet tiles.
   h2#정원-둘러보기 + ul {
     display: grid;

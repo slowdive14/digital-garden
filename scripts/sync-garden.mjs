@@ -365,6 +365,8 @@ function writeFolderIndexes() {
     if (dir === contentDir || path.basename(dir) === "attachments") continue
     const index = path.join(dir, "index.md")
     if (fs.existsSync(index)) continue
+    // A "folder note" (folder/folder.md) already becomes the folder page.
+    if (fs.existsSync(path.join(dir, `${path.basename(dir)}.md`))) continue
     const data = { title: folderTitle(path.basename(dir)), publish: true }
     fs.writeFileSync(index, matter.stringify({ content: "" }, data))
   }
