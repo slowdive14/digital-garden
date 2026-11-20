@@ -81,7 +81,13 @@ if (run("git", ["commit", "-m", `garden: 노트 동기화 ${stamp} (${changed}�
 
 // 4. Push; GitHub Actions takes it from here.
 console.log(`▶ ${BRANCH} 브랜치로 푸시`)
-if (run("git", ["push", "origin", BRANCH]).code !== 0) {
+// Prefer the GitHub CLI login when available: Git Credential Manager can stall
+// waiting for a sign-in window that never comes to the front.
+const ghReady = spawnSync("gh", ["auth", "status"], { stdio: "ignore" }).status === 0
+const pushArgs = ghReady
+  ? ["-c", "credential.helper=", "-c", "credential.helper=!gh auth git-credential", "push", "origin", BRANCH]
+  : ["push", "origin", BRANCH]
+if (run("git", pushArgs).code !== 0) {
   stop("✖ 푸시하지 못했습니다. 네트워크나 GitHub 로그인 상태를 확인하세요.")
 }
 console.log("✔ 푸시했습니다. 몇 분 뒤 GitHub Actions가 사이트를 다시 배포합니다.")
