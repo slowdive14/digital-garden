@@ -1,3 +1,170 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// Design rules live in DESIGN.md. Keep this file in sync with it.
+
+// ---------------------------------------------------------------------------
+// Korean reading typography
+
+article {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+
+  p,
+  li {
+    line-height: 1.8;
+  }
+
+  li {
+    margin: 0.2rem 0;
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+article h2 {
+  margin-top: 2.4rem;
+}
+
+// Keep the site title on one line next to the mobile toolbar.
+@media #{$mobile} {
+  .page-title {
+    font-size: 1.35rem;
+    white-space: nowrap;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Links
+
+// Links to notes that are not published read as plain text, not as dead links.
+a.internal.broken {
+  color: inherit;
+  background: none;
+  pointer-events: none;
+  text-decoration: underline dotted var(--lightgray);
+  text-underline-offset: 0.25em;
+}
+
+a.internal:not(.broken) {
+  border-radius: 4px;
+}
+
+// ---------------------------------------------------------------------------
+// Callouts: outlined, not filled
+
+.callout.quote {
+  background: transparent;
+  border: none;
+  border-left: 3px solid var(--secondary);
+  border-radius: 0;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+
+  .callout-title {
+    display: none;
+  }
+
+  .callout-content {
+    font-family: var(--headerFont);
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--darkgray);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Home page ("정원 입구")
+
+body[data-slug="index"] {
+  .article-title {
+    display: none;
+  }
+
+  .garden-hero {
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .garden-eyebrow {
+    margin: 0 0 1rem;
+    font-family: var(--codeFont);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--secondary);
+  }
+
+  .garden-lead {
+    margin: 0 0 0.9rem;
+    font-family: var(--headerFont);
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--dark);
+    word-break: keep-all;
+  }
+
+  .garden-sub {
+    margin: 0;
+    color: var(--gray);
+  }
+
+  // Topic hubs as a grid of quiet tiles.
+  h2#정원-둘러보기 + ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.6rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+    }
+
+    li > a {
+      display: block;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0.8rem 0.95rem;
+      border: 1px solid var(--lightgray);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--dark);
+      font-weight: 500;
+      transition:
+        border-color 0.15s ease,
+        color 0.15s ease;
+
+      &:hover {
+        border-color: var(--secondary);
+        color: var(--secondary);
+      }
+    }
+  }
+
+  // Recently tended notes as a plain list with hairlines.
+  h2#최근에-손본-글 + ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--lightgray);
+    }
+
+    li > a {
+      background: none;
+      color: var(--dark);
+
+      &:hover {
+        color: var(--secondary);
+      }
+    }
+  }
+}

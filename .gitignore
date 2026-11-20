@@ -12,3 +12,8 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# garden sync
+.garden-denylist.txt
+garden.local.json
+.claude/

@@ -1,0 +1,31 @@
+{
+  "contentDir": "content",
+  "keep": [],
+  "localConfig": "garden.local.json",
+  "sources": [
+    {
+      "path": "site",
+      "dest": ".",
+      "requireFlag": true
+    },
+    {
+      "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey",
+      "dest": ".",
+      "requireFlag": true
+    },
+    {
+      "path": "D:/slowdive/notes",
+      "dest": ".",
+      "requireFlag": true,
+      "exclude": ["Digital Garden of 잔향.md"]
+    },
+    {
+      "path": "import/hugo-posts",
+      "dest": "posts",
+      "requireFlag": false
+    }
+  ],
+  "blockedPathSegments": [".obsidian", ".trash", ".git", "Templates", "templates", "private"],
+  "denylistFile": ".garden-denylist.txt",
+  "allowSensitive": ["posts/마음 알아차리기 - AI 기반 마음 돌봄 플랫폼.md"]
+}
