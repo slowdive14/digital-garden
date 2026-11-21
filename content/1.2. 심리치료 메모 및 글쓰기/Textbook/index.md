@@ -1,5 +1,0 @@
----
-title: Textbook
-publish: true
----
-
