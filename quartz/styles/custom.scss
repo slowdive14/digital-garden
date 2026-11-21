@@ -271,3 +271,23 @@ body[data-slug="index"] {
 body[data-slug="index"] .toc {
   display: none;
 }
+
+// Desktop: the table of contents follows the reader. The right sidebar scrolls
+// with the page (layout.sidebars.right: static); stretched to the full height of
+// the page row, it lets the TOC (its last item) stick to the top of the screen
+// once the "연결된 노트" panel has scrolled away. It stays in the right column,
+// so it never covers the text.
+@media (min-width: 1200px) {
+  html .page > #quartz-body .sidebar.right[data-sidebar-mode="static"] {
+    align-self: stretch;
+  }
+
+  #quartz-body .sidebar.right .toc {
+    position: sticky;
+    top: 1.5rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--lightgray) transparent;
+  }
+}
