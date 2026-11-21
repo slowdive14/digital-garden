@@ -1291,7 +1291,7 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
   const nbs = nbIds
     .map((id) => graph.nodes.get(id)!)
     .sort((a, b) => isHub(a) - isHub(b) || b.degree - a.degree || a.title.localeCompare(b.title, "ko"))
-  const MAX = 12
+  const MAX = 10
   const shown = nbs.slice(0, MAX)
 
   // Notes to read next: not linked yet, but sharing connections with this note.
