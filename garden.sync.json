@@ -20,7 +20,8 @@
       "requireFlag": true
     },
     {
-      "path": "D:/slowdive/notes",
+      "path": "import/old-garden",
+      "copyDate": "2024-12-11",
       "dest": ".",
       "requireFlag": true,
       "recent": false,

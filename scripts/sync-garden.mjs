@@ -354,7 +354,10 @@ function syncSource(source, state) {
     const body = normalizeBody(parsed.content, data, fileBase)
     // The note's own written date (frontmatter or a "Created:" line), before
     // fillDates falls back to file times, which for some sources are copy times.
-    const ownDate = toDate(data.created ?? data.date)
+    let ownDate = toDate(data.created ?? data.date)
+    // A source may name the day its files were copied; that date says nothing
+    // about when a note was written.
+    if (ownDate && source.copyDate && isoDate(ownDate) === source.copyDate) ownDate = undefined
     fillDates(data, stat)
     for (const ref of attachmentRefs(body)) wanted.add(ref)
 
@@ -666,6 +669,32 @@ const state = {
     topics: { applied: 0, review: 0, none: 0, unassigned: 0 },
   },
 }
+// Safety: a source folder that has gone missing (a USB drive unplugged, a folder
+// deleted) must not turn into "all of its notes were removed". Stop before
+// content/ is touched; publishing then stops too, so nothing is deployed.
+const missing = config.sources
+  .filter((s) => !s.optional && !fs.existsSync(path.resolve(ROOT, s.path)))
+  .map((s) => s.path)
+if (missing.length) {
+  console.error(
+    [
+      `✖ 원본 폴더를 찾지 못해 동기화를 멈췄습니다: ${missing.join(", ")}`,
+      "  드라이브가 연결돼 있는지 확인하세요. 그 노트들을 정말 사이트에서 빼려면",
+      "  garden.sync.json에서 그 원본을 지우거나 \"optional\": true를 붙이세요.",
+    ].join("\n"),
+  )
+  process.exit(1)
+}
+
+const countNotes = (dir) =>
+  fs.existsSync(dir)
+    ? fs.readdirSync(dir, { withFileTypes: true }).reduce(
+        (n, e) => n + (e.isDirectory() ? countNotes(path.join(dir, e.name)) : e.name.endsWith(".md") ? 1 : 0),
+        0,
+      )
+    : 0
+const notesBefore = countNotes(contentDir)
+
 if (!DRY_RUN) await cleanContent()
 for (const source of config.sources) syncSource(source, state)
 if (!DRY_RUN) {
@@ -692,6 +721,21 @@ if (!DRY_RUN) {
   )
   if (t.unassigned > 0) {
     console.log("  → Claude Code에 '미분류 정리해 줘'라고 하면 분류합니다. (목록: .garden/unassigned.md)")
+  }
+}
+// Safety: a sudden large drop in notes is far more likely a mistake than a
+// clean-up. Fail so that garden:publish does not commit or push it.
+if (!DRY_RUN && !process.env.GARDEN_ALLOW_SHRINK) {
+  const notesAfter = countNotes(contentDir)
+  if (notesBefore >= 50 && notesAfter < notesBefore * 0.8) {
+    console.error(
+      [
+        `✖ 노트가 ${notesBefore}개에서 ${notesAfter}개로 크게 줄어 배포를 멈췄습니다.`,
+        "  원본 폴더나 publish 표시를 확인하세요. 의도한 정리라면",
+        "  GARDEN_ALLOW_SHRINK=1 을 붙여 다시 실행하세요.",
+      ].join("\n"),
+    )
+    process.exit(1)
   }
 }
 if (!DRY_RUN && !privacyCheck()) process.exit(1)
