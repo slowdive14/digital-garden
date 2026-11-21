@@ -688,19 +688,50 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     placeCard(x, y)
   }
 
-  // x, y: the dot's position inside the frame. The card sits beside it, inside the frame.
+  // The card docks in one corner of the map, the one that covers the fewest of
+  // the note and its linked notes (with their titles), so it never hides them.
+  // x, y: the note's own position inside the frame.
+  let screenOf: ((n: GNode) => [number, number]) | undefined
+  const nodeById = new Map(layout.nodes.map((n) => [n.id, n]))
+  let corner = -1
+  let cornerFor: GNode | undefined
   function placeCard(x: number, y: number) {
     const fw = frame.clientWidth
     const fh = frame.clientHeight
     const cw = tooltip.offsetWidth
     const ch = tooltip.offsetHeight
-    let left = x + 14
-    if (left + cw > fw - 8) left = x - 14 - cw
-    let top = y + 14
-    if (top + ch > fh - 8) top = y - 14 - ch
-    left = Math.max(8, Math.min(left, fw - cw - 8))
-    top = Math.max(8, Math.min(top, fh - ch - 8))
-    tooltip.style.transform = `translate(${left}px, ${top}px)`
+    const m = 10
+    const toolsH = tools.offsetHeight + 16
+    const spots: [number, number][] = [
+      [fw - cw - m, fh - ch - m], // bottom right
+      [m, fh - ch - m], // bottom left
+      [fw - cw - m, toolsH], // top right, under the buttons
+      [m, m], // top left
+    ]
+    const at = screenOf ?? dotOnScreen
+    const pts: { x: number; y: number; w: number }[] = [{ x, y, w: 5 }]
+    if (cardNode) {
+      for (const id of neighbors.get(cardNode.id) ?? []) {
+        const n = nodeById.get(id)
+        if (!n) continue
+        const [px, py] = at(n)
+        pts.push({ x: px, y: py, w: 1 })
+      }
+    }
+    // A dot plus the title drawn under it.
+    const cost = ([l, t]: [number, number]) =>
+      pts.reduce((sum, p) => {
+        const hit = p.x + 90 > l && p.x - 90 < l + cw && p.y + 26 > t && p.y - 8 < t + ch
+        return sum + (hit ? p.w : 0)
+      }, 0)
+    const costs = spots.map(cost)
+    // Keep the same corner while it still leaves the note itself uncovered.
+    if (cornerFor !== cardNode || corner < 0 || costs[corner] >= 5) {
+      corner = costs.indexOf(Math.min(...costs))
+      cornerFor = cardNode
+    }
+    const [left, top] = spots[corner]
+    tooltip.style.transform = `translate(${Math.max(m, left)}px, ${Math.max(m, top)}px)`
   }
 
   function hideCard(delay = 0) {
@@ -1149,6 +1180,11 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     const ro = new ResizeObserver(() => g.width(frame.clientWidth).height(frame.clientHeight))
     ro.observe(frame)
 
+    screenOf = (n: GNode) => {
+      const t = byId.get(n.id)!
+      const p = g.graph2ScreenCoords(t.x ?? 0, t.y ?? 0, t.z ?? 0)
+      return [p.x, p.y]
+    }
     threeView = {
       refresh() {
         g.backgroundColor(colors.surface)
@@ -1173,6 +1209,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   }
 
   function leaveThree() {
+    screenOf = undefined
     threeView?.destroy()
     threeView = undefined
     canvas.hidden = false
