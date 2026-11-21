@@ -221,7 +221,13 @@ body[data-slug="index"] {
     }
   }
 
+  // The left rule and padding must stay inside the sidebar width, or the
+  // plugin's scroll container shows a horizontal scrollbar.
+  overflow-x: hidden;
+
   .toc-content.overflow {
+    box-sizing: border-box;
+    width: 100%;
     margin-top: 0.6rem;
     padding-left: 0.7rem;
     border-left: 1px solid var(--lightgray);
