@@ -18,7 +18,7 @@ const GardenMap: QuartzComponent = ({ fileData, displayClass }: QuartzComponentP
   if (fileData.slug === "index") return null
   return (
     <div class={`garden-map garden-map--local ${displayClass ?? ""}`} data-mode="local">
-      <h3 class="garden-map__title">이 노트 주변</h3>
+      <h3 class="garden-map__title">연결된 노트</h3>
     </div>
   )
 }

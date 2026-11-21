@@ -38,6 +38,8 @@ interface GLink {
 interface Graph {
   nodes: Map<string, GNode>
   adj: Map<string, Set<string>>
+  // Direction kept for "이 노트가 링크" / "이 노트를 링크".
+  out: Map<string, Set<string>>
 }
 
 // Legend order is fixed; colors come from CSS variables (see gardenMap.scss).
@@ -79,17 +81,22 @@ function loadGraph(): Promise<Graph> {
       })
     }
     const adj = new Map<string, Set<string>>()
-    for (const id of nodes.keys()) adj.set(id, new Set())
+    const out = new Map<string, Set<string>>()
+    for (const id of nodes.keys()) {
+      adj.set(id, new Set())
+      out.set(id, new Set())
+    }
     for (const [slug, entry] of Object.entries(index)) {
       if (!nodes.has(slug)) continue
       for (const target of entry.links ?? []) {
         if (target === slug || !nodes.has(target)) continue
         adj.get(slug)!.add(target)
         adj.get(target)!.add(slug)
+        out.get(slug)!.add(target)
       }
     }
     for (const [id, set] of adj) nodes.get(id)!.degree = set.size
-    return { nodes, adj }
+    return { nodes, adj, out }
   })
   return graphPromise
 }
@@ -350,6 +357,8 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   let hovered: GNode | undefined
   let catFocus: Cat | undefined
   let topicFocus: GNode | undefined
+  // Set when arriving from a note's "전체 지도에서 이 노트 보기": keep that note framed.
+  let arrival: GNode[] | undefined
   const neighbors = new Map<string, Set<string>>()
   for (const n of layout.nodes) neighbors.set(n.id, new Set())
   for (const l of layout.links) {
@@ -619,7 +628,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     canvas.style.height = `${height}px`
     const members = topicFocus
       ? layout.nodes.filter((n) => n === topicFocus || neighbors.get(topicFocus!.id)!.has(n.id))
-      : undefined
+      : arrival
     sel.call(zoomBehavior.transform, fit(members))
   }
 
@@ -775,6 +784,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   const syncPressed = () => {
     for (const [c, b] of chips) b.setAttribute("aria-pressed", String(c === catFocus))
     for (const [id, b] of topicChips) b.setAttribute("aria-pressed", String(id === topicFocus?.id))
+    arrival = undefined
     threeView?.refresh()
   }
 
@@ -1065,6 +1075,17 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   observer.observe(frame)
   resize()
 
+  const wanted = mode === "global" ? new URLSearchParams(location.search).get("map") : null
+  const target = wanted ? layout.nodes.find((n) => n.id === wanted) : undefined
+  if (target) {
+    arrival = layout.nodes.filter((n) => n === target || neighbors.get(target.id)!.has(n.id))
+    sel.call(zoomBehavior.transform, fit(arrival))
+    pinned = target
+    hovered = target
+    draw()
+    showCard(target, ...dotOnScreen(target))
+  }
+
   window.addCleanup(() => {
     threeView?.destroy()
     threeView = undefined
@@ -1081,6 +1102,212 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   })
 }
 
+// ---------------------------------------------------------------------------
+// Beside a note: its direct connections with every title visible, a preview slot
+// that never covers them, and notes worth reading next.
+
+function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
+  const me = graph.nodes.get(center)
+  const nbIds = [...(graph.adj.get(center) ?? [])]
+  if (!me || !nbIds.length) return false
+  const out = graph.out.get(center) ?? new Set<string>()
+  const relation = (n: GNode) => {
+    if (n.cat === "hub") return "주제"
+    const to = out.has(n.id)
+    const from = graph.out.get(n.id)?.has(center) ?? false
+    return to && from ? "서로 링크" : to ? "이 노트가 링크" : "이 노트를 링크"
+  }
+  const isHub = (n: GNode) => (n.cat === "hub" ? 0 : 1)
+  const nbs = nbIds
+    .map((id) => graph.nodes.get(id)!)
+    .sort((a, b) => isHub(a) - isHub(b) || b.degree - a.degree || a.title.localeCompare(b.title, "ko"))
+  const MAX = 12
+  const shown = nbs.slice(0, MAX)
+
+  // Notes to read next: not linked yet, but sharing connections with this note.
+  // A shared note counts double a shared topic, since topics are broad.
+  const near = new Set([center, ...nbIds])
+  const score = new Map<string, number>()
+  for (const nb of nbIds) {
+    const weight = graph.nodes.get(nb)!.cat === "hub" ? 1 : 2
+    for (const id of graph.adj.get(nb) ?? []) {
+      if (near.has(id) || graph.nodes.get(id)!.cat === "hub") continue
+      score.set(id, (score.get(id) ?? 0) + weight)
+    }
+  }
+  const related = [...score]
+    .map(([id, s]) => ({ n: graph.nodes.get(id)!, s }))
+    .sort((a, b) => b.s - a.s || b.n.degree - a.n.degree)
+    .slice(0, 5)
+    .map((r) => r.n)
+
+  for (const sel of [".garden-ego", ".garden-map__preview", ".garden-map__related", ".garden-map__more"]) {
+    root.querySelector(sel)?.remove()
+  }
+  const colorOf = (n: GNode) => `var(${CATS.find((c) => c.key === n.cat)!.cssVar})`
+  const href = (n: GNode) => rootPrefix() + n.id
+
+  // ---- Connection map: this note on the left, a curve to each connection.
+  const ego = document.createElement("div")
+  ego.className = "garden-ego"
+  const svgNS = "http://www.w3.org/2000/svg"
+  const svg = document.createElementNS(svgNS, "svg")
+  svg.classList.add("garden-ego__lines")
+  svg.setAttribute("aria-hidden", "true")
+  const list = document.createElement("ul")
+  list.className = "garden-ego__list"
+  // Rows with a curve (direct connections) and every row (for the active mark).
+  const lineRows = new Map<GNode, HTMLLIElement>()
+  const allRows = new Map<GNode, HTMLLIElement>()
+
+  const makeRow = (n: GNode, note?: string) => {
+    const li = document.createElement("li")
+    const dot = document.createElement("span")
+    dot.className = "garden-ego__dot"
+    dot.style.background = colorOf(n)
+    if (n.cat === "hub") dot.classList.add("is-hub")
+    const a = document.createElement("a")
+    a.className = "internal garden-ego__link"
+    a.href = href(n)
+    a.dataset.noPopover = "true"
+    a.title = n.title
+    a.textContent = n.title
+    li.append(dot, a)
+    if (note) {
+      const tag = document.createElement("span")
+      tag.className = "garden-ego__rel"
+      tag.textContent = note
+      li.append(tag)
+    }
+    return { li, a }
+  }
+
+  // ---- Preview slot under the map: fills on hover (first tap on phones).
+  const preview = document.createElement("div")
+  preview.className = "garden-map__preview"
+  const hint = () => {
+    preview.replaceChildren()
+    const p = document.createElement("p")
+    p.className = "garden-map__preview-hint"
+    p.textContent = "제목에 마우스를 올리거나 한 번 누르면 미리보기가 나옵니다."
+    preview.append(p)
+  }
+  hint()
+  let previewed: GNode | undefined
+  const showPreview = (n: GNode) => {
+    previewed = n
+    const cat = CATS.find((c) => c.key === n.cat)!
+    preview.replaceChildren()
+    const chip = document.createElement("p")
+    chip.className = "garden-map__card-chip"
+    const sw = document.createElement("span")
+    sw.className = "garden-map__swatch"
+    sw.style.background = `var(${cat.cssVar})`
+    chip.append(sw, `${cat.label} · ${relation(n)}`)
+    const title = document.createElement("p")
+    title.className = "garden-map__card-title"
+    title.textContent = n.title
+    preview.append(chip, title)
+    if (n.excerpt && n.cat !== "hub") {
+      const ex = document.createElement("p")
+      ex.className = "garden-map__card-excerpt"
+      ex.textContent = n.excerpt
+      preview.append(ex)
+    }
+    const a = document.createElement("a")
+    a.className = "internal garden-map__card-link"
+    a.href = href(n)
+    a.dataset.noPopover = "true"
+    a.textContent = n.cat === "hub" ? "주제 페이지 열기 →" : "노트 읽기 →"
+    preview.append(a)
+    for (const [m, li] of allRows) li.classList.toggle("is-active", m === n)
+    paintLines()
+  }
+
+  let lastPointer = "mouse"
+  const wire = (n: GNode, a: HTMLAnchorElement) => {
+    a.addEventListener("pointerdown", (e) => (lastPointer = e.pointerType))
+    a.addEventListener("mouseenter", () => showPreview(n))
+    a.addEventListener("focus", () => showPreview(n))
+    // Phones: the first tap previews, a second tap on the same title opens it.
+    a.addEventListener("click", (e) => {
+      if (lastPointer !== "mouse" && previewed !== n) {
+        e.preventDefault()
+        e.stopPropagation()
+        showPreview(n)
+      }
+    })
+  }
+
+  for (const n of shown) {
+    const { li, a } = makeRow(n, relation(n))
+    lineRows.set(n, li)
+    allRows.set(n, li)
+    wire(n, a)
+    list.append(li)
+  }
+  if (nbs.length > shown.length) {
+    const li = document.createElement("li")
+    li.className = "garden-ego__extra"
+    li.textContent = `외 ${nbs.length - shown.length}개는 아래 백링크와 전체 지도에서 볼 수 있습니다`
+    list.append(li)
+  }
+  ego.append(svg, list)
+
+  // Curves from this note (left middle) to each row's dot.
+  function paintLines() {
+    const h = list.offsetHeight
+    svg.setAttribute("width", "44")
+    svg.setAttribute("height", String(h))
+    svg.replaceChildren()
+    const cy = h / 2
+    const me = document.createElementNS(svgNS, "circle")
+    me.setAttribute("cx", "8")
+    me.setAttribute("cy", String(cy))
+    me.setAttribute("r", "5.5")
+    me.classList.add("garden-ego__me")
+    for (const [n, li] of lineRows) {
+      const ry = li.offsetTop + li.offsetHeight / 2
+      const path = document.createElementNS(svgNS, "path")
+      path.setAttribute("d", `M8 ${cy} C 26 ${cy}, 22 ${ry}, 42 ${ry}`)
+      if (n === previewed) path.classList.add("is-active")
+      svg.append(path)
+    }
+    svg.append(me)
+  }
+
+  // ---- Notes to read next
+  let relatedBox: HTMLElement | undefined
+  if (related.length) {
+    relatedBox = document.createElement("section")
+    relatedBox.className = "garden-map__related"
+    const h = document.createElement("h4")
+    h.textContent = "함께 읽을 노트"
+    const cap = document.createElement("p")
+    cap.className = "garden-map__related-cap"
+    cap.textContent = "아직 링크되지 않았지만, 이 노트와 같은 주제·노트에 함께 연결된 노트입니다."
+    const ul = document.createElement("ul")
+    ul.className = "garden-ego__list garden-ego__list--plain"
+    for (const n of related) {
+      const { li, a } = makeRow(n)
+      allRows.set(n, li)
+      wire(n, a)
+      ul.append(li)
+    }
+    relatedBox.append(h, cap, ul)
+  }
+  const more = document.createElement("a")
+  more.className = "garden-map__more"
+  more.href = `${rootPrefix()}?map=${encodeURIComponent(center)}#정원-지도`
+  more.textContent = "정원 전체 지도에서 이 노트 보기 →"
+
+  root.append(ego, preview)
+  if (relatedBox) root.append(relatedBox)
+  root.append(more)
+  requestAnimationFrame(paintLines)
+  return true
+}
+
 async function setupAll() {
   const roots = document.querySelectorAll<HTMLElement>(".garden-map")
   if (!roots.length) return
@@ -1088,12 +1315,13 @@ async function setupAll() {
   const slug = document.body.dataset.slug ?? ""
   for (const root of roots) {
     const mode = root.dataset.mode === "global" ? "global" : "local"
-    const layout = buildSubgraph(graph, mode, slug)
-    if (!layout || layout.nodes.length < 2) {
-      // Nothing to map: hide the local panel rather than show an empty box.
-      if (mode === "local") root.hidden = true
+    if (mode === "local") {
+      // Nothing linked: hide the panel rather than show an empty box.
+      root.hidden = !mountLocal(root, graph, slug)
       continue
     }
+    const layout = buildSubgraph(graph, mode, slug)
+    if (!layout || layout.nodes.length < 2) continue
     root.hidden = false
     mount(root, layout, mode)
   }
