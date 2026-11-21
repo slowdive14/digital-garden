@@ -1113,6 +1113,7 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
   const out = graph.out.get(center) ?? new Set<string>()
   const relation = (n: GNode) => {
     if (n.cat === "hub") return "주제"
+    if (!graph.adj.get(center)!.has(n.id)) return "함께 읽을 노트"
     const to = out.has(n.id)
     const from = graph.out.get(n.id)?.has(center) ?? false
     return to && from ? "서로 링크" : to ? "이 노트가 링크" : "이 노트를 링크"

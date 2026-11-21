@@ -531,7 +531,8 @@
   }
 }
 
-.garden-ego__link {
+// "a." outranks Quartz's a.internal, which would add a filled background.
+a.garden-ego__link {
   min-width: 0;
   overflow: hidden;
   padding: 0;
@@ -601,7 +602,7 @@
     -webkit-line-clamp: 3;
   }
 
-  .garden-map__card-link {
+  a.garden-map__card-link {
     display: inline-block;
     margin-top: 0.4rem;
     padding: 0;
