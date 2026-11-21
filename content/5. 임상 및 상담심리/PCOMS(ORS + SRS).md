@@ -1,10 +1,9 @@
 ---
 publish: true
-created: '2024-12-11'
+created: '2024-03-10'
 modified: '2024-12-11'
 noteType: 임상·상담 메모
 ---
-2024-03-10
 
 ORS
 The clinical cutoff for the adult ORS is 25 (for adolescents, 28, and for children, 32). Recall that the ORS is really a measure of distress, so the number 25 out of 40 generally means that those under 25 are reporting the level of distress typically associated with being a client, and those over 25 are reporting a level of distress generally associated with not being a client. It’s not magic. It is just the number that reliably distinguishes the two populations. The average intake score of an outpatient psychotherapy setting is from 18 to 20, but anywhere between one fourth and one third of your clients will come in over the clinical cutoff. People who score under the cutoff are typically looking for change, something different in their lives, while those who score higher or over the cutoff tend to be folks who are more satisfied with the status quo and therefore may require a bit more context to understand what they are looking for from therapy. p. 53 

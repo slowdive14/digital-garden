@@ -1,11 +1,10 @@
 ---
 publish: true
-created: '2024-12-11'
+created: '2023-12-30'
 modified: '2024-12-11'
 title: 매일의 습관 사슬이 끊어지지 않게 하라
 noteType: 문헌 메모
 ---
-2023-12-30
 
 >It didn’t matter if he was motivated or not. It didn’t matter if he was writing great jokes or not. It didn’t matter if what he was working on would ever make it into a show. All that mattered was “not breaking the chain.” And that’s one of the simple secrets behind Seinfeld’s remarkable productivity and consistency. For years, the comedian simply focused on “not breaking the chain.” 그가 의욕이 있든 없든 상관없었습니다. 그가 훌륭한 농담을 쓰든 아니든 상관없었습니다. 그가 작업 중인 내용이 쇼로 만들어질지 여부도 중요하지 않았습니다. 중요한 것은 "사슬을 끊지 않는 것"이었습니다 이것이 바로 세인펠드가 놀라운 생산성과 일관성을 유지할 수 있었던 간단한 비결 중 하나입니다. 수년 동안 이 코미디언은 단순히 "연쇄를 끊지 않는 것"에 집중했습니다
 

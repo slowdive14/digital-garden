@@ -1,11 +1,10 @@
 ---
 publish: true
-created: '2024-12-11'
+created: '2023-10-17'
 modified: '2024-12-11'
 title: 의지로 환경을 바꿔 습관을 원하는 방향으로 바꾼다
 noteType: 문헌 메모
 ---
-2023-10-17
 
 ![](https://i.imgur.com/Sifxrg1.png)
 

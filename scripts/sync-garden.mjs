@@ -234,19 +234,30 @@ function normalizeBody(body, data, fileTitle) {
     const hit = path.posix.basename(target.trim()).match(PREFIX)
     return hit ? `[[${target}${anchor}|${hit[2]}]]` : m
   })
-  // Many notes keep their creation date as a "Created: YYYY-MM-DD" line near
-  // the top; move it into frontmatter so Quartz can show and sort by it.
-  const created = out.match(/^(?:[^\n]*\n){0,5}?\s*Created(?: Time)?:\s*(\d{4}-\d{2}-\d{2})[^\n]*\n?/)
-  if (created) {
-    // The line is written by hand when the note is made, so it wins over a
-    // frontmatter date that a template may have copied from another note.
-    data.created = created[1]
+  // Many notes keep their creation date on a line near the top: "Created:
+  // 2023-10-03", "### 작성일 : 2023-10-03" or just "2024-03-11". That line is
+  // written by hand when the note is made, so it wins over any frontmatter date
+  // (a template may have copied one, or an old sync filled in a copy date).
+  // Move it into frontmatter so Quartz shows and sorts by it.
+  const DATE_LINE =
+    /^\s*(?:#{1,6}\s*)?(?:(?:Created(?: Time)?|created|작성일)\s*:\s*)?(\d{4}-\d{2}-\d{2})(?:[ T]\d{1,2}:\d{2}(?::\d{2})?)?\s*$/
+  const lines = out.split("\n")
+  let seen = 0
+  for (let i = 0; i < lines.length && seen < 6; i++) {
+    if (!lines[i].trim()) continue
+    seen++
+    const m = lines[i].match(DATE_LINE)
+    if (!m) continue
+    data.created = m[1]
+    delete data.date
     // Template leftovers can also leave an "updated" date earlier than that.
     for (const key of ["updated", "modified", "lastmod"]) {
       const d = data[key] && new Date(String(data[key]))
-      if (d && !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) < created[1]) delete data[key]
+      if (d && !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) < m[1]) delete data[key]
     }
-    out = out.replace(/^\s*Created(?: Time)?:\s*\d{4}-\d{2}-\d{2}[^\n]*\n?/m, "")
+    lines.splice(i, 1)
+    out = lines.join("\n")
+    break
   }
   // Notes often repeat their title as the first heading; Quartz already shows it.
   const titles = [data.title, fileTitle].filter(Boolean).map((t) => String(t).trim())

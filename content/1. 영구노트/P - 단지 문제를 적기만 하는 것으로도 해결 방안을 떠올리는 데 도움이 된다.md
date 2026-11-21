@@ -1,11 +1,10 @@
 ---
 publish: true
-created: '2024-12-11'
+created: '2022-03-12'
 modified: '2024-12-11'
 title: 단지 문제를 적기만 하는 것으로도 해결 방안을 떠올리는 데 도움이 된다
 noteType: 문헌 메모
 ---
-### 작성일 : 2022-03-12
 
  > "Awareness is often enough to motivate change. 
 > 
