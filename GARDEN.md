@@ -83,9 +83,13 @@ C:\Users\user\digital-garden
 
 Windows 작업 스케줄러의 `DigitalGarden-Publish` 작업이 매일 밤 11시에 `scripts/publish-garden.mjs`를 실행합니다. PC가 꺼져 있었으면 다음에 켜질 때 실행합니다. 기록은 `.garden/publish.log`에 남습니다.
 
-1. 메인 볼트의 **`1. 문헌 메모`와 `2. 의견` 폴더만** 살펴봅니다. 가든에 올릴 노트는 이 두 폴더에 두고 머리말에 `publish: true`를 적습니다.
-2. 새 노트 중 어느 주제 허브에도 속하지 않은 노트는 **제미나이(Gemini) API**로 자동 분류해 `garden.assignments.json`에 기록합니다. 키는 뉴스레터 폴더의 `.env`에 있는 `GEMINI_API_KEY`를 읽어 옵니다(`garden.local.json`의 `gemini.envFile`). 분류에 실패하면 배포는 그대로 진행하고, 그 노트는 다음 실행에서 다시 분류합니다.
-3. 개인정보 검사를 통과하면 커밋·푸시하고, GitHub Actions가 사이트를 다시 배포합니다.
+1. 메인 볼트의 **`1. 문헌 메모`와 `2. 의견` 폴더만** 살펴봅니다. 가든에 올릴 노트는 이 두 폴더에 두고 머리말에 `publish: true`를 적습니다. 수정한 노트도 이때 다시 읽어서 사이트에 반영합니다.
+2. **'연결' 자동 채우기:** `publish: true`인 노트 중 '연결' 항목에 링크가 하나도 없는 노트는, 제미나이가 두 폴더의 노트에서 관련 노트를 1~3개 골라 볼트 노트의 '연결' 아래에 `[[노트]]`와 한 줄 이유를 적습니다(`scripts/link-garden.mjs`).
+   - 노트마다 한 번만 채웁니다(`.garden/linked.json`). 나중에 링크를 지우거나 고쳐도 다시 채우지 않습니다.
+   - '연결' 구역 말고는 건드리지 않고, 고치기 전 원본을 `.garden/backup/`에 남깁니다.
+   - 미리 보기만 하려면 `npm run garden:link -- --dry`를 씁니다.
+3. 새 노트 중 어느 주제 허브에도 속하지 않은 노트는 **제미나이(Gemini) API**로 자동 분류해 `garden.assignments.json`에 기록합니다. 키는 뉴스레터 폴더의 `.env`에 있는 `GEMINI_API_KEY`를 읽어 옵니다(`garden.local.json`의 `gemini.envFile`). 분류에 실패하면 배포는 그대로 진행하고, 그 노트는 다음 실행에서 다시 분류합니다.
+4. 개인정보 검사를 통과하면 커밋·푸시하고, GitHub Actions가 사이트를 다시 배포합니다.
 
 수동으로 바로 실행하려면 `npm run garden:publish`, 분류만 하려면 `npm run garden:classify`를 쓰면 됩니다. 작업을 멈추려면 작업 스케줄러에서 `DigitalGarden-Publish`를 사용 안 함으로 바꾸면 됩니다.
 

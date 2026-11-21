@@ -46,6 +46,13 @@ const sync = () => {
     stop("✖ 동기화 또는 개인정보 검사에서 멈췄습니다. 위 메시지를 확인하세요.")
   }
 }
+// 0. Fill the empty "연결" section of newly published vault notes with related
+//    notes (Gemini). A failure never blocks publishing; it retries next run.
+console.log("▶ 비어 있는 '연결' 채우기 (Gemini)")
+if (run(process.execPath, [path.join("scripts", "link-garden.mjs")]).code !== 0) {
+  console.log("  ! 자동 연결에 실패했습니다. 다음 실행에서 다시 시도합니다.")
+}
+
 console.log("▶ 노트 동기화")
 sync()
 
