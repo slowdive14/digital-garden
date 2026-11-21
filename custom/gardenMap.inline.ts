@@ -585,14 +585,15 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   }
 
   // ---- Pointer
-  function nodeAt(clientX: number, clientY: number): GNode | undefined {
+  // `slop` is extra reach in screen pixels; fingers need more than a mouse.
+  function nodeAt(clientX: number, clientY: number, slop = 6): GNode | undefined {
     const rect = canvas.getBoundingClientRect()
     const [x, y] = transform.invert([clientX - rect.left, clientY - rect.top])
     let best: GNode | undefined
     let bestD = Infinity
     for (const n of layout.nodes) {
       const d = Math.hypot(n.x! - x, n.y! - y)
-      const reach = radius(n) + 6 / transform.k
+      const reach = radius(n) + slop / transform.k
       if (d < reach && d < bestD) {
         best = n
         bestD = d
@@ -633,23 +634,20 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     }
     showTooltip(n, e.clientX, e.clientY)
   }
-  const onLeave = () => {
+  const onLeave = (e?: PointerEvent) => {
+    if (e?.pointerType === "touch") return
     hovered = undefined
     showTooltip(undefined)
     draw()
     syncListHover()
   }
   const onClick = (e: MouseEvent) => {
-    const n = nodeAt(e.clientX, e.clientY)
+    // A tap opens the note at once: touch has no hover to preview with, and
+    // lifting the finger fires pointerleave, which cleared any preview anyway.
+    const touch = lastPointerType !== "mouse"
+    const n = nodeAt(e.clientX, e.clientY, touch ? 18 : 6)
     if (!n) {
       if (hovered) onLeave()
-      return
-    }
-    // On touch, the first tap previews and the second opens.
-    if (lastPointerType === "touch" && hovered !== n) {
-      hovered = n
-      draw()
-      showTooltip(n, e.clientX, e.clientY)
       return
     }
     if (n === layout.center) return

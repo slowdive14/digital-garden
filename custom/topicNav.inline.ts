@@ -15,10 +15,16 @@ function setup() {
     const onChange = () => {
       details.open = wide.matches
     }
+    // On phones, a tap anywhere outside the open list folds it again.
+    const onOutside = (e: Event) => {
+      if (!wide.matches && details.open && !details.contains(e.target as Node)) details.open = false
+    }
     wide.addEventListener("change", onChange)
+    document.addEventListener("click", onOutside)
     window.addCleanup(() => {
       for (const a of links) a.removeEventListener("click", closeOnPick)
       wide.removeEventListener("change", onChange)
+      document.removeEventListener("click", onOutside)
     })
   }
 }

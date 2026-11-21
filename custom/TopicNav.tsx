@@ -22,7 +22,10 @@ const TopicNav: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzC
   return (
     <nav class={`topic-nav ${displayClass ?? ""}`} aria-label="주제">
       <details class="topic-nav__toggle" open>
-        <summary>주제</summary>
+        <summary>
+          <span class="topic-nav__icon" aria-hidden="true">☰</span>
+          <span>주제별로 노트 보기</span>
+        </summary>
         <div class="topic-nav__body">
           {groups.map((g) => (
             <section class="topic-nav__group">
