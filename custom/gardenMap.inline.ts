@@ -972,6 +972,57 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       g.cameraPosition({ x: (n.x ?? 0) * k, y: (n.y ?? 0) * k, z: (n.z ?? 1) * k }, n, 700)
     }
 
+    let dwell3 = 0
+    let cardTimer = 0
+    // Hold a note: keep its card and colours, and when some of its linked notes are
+    // off screen (or `always`), move the camera back along the current view
+    // direction until the note and all its links fit.
+    function hold3(n: T3, always: boolean) {
+      hideCard()
+      pinned = n.node
+      hovered = n.node
+      recolor()
+      const members = [n, ...[...neighbors.get(n.id)!].map((id) => byId.get(id)!).filter(Boolean)]
+      const fw = frame.clientWidth
+      const fh = frame.clientHeight
+      const pad = 24
+      const offScreen = members.some((m) => {
+        const s = g.graph2ScreenCoords(m.x ?? 0, m.y ?? 0, m.z ?? 0)
+        return s.x < pad || s.y < pad || s.x > fw - pad || s.y > fh - pad
+      })
+      const place = () => {
+        if (pinned !== n.node) return
+        const s = g.graph2ScreenCoords(n.x ?? 0, n.y ?? 0, n.z ?? 0)
+        showCard(n.node, s.x, s.y)
+      }
+      if (!offScreen && !always) {
+        place()
+        return
+      }
+      const c = { x: 0, y: 0, z: 0 }
+      for (const m of members) {
+        c.x += (m.x ?? 0) / members.length
+        c.y += (m.y ?? 0) / members.length
+        c.z += (m.z ?? 0) / members.length
+      }
+      let radius = 10
+      for (const m of members) {
+        radius = Math.max(radius, Math.hypot((m.x ?? 0) - c.x, (m.y ?? 0) - c.y, (m.z ?? 0) - c.z) + 4)
+      }
+      const cam = g.cameraPosition()
+      let dir = { x: cam.x - c.x, y: cam.y - c.y, z: cam.z - c.z }
+      const len = Math.hypot(dir.x, dir.y, dir.z)
+      dir = len > 1e-6 ? { x: dir.x / len, y: dir.y / len, z: dir.z / len } : { x: 0, y: 0, z: 1 }
+      // The library's camera has a 40° vertical field of view; a narrow frame has
+      // an even narrower horizontal one.
+      const vfov = (40 * Math.PI) / 180
+      const hfov = 2 * Math.atan(Math.tan(vfov / 2) * (fw / fh))
+      const dist = (radius / Math.sin(Math.min(vfov, hfov) / 2)) * 1.1
+      g.cameraPosition({ x: c.x + dir.x * dist, y: c.y + dir.y * dist, z: c.z + dir.z * dist }, c, 700)
+      window.clearTimeout(cardTimer)
+      cardTimer = window.setTimeout(place, 720)
+    }
+
     const g = make({ controlType: "orbit" })(box)
       .width(frame.clientWidth)
       .height(frame.clientHeight)
@@ -990,14 +1041,27 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       .graphData({ nodes, links })
       .onNodeHover((n) => {
         box.style.cursor = n ? "pointer" : "grab"
-        if (pinned) return
-        hovered = n?.node
-        if (n) showCard(n.node, ...pointer)
-        else hideCard(250)
+        window.clearTimeout(dwell3)
+        if (n) {
+          hovered = n.node
+          if (cardNode !== n.node) showCard(n.node, ...pointer)
+          else window.clearTimeout(hideTimer)
+          // Resting on a node for a moment holds it, as on the 2D map.
+          dwell3 = window.setTimeout(() => {
+            if (hovered === n.node && pinned !== n.node) hold3(n, false)
+          }, 350)
+        } else {
+          hovered = pinned
+          if (pinned) {
+            const p = byId.get(pinned.id)!
+            const s = g.graph2ScreenCoords(p.x ?? 0, p.y ?? 0, p.z ?? 0)
+            if (cardNode !== pinned) showCard(pinned, s.x, s.y)
+          } else hideCard(250)
+        }
         recolor()
       })
-      // Like the reference garden: a click flies to the note and keeps its card open.
       .onNodeClick((n) => {
+        window.clearTimeout(dwell3)
         // Clicking the held note again lets it go.
         if (pinned === n.node) {
           hideCard()
@@ -1005,16 +1069,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
           recolor()
           return
         }
-        hideCard()
-        pinned = n.node
-        hovered = n.node
-        recolor()
-        flyTo(n, 90)
-        window.setTimeout(() => {
-          if (pinned !== n.node) return
-          const p = g.graph2ScreenCoords(n.x ?? 0, n.y ?? 0, n.z ?? 0)
-          showCard(n.node, p.x, p.y)
-        }, 720)
+        hold3(n, true)
       })
       .onBackgroundClick(() => {
         hovered = undefined
@@ -1101,6 +1156,8 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
         if (hub) flyTo(hub, 170)
       },
       destroy() {
+        window.clearTimeout(dwell3)
+        window.clearTimeout(cardTimer)
         cancelAnimationFrame(raf)
         ro.disconnect()
         box.removeEventListener("pointermove", onPointer)
