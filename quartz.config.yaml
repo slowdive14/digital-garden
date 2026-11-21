@@ -285,6 +285,10 @@ plugins:
       exportPadding: 20
     order: 50
 layout:
+  # The right sidebar ("연결된 노트") can be taller than the screen; let it scroll
+  # on its own instead of cutting off the bottom.
+  sidebars:
+    right: scroll
   groups:
     toolbar:
       priority: 35

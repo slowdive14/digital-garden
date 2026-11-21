@@ -1242,6 +1242,14 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
     const from = graph.out.get(n.id)?.has(center) ?? false
     return to && from ? "서로 링크" : to ? "이 노트가 링크" : "이 노트를 링크"
   }
+  // Short marks keep the row for the title; the full words are in the tooltip,
+  // the legend under the list and the preview.
+  const MARK: Record<string, string> = {
+    주제: "주제",
+    "서로 링크": "↔",
+    "이 노트가 링크": "→",
+    "이 노트를 링크": "←",
+  }
   const isHub = (n: GNode) => (n.cat === "hub" ? 0 : 1)
   const nbs = nbIds
     .map((id) => graph.nodes.get(id)!)
@@ -1301,7 +1309,8 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
     if (note) {
       const tag = document.createElement("span")
       tag.className = "garden-ego__rel"
-      tag.textContent = note
+      tag.textContent = MARK[note] ?? note
+      tag.title = note
       li.append(tag)
     }
     return { li, a }
@@ -1378,6 +1387,16 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
     list.append(li)
   }
   ego.append(svg, list)
+  const marks = new Set<string>(shown.filter((n) => n.cat !== "hub").map((n) => relation(n)))
+  if (marks.size) {
+    const key = document.createElement("p")
+    key.className = "garden-ego__key"
+    key.textContent = ["이 노트가 링크", "이 노트를 링크", "서로 링크"]
+      .filter((r) => marks.has(r))
+      .map((r) => `${MARK[r]} ${r}`)
+      .join(" · ")
+    ego.append(key)
+  }
 
   // Curves from this note (left middle) to each row's dot.
   function paintLines() {

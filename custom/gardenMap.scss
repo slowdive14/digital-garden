@@ -572,8 +572,15 @@ a.garden-ego__link {
   flex: 0 0 auto;
   margin-left: auto;
   color: var(--gray);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   white-space: nowrap;
+}
+
+.garden-ego__key {
+  margin: 0.35rem 0 0 52px;
+  color: var(--gray);
+  font-size: 0.7rem;
+  line-height: 1.5;
 }
 
 .garden-ego__extra {
