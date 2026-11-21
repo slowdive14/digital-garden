@@ -1,5 +1,0 @@
----
-title: Journal
-publish: true
----
-

@@ -82,6 +82,13 @@ article h2 {
 // ---------------------------------------------------------------------------
 // Links
 
+// Headings get an id (the home page styles, the map's #정원-지도 jump and the
+// table of contents rely on it) plus a hover "link to this section" icon that
+// visitors found puzzling. Keep the id, hide the icon.
+:is(h1, h2, h3, h4, h5, h6) > a[role="anchor"] {
+  display: none;
+}
+
 // Links to notes that are not published read as plain text, not as dead links.
 a.internal.broken {
   color: inherit;
@@ -157,49 +164,6 @@ body[data-slug="index"] {
     color: var(--gray);
     font-size: 0.9rem;
     line-height: 1.7;
-  }
-
-  // Topic groups (generated from garden.topics.json): a small label per group.
-  h2#주제로-둘러보기 ~ h3 {
-    margin: 1.4rem 0 0.55rem;
-    color: var(--gray);
-    font-family: var(--bodyFont);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-  }
-
-  // Topic hubs in each group as a grid of quiet tiles.
-  h2#주제로-둘러보기 ~ h3 + ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-    gap: 0.6rem;
-    padding: 0;
-    list-style: none;
-
-    li {
-      margin: 0;
-    }
-
-    li > a {
-      display: block;
-      height: 100%;
-      box-sizing: border-box;
-      padding: 0.8rem 0.95rem;
-      border: 1px solid var(--lightgray);
-      border-radius: 10px;
-      background: transparent;
-      color: var(--dark);
-      font-weight: 500;
-      transition:
-        border-color 0.15s ease,
-        color 0.15s ease;
-
-      &:hover {
-        border-color: var(--secondary);
-        color: var(--secondary);
-      }
-    }
   }
 
   // Recently modified notes as a plain list with hairlines.
