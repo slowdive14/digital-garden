@@ -988,11 +988,17 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       return !f || f.has(n.id)
     }
     let pointer: [number, number] = [0, 0]
+    // Touch screens have no hover. Their last touch point stays behind as a
+    // "hover", so a node under the button that opened 3D got held by itself.
+    // There, only a tap holds a node.
+    let pointerKind = window.matchMedia("(hover: hover)").matches ? "mouse" : "touch"
     const onPointer = (e: PointerEvent) => {
+      pointerKind = e.pointerType
       const r = frame.getBoundingClientRect()
       pointer = [e.clientX - r.left, e.clientY - r.top]
     }
     box.addEventListener("pointermove", onPointer)
+    box.addEventListener("pointerdown", onPointer)
 
     // With a note held (or a topic chosen), everything else shrinks to faint
     // specks and unrelated links disappear, so the held note's links stand out.
@@ -1084,6 +1090,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       .onNodeHover((n) => {
         box.style.cursor = n ? "pointer" : "grab"
         window.clearTimeout(dwell3)
+        if (pointerKind !== "mouse") return
         if (n) {
           hovered = n.node
           if (cardNode !== n.node) showCard(n.node, ...pointer)
@@ -1208,6 +1215,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
         cancelAnimationFrame(raf)
         ro.disconnect()
         box.removeEventListener("pointermove", onPointer)
+        box.removeEventListener("pointerdown", onPointer)
         g._destructor()
         box.remove()
         labels.remove()
