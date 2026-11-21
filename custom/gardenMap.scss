@@ -438,6 +438,25 @@
   .garden-map__list {
     max-height: none;
   }
+
+  // Topic buttons and the legend stay on one line that scrolls sideways, so the
+  // map keeps the height even on a short window or a phone held sideways.
+  .garden-map__topics,
+  .garden-map__legend {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--lightgray) transparent;
+    padding-bottom: 0.3rem;
+
+    > *,
+    button {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+  }
 }
 
 :root.garden-map-lock {
