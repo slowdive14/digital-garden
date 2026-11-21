@@ -1408,8 +1408,14 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
   let lastPointer = "mouse"
   const wire = (n: GNode, a: HTMLAnchorElement) => {
     a.addEventListener("pointerdown", (e) => (lastPointer = e.pointerType))
-    a.addEventListener("mouseenter", () => showPreview(n))
-    a.addEventListener("focus", () => showPreview(n))
+    // A tap also fires mouseenter and focus just before its click. Treating those
+    // as a hover would mark the note previewed, and the click would then open it.
+    a.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse") showPreview(n)
+    })
+    a.addEventListener("focus", () => {
+      if (lastPointer === "mouse") showPreview(n)
+    })
     // Phones: the first tap previews, a second tap on the same title opens it.
     a.addEventListener("click", (e) => {
       if (lastPointer !== "mouse" && previewed !== n) {
