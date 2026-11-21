@@ -1778,7 +1778,26 @@
         "글쓰기"
       ],
       "confidence": "high"
+    },
+    "P - 예측은 빗나갈 수밖에 없고 계속 움직이면서 새로운 방식으로 적응한다": {
+      "title": "예측은 빗나갈 수밖에 없고 계속 움직이면서 새로운 방식으로 적응한다",
+      "hubs": [
+        "수용",
+        "대처"
+      ],
+      "confidence": "high",
+      "by": "gemini"
+    },
+    "P - 자비는 그 사람 전체를 미움 속에 가두지 않는 일": {
+      "title": "자비는 그 사람 전체를 미움 속에 가두지 않는 일",
+      "hubs": [
+        "마음챙김",
+        "수용"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
-  "restructuredAt": "2026-11-21"
+  "restructuredAt": "2026-11-21",
+  "lastAutoClassified": "2026-11-21T08:04:36.730Z"
 }
