@@ -18,6 +18,7 @@ publish: true
 
 <!-- recent:start: 동기화할 때 실제 수정일 순으로 자동으로 채웁니다. 직접 고치지 마세요. -->
 
+- [[P - 자비의 정의|자비의 정의]] <span class="recent-date">2026.11.22</span>
 - [[P - 예측은 빗나갈 수밖에 없고 계속 움직이면서 새로운 방식으로 적응한다|예측은 빗나갈 수밖에 없고 계속 움직이면서 새로운 방식으로 적응한다]] <span class="recent-date">2026.11.22</span>
 - [[P - 자비는 그 사람 전체를 미움 속에 가두지 않는 일|자비는 그 사람 전체를 미움 속에 가두지 않는 일]] <span class="recent-date">2026.11.21</span>
 - [[자기자비로서의 시련 완수|자기자비로서의 시련 완수]] <span class="recent-date">2025.05.24</span>
@@ -25,7 +26,6 @@ publish: true
 - [[DPHP를 통한 성격 패턴의 이해와 변화|DPHP를 통한 성격 패턴의 이해와 변화]] <span class="recent-date">2025.05.09</span>
 - [[마케팅 관점에서 본 심리상담|마케팅 관점에서 본 심리상담]] <span class="recent-date">2025.05.09</span>
 - [[인간에 대한 구원은 사랑을 통해서, 사랑 안에서 실현된다|인간에 대한 구원은 사랑을 통해서, 사랑 안에서 실현된다]] <span class="recent-date">2025.05.09</span>
-- [[마음챙김과 자비_2장_진화된 마음과 동기|마음챙김과 자비 2장 진화된 마음과 동기]] <span class="recent-date">2025.05.08</span>
 
 <!-- recent:end -->
 
