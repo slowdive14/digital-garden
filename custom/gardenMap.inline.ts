@@ -846,6 +846,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     onNodeClick(f: (n: T3) => void): FG
     onBackgroundClick(f: () => void): FG
     onEngineStop(f: () => void): FG
+    cameraPosition(): { x: number; y: number; z: number }
     cameraPosition(p: object, look?: object, ms?: number): FG
     graph2ScreenCoords(x: number, y: number, z: number): { x: number; y: number }
     zoomToFit(ms?: number, pad?: number): FG
@@ -950,27 +951,66 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       g.zoomToFit(400, 30)
     })
 
-    // Topic names float next to their hubs.
+    // Titles float beside their dots. Hundreds would bury each other, so each frame
+    // places them by priority into free spots only: the hovered or clicked note, the
+    // focused topic, hubs, then notes nearest the camera. Zooming in on an area
+    // therefore brings out the titles there.
     const tags = new Map<string, HTMLSpanElement>()
     for (const n of nodes) {
-      if (n.node.cat !== "hub") continue
       const t = document.createElement("span")
-      t.textContent = n.node.title
+      const max = n.node.cat === "hub" ? 30 : 18
+      t.textContent = n.node.title.length > max ? n.node.title.slice(0, max - 1) + "…" : n.node.title
+      if (n.node.cat === "hub") t.classList.add("is-hub")
+      t.hidden = true
       labels.append(t)
       tags.set(n.id, t)
     }
+    // Width estimate without measuring the DOM every frame (Korean ≈ 1em per glyph).
+    const estWidth = (t: HTMLSpanElement) => {
+      const len = t.textContent!.length
+      return t.classList.contains("is-hub") ? len * 12 + 12 : len * 11 + 10
+    }
+    const widths = new Map([...tags].map(([id, t]) => [id, estWidth(t)]))
+    type Box = [number, number, number, number]
+    const hit = (a: Box, b: Box) =>
+      a[0] < b[0] + b[2] && b[0] < a[0] + a[2] && a[1] < b[1] + b[3] && b[1] < a[1] + a[3]
     let raf = 0
+    let frameNo = 0
     const tick = () => {
+      raf = requestAnimationFrame(tick)
+      // Every other frame is plenty for labels and halves the work.
+      if (frameNo++ % 2) return
       const fw = frame.clientWidth
       const fh = frame.clientHeight
-      for (const [id, t] of tags) {
-        const n = byId.get(id)!
+      const cam = g.cameraPosition()
+      const focus = focusSet()
+      const cands: { n: T3; x: number; y: number; prio: number }[] = []
+      for (const n of nodes) {
         const p = g.graph2ScreenCoords(n.x ?? 0, n.y ?? 0, n.z ?? 0)
-        const show = inFocus(n) && p.x > 0 && p.y > 0 && p.x < fw && p.y < fh
-        t.hidden = !show
-        if (show) t.style.transform = `translate(${Math.round(p.x)}px, ${Math.round(p.y + 6)}px) translateX(-50%)`
+        if (p.x < 0 || p.y < 0 || p.x > fw || p.y > fh) continue
+        const dist = Math.hypot((n.x ?? 0) - cam.x, (n.y ?? 0) - cam.y, (n.z ?? 0) - cam.z)
+        let prio = 1000 / (1 + dist) // nearer first
+        if (focus && !focus.has(n.id)) continue
+        if (n.node === hovered || n.node === pinned) prio += 3000
+        else if (n.node === topicFocus) prio += 2000
+        else if (n.node.cat === "hub") prio += 1000
+        cands.push({ n, x: p.x, y: p.y, prio })
       }
-      raf = requestAnimationFrame(tick)
+      cands.sort((a, b) => b.prio - a.prio)
+      const placed: Box[] = []
+      const shown = new Set<string>()
+      const cap = fw < 600 ? 28 : 60
+      for (const c of cands) {
+        if (shown.size >= cap && c.prio < 2000) break
+        const w = widths.get(c.n.id)!
+        const box: Box = [c.x - w / 2, c.y + 6, w, 18]
+        if (c.prio < 3000 && placed.some((b) => hit(b, box))) continue
+        placed.push(box)
+        shown.add(c.n.id)
+        const t = tags.get(c.n.id)!
+        t.style.transform = `translate(${Math.round(box[0])}px, ${Math.round(box[1])}px)`
+      }
+      for (const [id, t] of tags) t.hidden = !shown.has(id)
     }
     raf = requestAnimationFrame(tick)
     const ro = new ResizeObserver(() => g.width(frame.clientWidth).height(frame.clientHeight))
