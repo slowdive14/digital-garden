@@ -2,7 +2,7 @@
 publish: true
 created: '2022-09-09'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 가치 있게 여기는 일에 시간을 사용하는 사람이 부자
 ---
 

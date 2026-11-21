@@ -3,7 +3,7 @@ title: 긍정적 반추는 작업기억의 기능을 향상시킨다
 publish: true
 created: '2022-04-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >The present study also found that positive rumination training in expressive writing improved the WM updating capacity[^1] in terms of RT to all three types of words significantly, indicating that rumination has a causal influence on WM updating. (중략) Thus, positive rumination might be understood as an emotional regulation strategy that helps individuals update emotional information quickly. In contrast, negative rumination causes individuals to update emotional information slowly.

@@ -2,7 +2,7 @@
 publish: true
 created: '2023-03-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 책임감 강하고 완벽주의적이서 걱정과 분노가 많은 사람이 통증에 취약
 ---
 

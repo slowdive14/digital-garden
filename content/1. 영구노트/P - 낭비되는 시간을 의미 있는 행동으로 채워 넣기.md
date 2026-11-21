@@ -2,7 +2,7 @@
 publish: true
 created: '2022-09-16'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 낭비되는 시간을 의미 있는 행동으로 채워 넣기
 ---
 

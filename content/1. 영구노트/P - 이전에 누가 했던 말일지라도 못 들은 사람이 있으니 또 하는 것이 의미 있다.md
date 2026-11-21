@@ -3,7 +3,7 @@ title: 이전에 누가 했던 말일지라도 못 들은 사람이 있으니 �
 publish: true
 created: '2022-07-19'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Everything that needs to be said has already been said. But, since no one was listening, everything needs be said again.

@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 미래 자기를 이상적인 부모처럼 형상화하면 안정 애착 형성에 도움이 됨
 ---
 *chatgpt가 아래 원문 번역 글을 요약한 내용*

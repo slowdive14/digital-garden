@@ -2,7 +2,7 @@
 publish: true
 created: '2022-05-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 감사할 수 있는 마음. 마음챙김이 내게 실질적으로 도움이 된다고 생각하는 부분
 ---
 

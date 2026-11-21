@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 주의력과 충동성을 조절하는 기능을 하는 메모
 ---
 

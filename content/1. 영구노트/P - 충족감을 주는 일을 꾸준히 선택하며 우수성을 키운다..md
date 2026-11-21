@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 충족감을 주는 일을 꾸준히 선택하며 우수성을 키운다.
 ---
 작성일 : 2022-01-17 

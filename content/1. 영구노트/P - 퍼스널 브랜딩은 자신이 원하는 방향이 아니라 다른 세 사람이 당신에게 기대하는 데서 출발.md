@@ -2,7 +2,7 @@
 publish: true
 created: '2023-02-22'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 퍼스널 브랜딩은 자신이 원하는 방향이 아니라 다른 세 사람이 당신에게 기대하는 데서 출발
 ---
 

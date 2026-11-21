@@ -3,7 +3,7 @@ title: 지식체계 구축이라는 목적은 모든 경험을 학습의 기회�
 publish: true
 created: '2022-03-24'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >...realize that everything you experience is an opportunity to learn.

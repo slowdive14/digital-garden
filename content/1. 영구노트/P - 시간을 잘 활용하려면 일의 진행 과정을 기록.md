@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-21'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 시간을 잘 활용하려면 일의 진행 과정을 기록
 ---
 

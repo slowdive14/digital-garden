@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 의지로 환경을 바꿔 습관을 원하는 방향으로 바꾼다
 ---
 2023-10-17

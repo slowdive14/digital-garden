@@ -3,7 +3,7 @@ title: 후회를 미래 행동의 동기로 삼는다
 publish: true
 created: '2022-03-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Pair New Years' resolutions with "old" year's regrets.

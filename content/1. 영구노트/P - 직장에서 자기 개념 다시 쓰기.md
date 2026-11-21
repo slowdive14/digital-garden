@@ -2,7 +2,7 @@
 publish: true
 created: '2024-07-01'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 직장에서 자기 개념 다시 쓰기
 ---
 

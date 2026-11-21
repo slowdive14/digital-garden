@@ -2,7 +2,7 @@
 publish: true
 created: '2022-09-24'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 받아들임이란
 ---
 

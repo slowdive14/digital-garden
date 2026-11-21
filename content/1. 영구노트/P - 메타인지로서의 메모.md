@@ -2,7 +2,7 @@
 publish: true
 created: '2022-06-22'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 메타인지로서의 메모
 ---
 

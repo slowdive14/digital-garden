@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '라이팅을 많이. 많이 쓰면 스피킹 시 모르는 부분이 어딘지, 어떻게 해결해야 하는지 알 수 있다'
 ---
 

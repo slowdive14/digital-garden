@@ -2,7 +2,7 @@
 publish: true
 created: '2022-04-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 배운 것을 자기말로 소화하는 글쓰기는 효과적인 학습법이다
 ---
 

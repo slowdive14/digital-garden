@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-30'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 자신감은 자신과의 약속을 꾸준히 지킨 결과
 ---
 

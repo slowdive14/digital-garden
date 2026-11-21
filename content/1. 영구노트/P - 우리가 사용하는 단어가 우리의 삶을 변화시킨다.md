@@ -2,7 +2,7 @@
 publish: true
 created: '2024-04-04'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 우리가 사용하는 단어가 우리의 삶을 변화시킨다
 ---
 

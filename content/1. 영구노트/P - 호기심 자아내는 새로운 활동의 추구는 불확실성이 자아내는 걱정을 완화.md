@@ -2,7 +2,7 @@
 publish: true
 created: '2022-11-08'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 호기심 자아내는 새로운 활동의 추구는 불확실성이 자아내는 걱정을 완화
 ---
 

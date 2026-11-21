@@ -2,7 +2,7 @@
 publish: true
 created: '2023-07-06'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 미래자기와의 연결이 강할수록 현 시점에서 더 나은 판단이 가능
 ---
 

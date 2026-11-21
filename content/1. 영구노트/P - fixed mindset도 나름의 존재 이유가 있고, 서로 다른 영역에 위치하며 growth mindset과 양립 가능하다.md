@@ -3,7 +3,7 @@ title: 'fixed mindset도 나름의 존재 이유가 있고, 서로 다른 영역
 publish: true
 created: '2022-02-24'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >It is important to understand that a fixed mindset is not easy to kick. It has likely become an emotional crutch over the years: it protects us from failure, creates recognition in the eyes of our parents and partners, and boosts our self-confidence. It comforts us time and again, so getting rid of it can be extremely discomforting. 

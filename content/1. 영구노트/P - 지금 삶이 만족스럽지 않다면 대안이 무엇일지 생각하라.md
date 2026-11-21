@@ -3,7 +3,7 @@ title: 지금 삶이 만족스럽지 않다면 대안이 무엇일지 생각하�
 publish: true
 created: '2022-09-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >“While the feeling of loss around midlife is real,” — I love this — “ask yourself what the alternative would be.” That’s something I think we have a hard time doing.

@@ -2,7 +2,7 @@
 publish: true
 created: '2022-06-16'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 어떤 인생 이야기를 쓰고 있는가
 ---
 

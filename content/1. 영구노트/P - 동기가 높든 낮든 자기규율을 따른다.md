@@ -3,7 +3,7 @@ title: 동기가 높든 낮든 자기규율을 따른다
 publish: true
 created: '2022-06-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >But where motivation is low, that's where discipline kicks in.

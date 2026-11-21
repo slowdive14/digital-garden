@@ -2,7 +2,7 @@
 publish: true
 created: '2022-01-05'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 기록은 과거의 나와 미래의 나를 연결시키는 적극적 행위이다.
 ---
 

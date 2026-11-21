@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '일단 저질러야 성공 가능성이 생기고, 실패는 생각만큼 아프지 않다'
 ---
 2023-12-19

@@ -2,7 +2,7 @@
 publish: true
 created: '2022-09-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 답을 얻는 것보다 질문을 잘하는 게 훨씬 중요
 ---
 

@@ -3,7 +3,7 @@ title: 삶을 충실히 살기 위한 주의조절
 publish: true
 created: '2022-09-09'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 Peak Mind란 무엇인지에 대한 저자의 답

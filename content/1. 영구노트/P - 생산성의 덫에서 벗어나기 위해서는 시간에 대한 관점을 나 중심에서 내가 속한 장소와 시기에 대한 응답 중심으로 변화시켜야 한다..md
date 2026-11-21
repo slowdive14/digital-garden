@@ -3,7 +3,7 @@ title: 생산성의 덫에서 벗어나기 위해서는 시간에 대한 관점�
 publish: true
 created: '2022-01-10'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >There is an alternative: the unfashionable but powerful notion of letting time use you, approaching life not as an opportunity to implement your predetermined plans for success but as a matter of responding to the needs of your place and your moment in history.

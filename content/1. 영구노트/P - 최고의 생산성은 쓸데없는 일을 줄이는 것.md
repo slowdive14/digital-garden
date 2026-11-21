@@ -3,7 +3,7 @@ title: 최고의 생산성은 쓸데없는 일을 줄이는 것
 publish: true
 created: '2022-08-01'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Sometimes the most productive thing you can do is eliminate the task.

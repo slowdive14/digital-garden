@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 경력은 직선적이기보다 비선형적일 변화하는 세상에 더 적응적
 ---
 

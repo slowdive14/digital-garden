@@ -2,7 +2,7 @@
 publish: true
 created: '2022-08-24'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 아웃풋을 내는 게 중요
 ---
 

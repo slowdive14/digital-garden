@@ -3,7 +3,7 @@ title: 목표추구에 부합하는 습관의 지속은 회복력을 강화한�
 publish: true
 created: '2022-01-29'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >In fact, the capacity to envision a desired future state (visually, if possible) is an executive function that recruits all of the other executive functions in the course of getting things done. (Other executive functions that follow include marshaling resources toward the goal, monitoring progress toward the goal, inhibiting alternative pursuits that will interfere, <u>and maintaining a level of cognitive flexibility that facilitates problem solving in the face of various obstacles</u>.)

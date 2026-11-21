@@ -2,7 +2,7 @@
 publish: true
 created: '2023-06-22'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 자기조절에서 외부 환경이 예측 가능하다고 지각하는 것의 중요성
 ---
 

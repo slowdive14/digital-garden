@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 매일의 습관 사슬이 끊어지지 않게 하라
 ---
 2023-12-30

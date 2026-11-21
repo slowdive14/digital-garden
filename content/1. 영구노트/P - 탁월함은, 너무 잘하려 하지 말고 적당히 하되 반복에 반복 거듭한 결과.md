@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-14'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '탁월함은, 너무 잘하려 하지 말고 적당히 하되 반복에 반복 거듭한 결과'
 ---
 

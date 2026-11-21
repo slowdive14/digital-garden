@@ -2,7 +2,7 @@
 publish: true
 created: '2022-08-01'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 고통은 필연적이며 창작 과정의 일부
 ---
 

@@ -3,7 +3,7 @@ title: 책의 내용을 내 것으로 소화하는 법(분석적 읽기)
 publish: true
 created: '2022-03-24'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 1.  What is the purpose of the book? 책의 목적이 무엇인가?

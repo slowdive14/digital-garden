@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-20'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 이야기를 만드는 과정은 질문에 대한 답을 하는 과정
 ---
 

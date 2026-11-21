@@ -3,7 +3,7 @@ title: '영어 공부의 목적에도 위계가 있고, 가장 상위의 목적�
 publish: true
 created: '2022-02-06'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >

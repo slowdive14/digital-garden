@@ -2,7 +2,7 @@
 publish: true
 created: '2022-07-21'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 언어학습에서 당신은 어떻게 즐거움을 유지할 것인가
 ---
 

@@ -2,7 +2,7 @@
 publish: true
 created: '2022-07-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 에베레스트를 오르면서 스트레스 안 받기를 바라는가
 ---
 

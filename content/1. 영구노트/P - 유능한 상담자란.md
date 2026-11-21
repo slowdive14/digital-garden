@@ -3,7 +3,7 @@ title: 유능한 상담자란
 publish: true
 created: '2022-03-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >

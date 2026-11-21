@@ -3,7 +3,7 @@ title: 더 나은 내가 되는 하나의 수단으로서의 영어공부
 publish: true
 created: '2022-07-03'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >

@@ -3,7 +3,7 @@ title: 정말 몰두하고 싶다면 시간을 낭비해야 한다
 publish: true
 created: '2022-04-06'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >The truth, then, is that spending at least some of your leisure time “wastefully,” focused solely on the pleasure of the experience, is the only way  not  to waste it—to be truly at leisure, rather than covertly engaged in future-focused self-improvement.

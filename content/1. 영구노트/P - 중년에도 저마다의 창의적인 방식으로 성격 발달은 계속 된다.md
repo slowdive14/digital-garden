@@ -3,7 +3,7 @@ title: 중년에도 저마다의 창의적인 방식으로 성격 발달은 계�
 publish: true
 created: '2022-07-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >This book is about middle-aged men and women wrestling with learning how to love, with making meaning, with reordering chaos, and with discovering, often inadvertently, how to put in the world what was not there before. Their life stories offer example after example in which maturation and the internalization of a holding environment occur in adulthood, not in childhood.

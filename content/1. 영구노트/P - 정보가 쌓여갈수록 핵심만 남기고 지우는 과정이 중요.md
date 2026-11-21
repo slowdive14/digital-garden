@@ -3,7 +3,7 @@ title: 정보가 쌓여갈수록 핵심만 남기고 지우는 과정이 중요
 publish: true
 created: '2022-07-27'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >You leave out unnecessary details and get right to the point.

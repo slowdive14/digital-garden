@@ -2,7 +2,7 @@
 publish: true
 created: '2023-07-02'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 성취 경험을 기록함으로써 내재적으로 동기 부여하는 것의 중요성
 ---
 

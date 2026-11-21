@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-30'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '때로는 아무것도 하지 말고, 그저 그 상황 안에 버티고 있는 게 나을 수도 있다'
 ---
 

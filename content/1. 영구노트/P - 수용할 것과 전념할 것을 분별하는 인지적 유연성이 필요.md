@@ -2,7 +2,7 @@
 publish: true
 created: '2023-02-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 수용할 것과 전념할 것을 분별하는 인지적 유연성이 필요
 ---
 

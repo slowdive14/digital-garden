@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 성공 과정에는 우리의 위엄과 긍지에 대한 포기도 포함
 ---
 

@@ -3,7 +3,7 @@ title: 우리의 믿음은 현실이 아니다
 publish: true
 created: '2022-03-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >They start out with an emotional commitment to a certain idea, and then they use their formidable cognitive powers to organize facts to support what they want to believe. Anyhow, so the partisan affiliation comes first, and then the reasoning process by which you justify it comes second. And unfortunately, i think affects all of us. We tend to see the world and cherry pick facts that support our version of the world. And it takes a really big external shock that just clearly proves you wrong.

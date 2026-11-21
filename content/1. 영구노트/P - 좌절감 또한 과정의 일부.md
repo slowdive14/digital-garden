@@ -3,7 +3,7 @@ title: 좌절감 또한 과정의 일부
 publish: true
 created: '2022-05-06'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >...When other people don't understand them. And I think they, they get frustrated because obviously, as you mentioned, you feel embarrassed, you feel, you know, like you're not doing enough, but this is part of the process.

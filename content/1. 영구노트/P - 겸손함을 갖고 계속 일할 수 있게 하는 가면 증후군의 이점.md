@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-26'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 겸손함을 갖고 계속 일할 수 있게 하는 가면 증후군의 이점
 ---
 

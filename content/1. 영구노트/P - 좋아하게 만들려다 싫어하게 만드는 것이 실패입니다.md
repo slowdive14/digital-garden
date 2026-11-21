@@ -3,7 +3,7 @@ title: 좋아하게 만들려다 싫어하게 만드는 것이 실패입니다
 publish: true
 created: '2022-03-21'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >좋아하게 만들려다 싫어하게 만드는 것이 실패입니다.

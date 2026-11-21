@@ -3,7 +3,7 @@ title: 가치 있는 것에 주의를 기울이는 것을 가능케 하는 메�
 publish: true
 created: '2022-06-28'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Adopting the habit of knowledge capture has immediate benefits for our mental health and peace of mind. We can let go of the fear that our memory will fail us at a crucial moment. Instead of jumping at every new headline and notification, we can choose to consume information that adds value to our lives and consciously let go of the rest.

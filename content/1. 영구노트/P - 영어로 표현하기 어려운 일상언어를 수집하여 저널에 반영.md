@@ -2,7 +2,7 @@
 publish: true
 created: '2022-05-16'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 영어로 표현하기 어려운 일상언어를 수집하여 저널에 반영
 ---
 

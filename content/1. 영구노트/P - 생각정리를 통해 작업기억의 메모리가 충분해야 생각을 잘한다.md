@@ -2,7 +2,7 @@
 publish: true
 created: '2022-11-14'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 생각정리를 통해 작업기억의 메모리가 충분해야 생각을 잘한다
 ---
 

@@ -42,7 +42,7 @@ interface Graph {
 // Legend order is fixed; colors come from CSS variables (see gardenMap.scss).
 const CATS: { key: Cat; label: string; cssVar: string }[] = [
   { key: "hub", label: "주제 허브", cssVar: "--gm-hub" },
-  { key: "permanent", label: "영구 노트", cssVar: "--gm-permanent" },
+  { key: "permanent", label: "문헌 메모", cssVar: "--gm-permanent" },
   { key: "opinion", label: "의견·글", cssVar: "--gm-opinion" },
   { key: "clinical", label: "임상·상담 메모", cssVar: "--gm-clinical" },
   { key: "other", label: "책·프로젝트·기타", cssVar: "--gm-other" },
@@ -51,7 +51,7 @@ const CATS: { key: Cat; label: string; cssVar: string }[] = [
 function category(slug: string): Cat {
   if (!slug.includes("/")) return "hub"
   const top = slug.split("/")[0]
-  if (/영구/.test(top)) return "permanent"
+  if (/영구|문헌/.test(top)) return "permanent"
   if (top === "posts" || /의견|개요/.test(top)) return "opinion"
   if (/임상|심리치료|평가|상담/.test(top)) return "clinical"
   return "other"

@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 만족감이 큰 일을 찾기 위해서는 포장된 도로가 아니라 산길을 헤매야 할 수도 있다
 ---
 ### 작성일 : 2022-02-09

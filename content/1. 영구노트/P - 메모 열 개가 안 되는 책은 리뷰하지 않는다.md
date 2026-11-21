@@ -2,7 +2,7 @@
 publish: true
 created: '2023-06-20'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 메모 열 개가 안 되는 책은 리뷰하지 않는다
 ---
 

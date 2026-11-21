@@ -2,7 +2,7 @@
 publish: true
 created: '2022-07-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 고통에서 아름다움을 빚어내기 위한 존재로서 태어났다는 건 어떤 의미일까
 ---
 

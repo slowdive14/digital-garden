@@ -2,7 +2,7 @@
 publish: true
 created: '2022-11-17'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 무조건 반복이 답이다. 혼잣말 반복하며 주기적으로 외워 장기기억으로
 ---
 

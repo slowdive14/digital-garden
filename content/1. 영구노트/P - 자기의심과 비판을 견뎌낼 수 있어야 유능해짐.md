@@ -2,7 +2,7 @@
 publish: true
 created: '2023-03-10'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 자기의심과 비판을 견뎌낼 수 있어야 유능해짐
 ---
 

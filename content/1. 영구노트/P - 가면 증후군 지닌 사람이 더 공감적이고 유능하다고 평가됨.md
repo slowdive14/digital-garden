@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-26'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 가면 증후군 지닌 사람이 더 공감적이고 유능하다고 평가됨
 ---
 

@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-10'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 통증은 스트레스가 되는 실제 요인을 보지 못 하게 함으로써 스트레스를 처리
 ---
 

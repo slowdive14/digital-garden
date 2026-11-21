@@ -3,7 +3,7 @@ title: 마음챙김 훈련은 마음을 위한 푸시업
 publish: true
 created: '2022-09-14'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Mindfulness training gave our soldiers push-ups for the mind.

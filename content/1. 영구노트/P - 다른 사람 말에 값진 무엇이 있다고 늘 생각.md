@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 다른 사람 말에 값진 무엇이 있다고 늘 생각
 ---
 2023-09-28

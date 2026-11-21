@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-21'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 유창성은 맥락의존적
 ---
 

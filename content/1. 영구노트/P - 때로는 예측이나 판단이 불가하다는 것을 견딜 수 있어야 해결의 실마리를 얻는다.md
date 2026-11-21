@@ -3,7 +3,7 @@ title: 때로는 예측이나 판단이 불가하다는 것을 견딜 수 있어
 publish: true
 created: '2022-05-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >If you're willing to endure the discomfort of not knowing, a solution will often present itself.

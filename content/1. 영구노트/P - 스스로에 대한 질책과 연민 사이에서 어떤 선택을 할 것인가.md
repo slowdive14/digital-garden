@@ -3,7 +3,7 @@ title: 스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 �
 publish: true
 created: '2022-10-13'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >고통은 당신 잘못이 아니지만 그에 대한 반응은 당신 책임이다.

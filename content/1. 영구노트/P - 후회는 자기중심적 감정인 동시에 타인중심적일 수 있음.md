@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-29'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 후회는 자기중심적 감정인 동시에 타인중심적일 수 있음
 ---
 

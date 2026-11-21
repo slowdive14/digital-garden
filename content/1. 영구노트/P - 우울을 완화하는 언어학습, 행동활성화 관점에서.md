@@ -2,7 +2,7 @@
 publish: true
 created: '2023-02-09'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '우울을 완화하는 언어학습, 행동활성화 관점에서'
 ---
 

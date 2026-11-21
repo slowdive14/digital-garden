@@ -3,7 +3,7 @@ title: 뱀이 허물 벗듯이 사례개념화도 새로운 정보에 맞게 변
 publish: true
 created: '2022-03-18'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >In a sense, whatever is the explicit case conceptualization is not only partial, but is also temporally behind the progression of reality.

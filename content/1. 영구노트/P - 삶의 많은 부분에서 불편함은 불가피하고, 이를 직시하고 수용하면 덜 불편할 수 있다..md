@@ -2,7 +2,7 @@
 publish: true
 created: '2022-02-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: '삶의 많은 부분에서 불편함은 불가피하고, 이를 직시하고 수용하면 덜 불편할 수 있다.'
 ---
 

@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 가장 큰 실패는 별다른 실패를 하지 않은 것
 ---
 2023-12-18

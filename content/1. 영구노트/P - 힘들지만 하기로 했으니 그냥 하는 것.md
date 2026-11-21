@@ -3,7 +3,7 @@ title: 힘들지만 하기로 했으니 그냥 하는 것
 publish: true
 created: '2022-06-04'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >하는 일이 잘 안될 때 : 걍 계속 하면 됨 온 사방에 잘 안되고 힘들다고 징징대면서 걍 하면 됨

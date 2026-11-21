@@ -3,7 +3,7 @@ title: 삶이 내게 건내는 물음에 응답하라
 publish: true
 created: '2022-08-22'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >You don’t need to go out and hunt down insights. All you have to do is listen to what life is repeatedly trying to tell you.

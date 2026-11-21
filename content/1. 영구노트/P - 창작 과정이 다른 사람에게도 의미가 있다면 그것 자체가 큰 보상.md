@@ -3,7 +3,7 @@ title: 창작 과정이 다른 사람에게도 의미가 있다면 그것 자체
 publish: true
 created: '2022-07-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >There are other people out there that can benefit from your lessons your realizations your insights and it is just the most rewarding and inspiring and meaningful thing that I've ever found to commit yourself to sharing what you know in some form rather than just keeping it private to yourself.

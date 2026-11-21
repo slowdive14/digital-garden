@@ -3,7 +3,7 @@ title: '삶의 많은 부분에서 불편함은 불가피하고, 이를 직시�
 publish: true
 created: '2022-02-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >The way to find peaceful absorption in a difficult project, or a boring Sunday afternoon, isn’t to chase feelings of peace or absorption, but to  acknowledge the inevitability of discomfort, and to turn more of your attention to the reality of your situation than to railing against it.

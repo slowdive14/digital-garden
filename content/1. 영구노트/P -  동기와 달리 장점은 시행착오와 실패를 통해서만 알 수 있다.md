@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 동기와 달리 장점은 시행착오와 실패를 통해서만 알 수 있다
 ---
 ### 작성일 : 2022-02-07

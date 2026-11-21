@@ -3,7 +3,7 @@ title: 기억하기 위해서는 지엽적인 부분은 잊을 수 있어야 한
 publish: true
 created: '2022-09-23'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >..remembering everything leads to paralysis. And forgetting is a skill that you need to develop.

@@ -3,7 +3,7 @@ title: 창의성은 좋은 작업 습관의 결과
 publish: true
 created: '2022-07-25'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Creativity is a habit, and the best creativity is a result of good work habits. That’s it in a nutshell.

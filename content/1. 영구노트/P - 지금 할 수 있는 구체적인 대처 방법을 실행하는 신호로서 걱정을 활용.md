@@ -2,7 +2,7 @@
 publish: true
 created: '2022-11-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 지금 할 수 있는 구체적인 대처 방법을 실행하는 신호로서 걱정을 활용
 ---
 

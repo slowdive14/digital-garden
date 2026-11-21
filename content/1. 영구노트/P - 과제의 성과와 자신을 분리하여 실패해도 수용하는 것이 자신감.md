@@ -2,7 +2,7 @@
 publish: true
 created: '2023-01-19'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 과제의 성과와 자신을 분리하여 실패해도 수용하는 것이 자신감
 ---
 

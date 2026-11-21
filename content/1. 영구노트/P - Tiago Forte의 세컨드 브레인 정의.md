@@ -3,7 +3,7 @@ title: Tiago Forte의 세컨드 브레인 정의
 publish: true
 created: '2022-04-06'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 ---
 

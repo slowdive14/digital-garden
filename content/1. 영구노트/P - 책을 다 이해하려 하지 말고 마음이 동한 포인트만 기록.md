@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-01'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 책을 다 이해하려 하지 말고 마음이 동한 포인트만 기록
 ---
 

@@ -3,7 +3,7 @@ title: 유용한 자기기만이자 창작으로서의 방어
 publish: true
 created: '2022-07-21'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >방어는 갈등의 근원을 창의적으로 재배열함으로써 다룰 수 있게 만들어 준다.

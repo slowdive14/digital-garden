@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-03'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 뇌는 생각하기 위해서가 아니라 신체 예산을 관리하기 위해 진화
 ---
 

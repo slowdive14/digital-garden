@@ -3,7 +3,7 @@ title: 질문을 중심으로 메모를 엮는다
 publish: true
 created: '2022-04-01'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >

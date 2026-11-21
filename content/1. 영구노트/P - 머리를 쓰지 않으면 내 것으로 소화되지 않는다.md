@@ -2,7 +2,7 @@
 publish: true
 created: '2022-01-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 머리를 쓰지 않으면 내 것으로 소화되지 않는다
 ---
 

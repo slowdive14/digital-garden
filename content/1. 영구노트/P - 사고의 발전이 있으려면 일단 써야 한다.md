@@ -3,7 +3,7 @@ title: 사고의 발전이 있으려면 일단 써야 한다
 publish: true
 created: '2022-03-31'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Writing is a great way to put pressure on your thinking: it's hard to summarize something you don't sharply understand. By trying to explain an idea, you'll naturally try multiple framings, flesh out its edges, and see new connections. by Andy Matuschak

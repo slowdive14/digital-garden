@@ -3,7 +3,7 @@ title: 의미 있는 것들은 대개 시간이 오래 걸리고 불편하다
 publish: true
 created: '2022-01-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >But the real point is that her decision to make such a radical change arose from the recognition that she’d never manage to build a more meaningful life—which for her meant cultivating a more mindful relationship with her family’s physical surroundings—by saving time and thereby squeezing more into her existing one. To make time for what mattered, she needed to give things up. Convenience culture seduces us into imagining that we might find room for everything important by eliminating only life’s tedious tasks. But it’s a lie. You have to choose a few things, sacrifice everything else, and deal with the inevitable sense of loss that results.

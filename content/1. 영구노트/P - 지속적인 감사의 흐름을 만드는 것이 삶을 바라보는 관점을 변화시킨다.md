@@ -2,7 +2,7 @@
 publish: true
 created: '2022-06-23'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 지속적인 감사의 흐름을 만드는 것이 삶을 바라보는 관점을 변화시킨다
 ---
 

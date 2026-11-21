@@ -2,7 +2,7 @@
 publish: true
 created: '2023-03-31'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 존 사노의 스트레스 정의
 ---
 

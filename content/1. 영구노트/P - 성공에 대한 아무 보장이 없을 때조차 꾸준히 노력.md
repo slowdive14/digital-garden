@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-08'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 성공에 대한 아무 보장이 없을 때조차 꾸준히 노력
 ---
 

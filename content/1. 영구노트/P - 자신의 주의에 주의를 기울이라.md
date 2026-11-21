@@ -3,7 +3,7 @@ title: 자신의 주의에 주의를 기울이라
 publish: true
 created: '2022-09-14'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Our problem is not the phone, nor is it our rapidly filling inbox. It’s not that we are surrounded by attention-grabbing news and information at all times. It’s not the team of software engineers working on new and better ways to trap your attention with that buzzing and beeping rectangle tethered to you day and night. The problem is that we often don’t know what’s happening in our own minds. We lack internal cues about where our attention is moment to moment. And for this, there is a solution: pay attention to your attention.

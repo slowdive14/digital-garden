@@ -2,7 +2,7 @@
 publish: true
 created: '2022-11-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 마음챙김은 걱정과 불안을 줄임으로써 통제감을 되찾고 시야를 확장
 ---
 

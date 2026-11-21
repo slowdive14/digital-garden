@@ -3,7 +3,7 @@ title: 블로그는 청중을 향하는 공간이라기보다 자신의 생각�
 publish: true
 created: '2022-03-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >“With blogging, you’re talking to a large audience,” … “With digital gardening, you’re talking to yourself. You focus on what you want to cultivate over time.”

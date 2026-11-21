@@ -2,7 +2,7 @@
 publish: true
 created: '2022-10-14'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 신체 예산(body budget)의 의미와 함의
 ---
 

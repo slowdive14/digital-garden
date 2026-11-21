@@ -2,7 +2,7 @@
 publish: true
 created: '2022-04-20'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 자기고양과 대의는 상충하지 않는다
 ---
 

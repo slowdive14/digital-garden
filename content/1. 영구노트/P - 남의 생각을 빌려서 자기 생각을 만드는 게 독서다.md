@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 남의 생각을 빌려서 자기 생각을 만드는 게 독서다
 ---
 

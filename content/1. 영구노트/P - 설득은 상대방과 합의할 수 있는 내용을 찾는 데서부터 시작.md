@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 설득은 상대방과 합의할 수 있는 내용을 찾는 데서부터 시작
 ---
 2023-11-15

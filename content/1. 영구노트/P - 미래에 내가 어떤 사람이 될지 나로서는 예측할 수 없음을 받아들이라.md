@@ -2,7 +2,7 @@
 publish: true
 created: '2022-10-07'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 미래에 내가 어떤 사람이 될지 나로서는 예측할 수 없음을 받아들이라
 ---
 

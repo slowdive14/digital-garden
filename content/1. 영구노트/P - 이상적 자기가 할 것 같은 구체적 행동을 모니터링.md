@@ -2,7 +2,7 @@
 publish: true
 created: '2023-05-15'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 이상적 자기가 할 것 같은 구체적 행동을 모니터링
 ---
 

@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-25'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 목표 달성에서 얻는 큰 기쁨보다 과정에서 얻는 작은 기쁨들이 중요
 ---
 

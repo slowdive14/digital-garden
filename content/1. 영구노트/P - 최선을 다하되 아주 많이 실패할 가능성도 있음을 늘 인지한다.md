@@ -3,7 +3,7 @@ title: 최선을 다하되 아주 많이 실패할 가능성도 있음을 늘 �
 publish: true
 created: '2022-07-04'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 <blockquote><b>Speaker 1</b><br/><br/>So if you are a perfectionist, how do you break free from the rumination while still striving to do your best?</blockquote><blockquote><b>Speaker 2</b><br/><br/>There are some very real pressures that we feel that create a sense that we must conceal our failure. Because whenever we push ourselves out there, society can often stamp us down(stamp down: to put down by force or authority). We need to slow down, and we need to accept that we're going to fail, and we're going to fail many, many times.</blockquote>

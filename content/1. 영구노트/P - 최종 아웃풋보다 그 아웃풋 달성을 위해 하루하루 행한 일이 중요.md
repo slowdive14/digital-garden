@@ -2,7 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 최종 아웃풋보다 그 아웃풋 달성을 위해 하루하루 행한 일이 중요
 ---
 >

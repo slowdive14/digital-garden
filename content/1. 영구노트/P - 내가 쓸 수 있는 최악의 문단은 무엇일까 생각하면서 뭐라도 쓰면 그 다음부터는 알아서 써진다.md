@@ -2,7 +2,7 @@
 publish: true
 created: '2023-06-26'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 내가 쓸 수 있는 최악의 문단은 무엇일까 생각하면서 뭐라도 쓰면 그 다음부터는 알아서 써진다
 ---
 

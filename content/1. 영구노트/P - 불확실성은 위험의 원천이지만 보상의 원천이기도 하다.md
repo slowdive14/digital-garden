@@ -3,7 +3,7 @@ title: 불확실성은 위험의 원천이지만 보상의 원천이기도 하�
 publish: true
 created: '2022-01-10'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Moreover, most of us seek a specifically individualistic kind of mastery over time—our culture’s ideal is that you alone should control your schedule, doing whatever you prefer, whenever you want—because it’s scary to confront the truth that almost everything worth doing, from marriage and parenting to business or politics, depends on cooperating with others, and therefore on exposing yourself to the emotional uncertainties of relationships.

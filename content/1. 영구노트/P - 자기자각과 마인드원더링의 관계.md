@@ -3,7 +3,7 @@ title: 자기자각과 마인드원더링의 관계
 publish: true
 created: '2022-10-22'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >When you’re meta-aware, you’re looking at yourself. You’re the object! <u>You can’t be simultaneously immersed in selfrelated thinking (mind-wandering, simulating) and reflecting on the self</u>. This is why, as meta-awareness goes up, mind-wandering goes down. It makes sense that these would be antagonistic processes: the self can’t be outside and inside at the same time.

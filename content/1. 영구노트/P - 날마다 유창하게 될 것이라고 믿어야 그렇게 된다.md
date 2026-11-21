@@ -3,7 +3,7 @@ title: 날마다 유창하게 될 것이라고 믿어야 그렇게 된다
 publish: true
 created: '2022-02-17'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >If you don't believe in yourself or your ability to become fluent in English you will not become fluent. (중략) We need to envison you speaking English fluently now.

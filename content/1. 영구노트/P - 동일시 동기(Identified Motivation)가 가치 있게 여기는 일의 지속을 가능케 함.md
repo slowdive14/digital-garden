@@ -2,7 +2,7 @@
 publish: true
 created: '2023-01-10'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 동일시 동기(Identified Motivation)가 가치 있게 여기는 일의 지속을 가능케 함
 ---
 

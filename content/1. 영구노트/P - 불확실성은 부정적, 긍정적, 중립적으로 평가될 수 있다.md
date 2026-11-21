@@ -3,7 +3,7 @@ title: '불확실성은 부정적, 긍정적, 중립적으로 평가될 수 있�
 publish: true
 created: '2022-04-11'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >When people experience anxiety or negative emotions they appraise uncertainty as a threat, and when they experience positive emotions they appraise it as an opportunity ([Brashers, 2001](https://www.sciencedirect.com/science/article/pii/S0277953617301703#bib6)). These appraisals, in turn, lead individuals to either avoid or seek information as a means of managing their uncertainty.

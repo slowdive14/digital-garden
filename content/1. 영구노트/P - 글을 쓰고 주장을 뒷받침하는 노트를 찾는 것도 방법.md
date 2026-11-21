@@ -3,7 +3,7 @@ title: 글을 쓰고 주장을 뒷받침하는 노트를 찾는 것도 방법
 publish: true
 created: '2022-04-04'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >

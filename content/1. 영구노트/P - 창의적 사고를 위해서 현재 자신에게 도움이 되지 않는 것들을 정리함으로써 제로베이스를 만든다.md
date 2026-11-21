@@ -3,7 +3,7 @@ title: 창의적 사고를 위해서 현재 자신에게 도움이 되지 않는
 publish: true
 created: '2022-02-23'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >Luckily, as hard as it is to cut out the activities that no longer bring reward, the results are worth it. You’ll come out with more time, more energy and an enormous sense of relief. 

@@ -2,7 +2,7 @@
 publish: true
 created: '2022-12-12'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 꾸준히 오래 하는 사람이 살아남는다
 ---
 

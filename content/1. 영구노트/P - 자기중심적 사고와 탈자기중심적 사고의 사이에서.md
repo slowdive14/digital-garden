@@ -3,7 +3,7 @@ title: 자기중심적 사고와 탈자기중심적 사고의 사이에서
 publish: true
 created: '2022-06-09'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 ---
 
 >No wonder it comes as a relief to be reminded of your insignificance: it’s the feeling of realizing that you’d been holding yourself, all this time, to standards you couldn’t reasonably be expected to meet. And this realization isn’t merely calming but liberating, because once you’re no longer burdened by such an unrealistic definition of a “life well spent,” you’re freed to consider the possibility that a far wider variety of things might qualify as meaningful ways to use your finite time. You’re freed, too, to consider the possibility that many of the things you’re already doing with it are more meaningful than you’d supposed.

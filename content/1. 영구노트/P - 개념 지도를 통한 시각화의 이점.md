@@ -2,7 +2,7 @@
 publish: true
 created: '2023-04-05'
 modified: '2024-12-11'
-noteType: 영구 노트
+noteType: 문헌 메모
 title: 개념 지도를 통한 시각화의 이점
 ---
 
