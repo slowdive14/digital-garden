@@ -46,7 +46,27 @@ article h2 {
   }
 }
 
-// Caption under the "이 주제의 다른 노트" section on hub pages.
+// Dates and "새 글" marks in hub lists.
+.note-date {
+  margin-left: 0.5rem;
+  color: var(--gray);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.new-badge {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--light);
+  font-size: 0.68rem;
+  font-weight: 600;
+  vertical-align: 0.1em;
+}
+
+// Caption under the hub list.
 .auto-topic-note {
   margin-top: -0.4rem;
   color: var(--gray);

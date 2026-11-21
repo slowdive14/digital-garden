@@ -345,6 +345,9 @@ function syncSource(source, state) {
 
     const fileBase = path.basename(file, ".md")
     const body = normalizeBody(parsed.content, data, fileBase)
+    // The note's own written date (frontmatter or a "Created:" line), before
+    // fillDates falls back to file times, which for some sources are copy times.
+    const ownDate = toDate(data.created ?? data.date)
     fillDates(data, stat)
     for (const ref of attachmentRefs(body)) wanted.add(ref)
 
@@ -374,11 +377,12 @@ function syncSource(source, state) {
           .map(toDate)
           .filter(Boolean)
           .map((d) => d.getTime())
-        state.recent.push({
-          name: fileBase,
-          title: String(data.title ?? fileBase),
-          when: new Date(Math.max(stat.mtimeMs, ...stamps)),
-        })
+        const when = new Date(Math.max(stat.mtimeMs, ...stamps))
+        state.recent.push({ name: fileBase, title: String(data.title ?? fileBase), when })
+        state.dates.set(fileBase, when)
+      } else {
+        // Copy times are meaningless here; the written date is the best we have.
+        if (ownDate) state.dates.set(fileBase, ownDate)
       }
     }
     stats.copied++
@@ -536,6 +540,45 @@ function reportUnassigned(stats) {
   )
 }
 
+// One list per hub page: the vault's own list and the classified notes merged,
+// newest first, each with its date; notes from the last 14 days get a "새 글" mark.
+function rebuildHubLists(dates) {
+  const pad = (n) => String(n).padStart(2, "0")
+  const fmt = (d) => `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`
+  const fresh = Date.now() - 14 * 24 * 3600 * 1000
+  const notes = contentNotes()
+  for (const [hub, file] of hubFiles()) {
+    const parsed = matter(fs.readFileSync(file, "utf8"))
+    const keep = []
+    const entries = new Map()
+    for (const line of parsed.content.split(/\r?\n/)) {
+      const item = line.match(/^\s*[-*]\s+\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]+))?\]\]\s*$/)
+      if (item) {
+        const target = path.posix.basename(item[1].trim())
+        if (notes.has(target) && !entries.has(target)) entries.set(target, item[2]?.trim() ?? target)
+        else if (!notes.has(target)) keep.push(line) // unpublished links stay as they were
+        continue
+      }
+      if (/^## 이 주제의 (다른 )?노트/.test(line) || /class="auto-topic-note"/.test(line)) continue
+      keep.push(line)
+    }
+    if (!entries.size) continue
+    const rows = [...entries]
+      .map(([name, alias]) => ({ name, alias: aliasText(alias), when: dates.get(name) }))
+      .sort((a, b) => (b.when?.getTime() ?? 0) - (a.when?.getTime() ?? 0) || a.alias.localeCompare(b.alias, "ko"))
+    const list = rows
+      .map((r) => {
+        const date = r.when ? ` <span class="note-date">${fmt(r.when)}</span>` : ""
+        const badge = r.when && r.when.getTime() > fresh ? ` <span class="new-badge">새 글</span>` : ""
+        return `- [[${r.name}|${r.alias}]]${badge}${date}`
+      })
+      .join("\n")
+    const intro = keep.join("\n").replace(/\n{3,}/g, "\n\n").trim()
+    const body = `${intro ? intro + "\n\n" : ""}## 노트 ${rows.length}개\n\n<p class="auto-topic-note">최근에 수정한 노트부터 보여 줍니다.</p>\n\n${list}\n`
+    fs.writeFileSync(file, matter.stringify({ content: body }, parsed.data))
+  }
+}
+
 // Fill the home page's "최근에 수정한 글" with the most recently edited notes.
 function writeRecentSection(recent, limit = 8) {
   const index = path.join(contentDir, "index.md")
@@ -602,6 +645,7 @@ if (CHECK_ONLY) {
 const state = {
   seen: new Set(),
   recent: [],
+  dates: new Map(), // note name → last edit (or written) date, for hub lists
   stats: {
     copied: 0,
     unflagged: 0,
@@ -620,6 +664,7 @@ for (const source of config.sources) syncSource(source, state)
 if (!DRY_RUN) {
   applyAssignments(state.stats)
   reportUnassigned(state.stats)
+  rebuildHubLists(state.dates)
   writeFolderIndexes()
   writeTopicSection()
   writeRecentSection(state.recent)
