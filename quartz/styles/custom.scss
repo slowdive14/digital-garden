@@ -19,6 +19,12 @@ article {
   li {
     margin: 0.2rem 0;
   }
+
+  // Long inline code (URLs, commands) wraps instead of widening the page.
+  :not(pre) > code {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
 }
 
 h1,

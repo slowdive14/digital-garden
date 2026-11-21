@@ -13,6 +13,27 @@
   --gm-ink: var(--dark);
 
   margin: 0 0 2rem;
+  width: 100%;
+  min-width: 0;
+}
+
+// On phones the sidebars stack under the page; keep them at the page width.
+@media (max-width: 800px) {
+  .sidebar.right,
+  .sidebar.left {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+}
+
+// Below the desktop width the right sidebar is a wrapping row (base.scss);
+// give the map a full row of its own. The id matches base.scss's specificity.
+@media (max-width: 1199px) {
+  #quartz-body .sidebar.right > .garden-map {
+    flex: 1 1 100%;
+    max-height: none;
+  }
 }
 
 :root[saved-theme="dark"] .garden-map {
@@ -133,6 +154,11 @@
 }
 
 .garden-map__canvas {
+  // Out of the flow: the canvas gets a fixed pixel size from the script, and
+  // in flow that size would hold its container (the mobile sidebar) open, so
+  // the page could only ever get wider.
+  position: absolute;
+  inset: 0;
   display: block;
   cursor: grab;
 
