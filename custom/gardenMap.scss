@@ -581,8 +581,15 @@ a.garden-ego__link {
   font-size: 0.75rem;
 }
 
+// Fixed height: if the slot grew or shrank with each note, the list below it
+// would jump under the pointer and keep switching the preview (visible jitter).
 .garden-map__preview {
-  min-height: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  // Room for a 2-line title, 3 lines of text and the link.
+  height: 11rem;
+  overflow: hidden;
   margin-top: 0.6rem;
   padding: 0.65rem 0.8rem;
   border-radius: 10px;
@@ -608,6 +615,10 @@ a.garden-ego__link {
     font-size: 0.88rem;
     font-weight: 600;
     word-break: keep-all;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .garden-map__card-excerpt {
@@ -623,8 +634,9 @@ a.garden-ego__link {
 
   a.garden-map__card-link {
     display: inline-block;
-    margin-top: 0.4rem;
-    padding: 0;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 0.3rem 0 0;
     background: none;
     color: var(--secondary);
     font-weight: 600;

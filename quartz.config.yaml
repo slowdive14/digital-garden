@@ -180,8 +180,9 @@ plugins:
       group: toolbar
       groupOptions:
         grow: true
+  # The "연결된 노트" panel (custom/GardenMap) already lists notes linking here.
   - source: "@quartz-community/backlinks"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 50

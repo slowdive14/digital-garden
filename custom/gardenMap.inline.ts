@@ -1316,7 +1316,7 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
   if (nbs.length > shown.length) {
     const li = document.createElement("li")
     li.className = "garden-ego__extra"
-    li.textContent = `외 ${nbs.length - shown.length}개는 아래 백링크와 전체 지도에서 볼 수 있습니다`
+    li.textContent = `외 ${nbs.length - shown.length}개는 전체 지도에서 볼 수 있습니다`
     list.append(li)
   }
   ego.append(svg, list)
