@@ -109,7 +109,8 @@ function makeExcerpt(text: string): string {
     .map((l) => l.trim())
     .filter((l) => l.length > 14)
   const joined = lines.join(" ").replace(/\s+/g, " ").trim()
-  return joined.length > 130 ? joined.slice(0, 129).trimEnd() + "…" : joined
+  // Long enough to fill the preview slot beside a note; the floating card clamps it.
+  return joined.length > 320 ? joined.slice(0, 319).trimEnd() + "…" : joined
 }
 
 const THREE_D_SRC = "https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.1/dist/3d-force-graph.min.js"
