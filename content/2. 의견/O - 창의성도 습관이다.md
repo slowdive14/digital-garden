@@ -1,8 +1,9 @@
 ---
-title: O - 창의성도 습관이다
+title: 창의성도 습관이다
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 ## 창의성을 가능케 하는 좋은 습관이란?

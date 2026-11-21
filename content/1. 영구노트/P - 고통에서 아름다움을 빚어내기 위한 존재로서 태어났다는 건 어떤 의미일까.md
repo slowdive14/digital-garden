@@ -2,6 +2,8 @@
 publish: true
 created: '2022-07-07'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 고통에서 아름다움을 빚어내기 위한 존재로서 태어났다는 건 어떤 의미일까
 ---
 
 >..even melancholic way of being and what i've learned is that this bittersweet tradition it's been with us for centuries and what it teaches us is that we are creatures who are born to transform pain into beauty and that's something our culture will never tell us.
@@ -15,7 +17,7 @@ modified: '2024-12-11'
 
 #### 연결
 - [Deafheaven - New Bermuda (2015) — 잔향](https://slowdive14.tistory.com/1298080)
-- [[P - 넘어져도 다시 일어나는 것이 마음챙김의 본질]]
+- [[P - 넘어져도 다시 일어나는 것이 마음챙김의 본질|넘어져도 다시 일어나는 것이 마음챙김의 본질]]
     - 인생 살며 넘어지고 실패하더라도 다시 일어나는 것이 고통에서 아름다움을 빚어낸다는 말의 의미 중 하나 아닐지
 - [[고통의 즐거움과 의미 추구]]
 

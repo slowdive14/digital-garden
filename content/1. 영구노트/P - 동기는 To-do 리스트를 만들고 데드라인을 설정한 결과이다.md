@@ -1,8 +1,9 @@
 ---
-title: P - 동기는 To-do 리스트를 만들고 데드라인을 설정한 결과이다
+title: 동기는 To-do 리스트를 만들고 데드라인을 설정한 결과이다
 publish: true
 created: '2022-03-28'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >This is where motivation should actually be placed in a productive process: Do tasks with urgency, success, motivation unlocked for next task! <img src="https://images.squarespace-cdn.com/content/v1/5a049a70be42d60e92dd8246/1579880342111-O7QA6EE68FQ8CA0E1Q72/1_uX6F_txxDqrnpCm5EQEroQ.png" alt="1_uX6F_txxDqrnpCm5EQEroQ.png" /> Do tasks with urgency.

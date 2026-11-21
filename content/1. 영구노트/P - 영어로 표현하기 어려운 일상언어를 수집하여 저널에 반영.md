@@ -2,6 +2,8 @@
 publish: true
 created: '2022-05-16'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 영어로 표현하기 어려운 일상언어를 수집하여 저널에 반영
 ---
 
 >1) Listen an audio soap-opera 2) Talk with natives 3) Learn few words everyday 4) Write a journal using the words you have learned 5) Translations of a topic that interests you

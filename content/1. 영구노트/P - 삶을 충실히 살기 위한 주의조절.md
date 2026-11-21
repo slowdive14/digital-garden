@@ -1,8 +1,9 @@
 ---
-title: P - 삶을 충실히 살기 위한 주의조절
+title: 삶을 충실히 살기 위한 주의조절
 publish: true
 created: '2022-09-09'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 Peak Mind란 무엇인지에 대한 저자의 답
@@ -17,4 +18,4 @@ Peak Mind란 무엇인지에 대한 저자의 답
     - [Amazon.com: Peak Mind: Find Your Focus, Own Your Attention in Just 12 Minutes a Day: 9780062992147: Jha, Amishi P.: 도서](https://www.amazon.com/Peak-Mind-Attention-Invest-Minutes/dp/0062992147/ref=tmm_hrd_swatch_0?_encoding=UTF8&qid=&sr=)
 
 #### 연결
-- [[O - 아직도 의지력을 탓하는 당신에게#^fdc873]]
+- [[O - 아직도 의지력을 탓하는 당신에게#^fdc873|아직도 의지력을 탓하는 당신에게]]

@@ -1,8 +1,9 @@
 ---
-title: 'P - 불확실성은 부정적, 긍정적, 중립적으로 평가될 수 있다'
+title: '불확실성은 부정적, 긍정적, 중립적으로 평가될 수 있다'
 publish: true
 created: '2022-04-11'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >When people experience anxiety or negative emotions they appraise uncertainty as a threat, and when they experience positive emotions they appraise it as an opportunity ([Brashers, 2001](https://www.sciencedirect.com/science/article/pii/S0277953617301703#bib6)). These appraisals, in turn, lead individuals to either avoid or seek information as a means of managing their uncertainty.
@@ -15,4 +16,4 @@ modified: '2024-12-11'
 - 
 
 #### 연결
-- [[P - 불확실성은 위험의 원천이지만 보상의 원천이기도 하다]]
+- [[P - 불확실성은 위험의 원천이지만 보상의 원천이기도 하다|불확실성은 위험의 원천이지만 보상의 원천이기도 하다]]

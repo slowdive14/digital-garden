@@ -2,6 +2,8 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 자녀나 돈이 행복을 불러올 것이라고 믿어야만 돌아가는 사회
 ---
 2023-12-29
 

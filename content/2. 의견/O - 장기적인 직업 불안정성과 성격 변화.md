@@ -1,8 +1,9 @@
 ---
-title: O - 장기적인 직업 불안정성과 성격 변화
+title: 장기적인 직업 불안정성과 성격 변화
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 > Just as it takes many years to develop patterns of thoughts, feelings, and behaviors, it will take some time—perhaps many years—to alter them. But the good news is that change _is_ possible.

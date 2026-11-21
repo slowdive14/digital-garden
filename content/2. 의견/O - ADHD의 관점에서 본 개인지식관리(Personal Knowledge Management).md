@@ -1,8 +1,9 @@
 ---
-title: O - ADHD의 관점에서 본 개인지식관리(Personal Knowledge Management)
+title: ADHD의 관점에서 본 개인지식관리(Personal Knowledge Management)
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 [Marie Poulin, Jesse J. Anderson, Bryan Jenks, Karaminder Ghuman: PKM Through the Lens of ADHD - YouTube](https://youtu.be/b3x2JHmVNpg)
@@ -46,9 +47,9 @@ Marie는 스스로에게 맞는 PKM을 구축하기 까지 긴 시간(1년 반?)
 PKM이 어렵게 느껴진다면, Jesse의 말처럼 완벽하게 체계를 만들려 하기보다 날마다 조금씩 자신에게 맞는 틀을 갖춰 나가는 것도 좋을 것 같습니다. 저 또한 날마다 옵시디언을 공부하고, 어떻게 하면 제게 맞는 PKM을 옵시디언에 구축할 수 있을지 고민하고 있고요. 
 
 
-[^1]: [[P - ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련]]
+[^1]: [[P - ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련|ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련]]
 [^2]: 목표를 이루기 위하여 정서, 사고, 행동을 조절하는 고차적 인지기능을 가리킴
 [^3]: [프로 자기계발러가 노션을 활용하는 법 — 잔향](https://slowdive14.tistory.com/1299493)
 [^4]: [Obsidian Basics: Search & Starred Search - YouTube](https://www.youtube.com/watch?v=mbPS3GXFFA4)
-[^5]: [[P - Tiago Forte의 세컨드 브레인 정의]]
+[^5]: [[P - Tiago Forte의 세컨드 브레인 정의|Tiago Forte의 세컨드 브레인 정의]]
 

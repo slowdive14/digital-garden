@@ -2,6 +2,8 @@
 publish: true
 created: '2022-04-20'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 자기고양과 대의는 상충하지 않는다
 ---
 
 >The ultimate goal is to serve a larger purpose, but the person recognizes that they can better help others by getting power first and then applying that power in the service of others.
@@ -13,4 +15,4 @@ modified: '2024-12-11'
 - 지식이든 돈이든 건강이든 더 많은 리소스를 확보해야 더 효과적으로 다른 사람을 도울 수 있다는 점에서 자기고양과 대의는 양립 가능함. 
 
 #### 연결
-- [[P - 불순한 동기라도 괜찮다]]
+- [[P - 불순한 동기라도 괜찮다|불순한 동기라도 괜찮다]]

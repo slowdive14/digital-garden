@@ -1,8 +1,9 @@
 ---
-title: P - 현 순간에 주의를 맞출 수 없게 하는 정신적 시간 여행
+title: 현 순간에 주의를 맞출 수 없게 하는 정신적 시간 여행
 publish: true
 created: '2022-09-25'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >One of the biggest culprits? <mark style="background: #FFB86CA6;">Mental time travel</mark>. We do it all the time. We do it seamlessly. And we do it even more under stress. Under stress, our attention gets yanked into the past by a memory, where we get stuck in a ruminative loop. Or we may get launched into the future by a worry, leading us to catastrophize on an endless number of doomsday scenarios. <br><br>
@@ -21,4 +22,4 @@ modified: '2024-12-11'
 - 
 
 #### 연결
-- [[P - 받아들임이란]]
+- [[P - 받아들임이란|받아들임이란]]

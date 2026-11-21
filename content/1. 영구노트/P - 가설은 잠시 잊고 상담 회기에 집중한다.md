@@ -1,8 +1,9 @@
 ---
-title: P - 가설은 잠시 잊고 상담 회기에 집중한다
+title: 가설은 잠시 잊고 상담 회기에 집중한다
 publish: true
 created: '2022-03-18'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >But to believe in it in a manner that filters perceptions and interventions, that preselects data supporting it, can *blind the therapist to the reality of the next moment*, the next session, the information contradictory to the propositions up to that point. So, as much as the therapist embraces the blueprint as a road map to change, he does not become attached to a particular equation to explain the outcome of the chain.

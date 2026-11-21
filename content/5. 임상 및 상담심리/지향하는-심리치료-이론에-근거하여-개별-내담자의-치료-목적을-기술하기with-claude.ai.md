@@ -2,6 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 임상·상담 메모
 ---
 
 * AI 응용 분야: 지향하는 심리치료 이론에 근거한 치료 목적 기술

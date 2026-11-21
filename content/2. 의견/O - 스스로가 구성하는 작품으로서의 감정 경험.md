@@ -1,8 +1,9 @@
 ---
-title: O - 스스로가 구성하는 작품으로서의 감정 경험
+title: 스스로가 구성하는 작품으로서의 감정 경험
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 ## 특정 감정에 고유한 신체 반응이 있을까
@@ -61,10 +62,10 @@ modified: '2024-12-11'
 
 관련 메모
 - [[감정이론의 최신 동향, 강등현과 조철래, 2022.10.14 임상심리학회 학술대회]]
-- [[P - 감정 반응은 우리의 구성 작품]]
-- [[P - 즉각적인 감정 반응은 합리적이다]]
-- [[P - 강한 분노의 무의식적 합리성]]
-- [[P - 스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가]]
+- [[P - 감정 반응은 우리의 구성 작품|감정 반응은 우리의 구성 작품]]
+- [[P - 즉각적인 감정 반응은 합리적이다|즉각적인 감정 반응은 합리적이다]]
+- [[P - 강한 분노의 무의식적 합리성|강한 분노의 무의식적 합리성]]
+- [[P - 스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가|스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가]]
 
 [^1]: "The hypothesis that the capacity for panic serves the function of facilitating escape from mortal danger is consistent with the available facts about the panic syndrome and implies that panic does not necessarily involve an organic defect.(공황이 치명적인 위험으로부터 탈출을 용이하게 하는 기능을 한다는 가설은 공황 증후군에 대한 기존 사실과 일치하며, 공황이 반드시 유기적 결함을 수반하는 것은 아니라는 것을 암시한다.)" 출처: [An evolutionary perspective on panic disorder and agoraphobia - ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/0162309587900203)
 [^2]: [Feelings Into Words: Contributions of Language to Exposure Therapy - Katharina Kircanski, Matthew D. Lieberman, Michelle G. Craske, 2012](https://journals.sagepub.com/doi/10.1177/0956797612443830)

@@ -2,6 +2,8 @@
 publish: true
 created: '2023-02-09'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: '우울을 완화하는 언어학습, 행동활성화 관점에서'
 ---
 
 >Language learning can be a beneficial hobby for individuals struggling with depression as it aligns with the concept of behavioral activation in cognitive-behavioral therapy. It provides a sense of accomplishment, engages the mind, promotes social connections, and can improve physical activity, all of which can help to improve mood and reduce symptoms of depression. Engaging in enjoyable and fulfilling activities, such as language learning, is a key component of treating depression and promoting overall well-being.
@@ -13,7 +15,7 @@ modified: '2024-12-11'
 - 
 
 #### 연결
-- [[P - 사업의 타깃을 구체적으로 그려라#^c528a1]]
+- [[P - 사업의 타깃을 구체적으로 그려라#^c528a1|사업의 타깃을 구체적으로 그려라]]
     - 경미한 정서적 어려움이 있는 사람을 대상으로 언어학습이나 글쓰기를 통한 습관 코칭
 - [Creativity and Leisure During COVID-19: Examining the Relationship Between Leisure Activities, Motivations, and Psychological Well-Being](https://www.frontiersin.org/articles/10.3389/fpsyg.2021.609967/full#:~:text=In%20summary%2C%20increased%20time%20on%20sports,also%20predicted%20significantly%20higher%20well%2Dbeing.)
     - 전반적 웰빙 증가: In summary, increased time on sports and outdoor pursuits predicted the highest well-being outcomes, but increased time on creative activities such as niche and IT interests, reading, writing and languages, home crafts and artisanship, and active musical engagement also predicted significantly higher well-being.

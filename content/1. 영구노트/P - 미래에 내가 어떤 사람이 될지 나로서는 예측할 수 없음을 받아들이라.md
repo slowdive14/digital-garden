@@ -2,6 +2,8 @@
 publish: true
 created: '2022-10-07'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 미래에 내가 어떤 사람이 될지 나로서는 예측할 수 없음을 받아들이라
 ---
 
 >The first piece of advice I have is if you accept the idea that you're going to be a different person in 30 years' time, you should play an active role crafting the person you are going to become. You should be the curator of your future self. You should be the architect of your future self. 
@@ -20,4 +22,4 @@ modified: '2024-12-11'
 - 무엇보다 미래 자기를 지금 내 모습의 연장으로 생각하지 말고, 호기심을 갖고 탁 트인 조망에서 상상하라.
 
 #### 연결
-- [[P - 확연히 발전한 자기를 만나는 기쁨]]
+- [[P - 확연히 발전한 자기를 만나는 기쁨|확연히 발전한 자기를 만나는 기쁨]]

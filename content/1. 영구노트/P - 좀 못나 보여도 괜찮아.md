@@ -1,8 +1,9 @@
 ---
-title: P - 좀 못나 보여도 괜찮아
+title: 좀 못나 보여도 괜찮아
 publish: true
 created: '2022-07-12'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >

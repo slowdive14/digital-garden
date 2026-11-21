@@ -1,8 +1,9 @@
 ---
-title: O - 기분이 울적하거나 마음이 산란할 때 글을 써야 하는 이유
+title: 기분이 울적하거나 마음이 산란할 때 글을 써야 하는 이유
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 우울증 발병에 영향을 미치는 심리적 요인들 중 연구가 많이 된 것이 반추(rumination)입니다. 반추는 소가 여물을 되새김질 하듯이 반복적으로 어떤 것에 대해 생각하는 것으로 사고 내용 자체와는 관련이 없습니다. 다만 우울증에서의 반추는 과거의 사건이나 현재의 스트레스 요인에 대해 반복적이고 부정적인 방식으로 생각하는 것을 의미하며,  우울증이 깊어지는 데 중요한 역할을 합니다. 
@@ -29,6 +30,6 @@ modified: '2024-12-11'
 
 
 [^1]: [Creativity and ADHD: A review of behavioral studies, the effect of psychostimulants and neural underpinnings - PubMed](https://pubmed.ncbi.nlm.nih.gov/33035524/)
-[^2]: [[P - ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련]]
-[^3]: [[P - 창의성의 두 차원, 인지적 유연성과 인지적 끈기]]
+[^2]: [[P - ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련|ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련]]
+[^3]: [[P - 창의성의 두 차원, 인지적 유연성과 인지적 끈기|창의성의 두 차원, 인지적 유연성과 인지적 끈기]]
 [^4]: [The Effect of Mental Progression on Mood - PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3787596/) 특정 범주에 속하는 일련의 단어들(수렴적) vs. 선행 단어와 관련 있으니 다른 단어와는 관련이 없는 일련의 단어들(확산적)을 비교했습니다.

@@ -2,6 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 ## What went well this year?

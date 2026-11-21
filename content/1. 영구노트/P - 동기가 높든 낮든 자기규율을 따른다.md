@@ -1,8 +1,9 @@
 ---
-title: P - 동기가 높든 낮든 자기규율을 따른다
+title: 동기가 높든 낮든 자기규율을 따른다
 publish: true
 created: '2022-06-15'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >But where motivation is low, that's where discipline kicks in.
@@ -14,4 +15,4 @@ modified: '2024-12-11'
 - 방향이 맞다고 생각한다면 동기 수준의 변화는 중요하지 않다. 해야 할 일을 그저 하는 것이 중요하다.
 
 #### 연결
-- [[P - 품위란 결과에 연연하지 않고 해야 할 일을 하는 것]]
+- [[P - 품위란 결과에 연연하지 않고 해야 할 일을 하는 것|품위란 결과에 연연하지 않고 해야 할 일을 하는 것]]

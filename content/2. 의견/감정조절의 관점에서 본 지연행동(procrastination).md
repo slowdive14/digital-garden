@@ -2,6 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 ![](https://i.imgur.com/92tOdAl.png)
 
@@ -28,11 +29,11 @@ modified: '2024-12-11'
 자기연민과 미루는 행동은 부적 상관을 보입니다.[^2] 즉, 자기연민이 잘 되는 사람은  그렇지 않은 사람에 비해 미루는 행동을 덜할 가능성이 높습니다. 아마도 자기연민은 미루는 행동에 수반되는 부정적 감정을 완화할 것이고, 부정적 감정에 연관되는 포유류의 뇌가 진정되는 만큼 전두엽이 활성화되어 보다 나은 대처를 가능하게 하는 것 아닐까 싶습니다. 
 
 ### 관련 메모
-- [[P - 멀리 가려면 완벽주의는 버려야 한다]]
+- [[P - 멀리 가려면 완벽주의는 버려야 한다|멀리 가려면 완벽주의는 버려야 한다]]
 - [[자비중심치료, 조현주, 2022.10.13 임상심리학회 학술대회#^ef79b7]]
-- [[P - 스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가]]
-- [[P - 자기연민의 정의]]
-- [[P - 회피는 습관을 더 쉽게 만들라는 신호다]]
+- [[P - 스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가|스스로에 대한 질책과 연민 사이에서 어떤 선택을 할 것인가]]
+- [[P - 자기연민의 정의|자기연민의 정의]]
+- [[P - 회피는 습관을 더 쉽게 만들라는 신호다|회피는 습관을 더 쉽게 만들라는 신호다]]
 
 [^1]: [자기연민이란](http://mind.amc.seoul.kr/asan/depts/mind/K/bbsDetail.do?menuId=4548&contentId=265394#:~:text=%EA%B3%A0%ED%86%B5%EC%8A%A4%EB%9F%AC%EC%9A%B4%20%EC%88%9C%EA%B0%84%EC%97%90%20%EA%B3%BC%EB%8F%84%ED%95%9C%20%EC%9E%90%EA%B8%B0%EB%B9%84%EB%82%9C%EC%97%90%20%EB%B9%A0%EC%A0%B8%EB%93%9C%EB%8A%94%20%EB%8C%80%EC%8B%A0%EC%97%90%20%EB%84%88%EA%B7%B8%EB%9F%BD%EA%B2%8C%20%EC%8A%A4%EC%8A%A4%EB%A1%9C%EB%A5%BC%20%EC%9D%B4%ED%95%B4%ED%95%98%EA%B3%A0%20%EB%8F%8C%EB%B3%B4%EB%8A%94%20%ED%83%9C%EB%8F%84%EB%A5%BC%20%EC%9C%84%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%9D%98%EB%AF%B8%ED%95%A9%EB%8B%88%EB%8B%A4.)
 [^2]: "Similarly, a meta-analysis of four studies found that procrastination was associated with low self-compassion (average r = -.31 ) suggesting that self-kindness and selfacceptance may be difficult for those who needlessly delay." - 출처: [Sirois, F. and Pychyl, T. (2013) Procrastination and the Priority of Short-Term Mood Regulation: Consequences for Future Self. Social and Personality Psychology Compass, 7 (2). 115 - 127. ISSN 1751-9004](https://eprints.whiterose.ac.uk/91793/1/Compass%20Paper%20revision%20FINAL.pdf)

@@ -2,6 +2,8 @@
 publish: true
 created: '2023-04-03'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 뇌는 생각하기 위해서가 아니라 신체 예산을 관리하기 위해 진화
 ---
 
 >- Your brain’s most important job is to control your body so you stay alive and well. 
@@ -21,5 +23,5 @@ modified: '2024-12-11'
     - 심장이 두근거리는 것을 불안이 아닌 설렘으로 해석하는 것 등. 
 
 #### 연결
-- [[P - 신체 예산(body budget)의 의미와 함의]]
-- [[P - 대인관계에서의 호불호는 예측 가능성과도 밀접한 연관]]
+- [[P - 신체 예산(body budget)의 의미와 함의|신체 예산(body budget)의 의미와 함의]]
+- [[P - 대인관계에서의 호불호는 예측 가능성과도 밀접한 연관|대인관계에서의 호불호는 예측 가능성과도 밀접한 연관]]

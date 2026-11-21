@@ -3,6 +3,7 @@ title: CHAPTER 11 Behavioral Chain Analysis
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 프로젝트
 ---
 
 # THE NATURE AND FUNCTIONS OF BEHAVIORAL CHAIN ANALYSIS

@@ -3,6 +3,7 @@ title: CHAPTER 9 Case Conceptualization in DBT
 publish: true
 created: '2022-03-18'
 modified: '2024-12-11'
+noteType: 프로젝트
 ---
 
 # INTRO

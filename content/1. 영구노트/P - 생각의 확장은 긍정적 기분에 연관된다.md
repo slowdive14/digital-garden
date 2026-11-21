@@ -1,8 +1,9 @@
 ---
-title: P - 생각의 확장은 긍정적 기분에 연관된다
+title: 생각의 확장은 긍정적 기분에 연관된다
 publish: true
 created: '2022-04-04'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >We can make people more creative and more associative, we improve their mood.

@@ -3,6 +3,7 @@ title: CHAPTER 8 Dialectical Dilemmas and Secondary Targets
 publish: true
 created: '2022-03-12'
 modified: '2024-12-11'
+noteType: 프로젝트
 ---
 
 # Table of contents(testing)

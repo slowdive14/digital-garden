@@ -2,6 +2,8 @@
 publish: true
 created: '2022-12-18'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: '라이팅을 많이. 많이 쓰면 스피킹 시 모르는 부분이 어딘지, 어떻게 해결해야 하는지 알 수 있다'
 ---
 
 >And the second thing that I would recommend is to take notes and write things down in English. I think that's really important. I think that's really, I mean, you get to know the way you think when you're writing. And it is easier to know like how much you can talk about some things. Like sometimes the language will will create limits when you're speaking. So if you're writing, you can come up with solutions. And if you don't know something in English, you can just research it. You sit down on the computer and you find out what you want to say. And you're going to find like really interesting stuff.
@@ -20,4 +22,4 @@ modified: '2024-12-11'
     - 단어장 정리 후 복습
 
 #### 연결
-- [[P - 틀려도 많이 영작해보는 것이 좋다]]
+- [[P - 틀려도 많이 영작해보는 것이 좋다|틀려도 많이 영작해보는 것이 좋다]]

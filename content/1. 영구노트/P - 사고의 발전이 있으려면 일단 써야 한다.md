@@ -1,8 +1,9 @@
 ---
-title: P - 사고의 발전이 있으려면 일단 써야 한다
+title: 사고의 발전이 있으려면 일단 써야 한다
 publish: true
 created: '2022-03-31'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Writing is a great way to put pressure on your thinking: it's hard to summarize something you don't sharply understand. By trying to explain an idea, you'll naturally try multiple framings, flesh out its edges, and see new connections. by Andy Matuschak
@@ -15,5 +16,5 @@ modified: '2024-12-11'
 - 이러한 과정을 자연스럽게 가능케 하는 것이 바로 글쓰기임. 
 
 #### 연결
-- [[P - 글을 쓰며 생각을 발전시키는 상향식 글쓰기]]
-- [[P - 읽고 쓰는 것이 곧 성찰의 양이다]]
+- [[P - 글을 쓰며 생각을 발전시키는 상향식 글쓰기|글을 쓰며 생각을 발전시키는 상향식 글쓰기]]
+- [[P - 읽고 쓰는 것이 곧 성찰의 양이다|읽고 쓰는 것이 곧 성찰의 양이다]]

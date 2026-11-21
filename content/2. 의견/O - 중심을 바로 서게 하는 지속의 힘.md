@@ -2,6 +2,8 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
+title: 중심을 바로 서게 하는 지속의 힘
 ---
 
 
@@ -61,7 +63,7 @@ Toggl에 기록한 시간 사용 통계를 보면 회사 다닐 때보다 프리
 
 [^1]: 이미지 출처: [2021년 습관 결산](https://slowdive14.tistory.com/1299723)
 [^2]: [Make Time Sammendrag](https://notes.ole.dev/sammendrag/make-time/)
-[^3]: [[P - 가치 있는 것은 스트레스와 고민 속에서도 만족감을 준다]]
+[^3]: [[P - 가치 있는 것은 스트레스와 고민 속에서도 만족감을 준다|가치 있는 것은 스트레스와 고민 속에서도 만족감을 준다]]
 
 
 

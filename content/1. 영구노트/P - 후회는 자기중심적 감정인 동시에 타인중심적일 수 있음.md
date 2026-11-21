@@ -2,6 +2,8 @@
 publish: true
 created: '2023-04-29'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 후회는 자기중심적 감정인 동시에 타인중심적일 수 있음
 ---
 
 >And I think that, again, regret is based on this idea that we personally could have done something differently. And so in some ways, it's obviously a self-focused emotion. It's about what we should have done. But I think it can also be a fairly selfless emotion and be about how we relate to the people in the world around us. What responsibility do we have towards our fellow humans?
@@ -15,5 +17,5 @@ modified: '2024-12-11'
 
 #### 연결
 - [[후회에 관하여]]
-- [[P - 가면 증후군 지닌 사람이 더 공감적이고 유능하다고 평가됨]]
+- [[P - 가면 증후군 지닌 사람이 더 공감적이고 유능하다고 평가됨|가면 증후군 지닌 사람이 더 공감적이고 유능하다고 평가됨]]
     - 가면 증후군도 자기초점적인 면이 있지만 타인에게 도움이 되는 결과로 나타날 수 있음.

@@ -38,6 +38,14 @@ const config = {
   allowSensitive: [...(baseConfig.allowSensitive ?? []), ...(localConfig.allowSensitive ?? [])],
 }
 
+// Topic groups and note-type labels shared with the site components.
+const topicsConfig = readJson(path.join(ROOT, "garden.topics.json"))
+// Vault hubs the site no longer uses as topics: hidden, their notes re-classified.
+const retiredHubs = new Set(topicsConfig.retiredHubs ?? [])
+
+// "P - title", "O - title", "DI - title": note-type prefixes used in the vault.
+const PREFIX = /^([A-Z]{1,3})\s*-\s+(.+)$/
+
 const contentDir = path.resolve(ROOT, config.contentDir ?? "content")
 if (!contentDir.startsWith(ROOT + path.sep)) {
   throw new Error(`contentDir must live inside the repository: ${contentDir}`)
@@ -221,6 +229,11 @@ function normalizeBody(body, data, fileTitle) {
   out = out.replace(/\[\[_notes\//g, "[[")
   out = admonitionsToCallouts(out)
   out = obsidianUrisToWikilinks(out)
+  // Show "[[P - 제목]]" as "제목": the prefix is shown as a badge instead.
+  out = out.replace(/(?<!!)\[\[([^\]|#]+)(#[^\]|]*)?\]\]/g, (m, target, anchor = "") => {
+    const hit = path.posix.basename(target.trim()).match(PREFIX)
+    return hit ? `[[${target}${anchor}|${hit[2]}]]` : m
+  })
   // Many notes keep their creation date as a "Created: YYYY-MM-DD" line near
   // the top; move it into frontmatter so Quartz can show and sort by it.
   const created = out.match(/^(?:[^\n]*\n){0,5}?\s*Created(?: Time)?:\s*(\d{4}-\d{2}-\d{2})[^\n]*\n?/)
@@ -251,6 +264,12 @@ function attachmentRefs(text) {
 }
 
 const isoDate = (d) => d.toISOString().slice(0, 10)
+
+function toDate(value) {
+  if (!value) return undefined
+  const d = value instanceof Date ? value : new Date(String(value))
+  return Number.isNaN(d.getTime()) ? undefined : d
+}
 
 // Dates must come from the source note, not from the copy we just wrote.
 function fillDates(data, stat) {
@@ -316,6 +335,7 @@ function syncSource(source, state) {
 
     for (const key of DROP_KEYS) delete data[key]
     if (data.aliases == null || data.aliases === "") delete data.aliases
+    if (data.title == null || String(data.title).trim() === "") delete data.title
     // Permalinks written by the old plugin point at the retired `_notes/` tree.
     if (typeof data.permalink === "string" && data.permalink.includes("_notes")) {
       delete data.permalink
@@ -323,12 +343,44 @@ function syncSource(source, state) {
     normalizeTags(data)
     data.publish = true
 
-    const body = normalizeBody(parsed.content, data, path.basename(file, ".md"))
+    const fileBase = path.basename(file, ".md")
+    const body = normalizeBody(parsed.content, data, fileBase)
     fillDates(data, stat)
     for (const ref of attachmentRefs(body)) wanted.add(ref)
 
     seen.add(base)
     const dest = path.join(destRoot, rel)
+
+    if (base !== "index.md") {
+      // Note type comes from the top-level folder; root-level notes are topic hubs.
+      const destRel = toPosix(path.relative(contentDir, dest))
+      const top = destRel.includes("/") ? destRel.split("/")[0] : ""
+      if (!top && retiredHubs.has(fileBase)) {
+        // Still reachable by URL, but out of menus, search and the map.
+        data.unlisted = true
+      } else {
+        const type = top ? topicsConfig.noteTypes?.[folderTitle(top)] : "주제"
+        if (type) data.noteType = type
+      }
+      // Drop the "P - " style prefix from the displayed title.
+      const prefixed = String(data.title ?? fileBase).match(PREFIX)
+      if (prefixed) data.title = prefixed[2]
+
+      // Candidates for "최근에 수정한 글": the later of the file's own modification
+      // time and any updated/modified date in its frontmatter. Sources whose file
+      // times are copy times, not edits, opt out with "recent": false.
+      if (source.recent !== false) {
+        const stamps = [data.updated, data.modified, data.lastmod]
+          .map(toDate)
+          .filter(Boolean)
+          .map((d) => d.getTime())
+        state.recent.push({
+          name: fileBase,
+          title: String(data.title ?? fileBase),
+          when: new Date(Math.max(stat.mtimeMs, ...stamps)),
+        })
+      }
+    }
     stats.copied++
     stats.bySource[source.path] = (stats.bySource[source.path] ?? 0) + 1
     if (DRY_RUN) {
@@ -372,6 +424,150 @@ function writeFolderIndexes() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Topic assignments (garden.assignments.json, written by Claude Code on request)
+
+// Text usable as a wikilink alias: no "|" and no square brackets.
+const aliasText = (title) =>
+  title
+    .replace(/\|/g, " ")
+    .replace(/[[\]]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+
+const linkTargets = (text) =>
+  new Set([...text.matchAll(/\[\[([^\]|#]+)/g)].map((m) => path.posix.basename(m[1].trim())))
+
+function contentNotes() {
+  const notes = new Map() // name → file
+  for (const f of walk(contentDir)) {
+    const name = path.basename(f, ".md")
+    if (f.endsWith(".md") && name !== "index" && !retiredHubs.has(name)) notes.set(name, f)
+  }
+  return notes
+}
+
+function hubFiles() {
+  return new Map(
+    fs
+      .readdirSync(contentDir)
+      .filter((f) => f.endsWith(".md") && f !== "index.md" && !retiredHubs.has(f.slice(0, -3)))
+      .map((f) => [f.slice(0, -3), path.join(contentDir, f)]),
+  )
+}
+
+// Add high-confidence assignments to their hub pages, so the topic menu,
+// "속한 주제" and the garden map all pick them up as ordinary links.
+function applyAssignments(stats) {
+  const assigned = readJson(path.join(ROOT, "garden.assignments.json")).notes ?? {}
+  const notes = contentNotes()
+  const hubs = hubFiles()
+  const additions = new Map()
+  for (const [name, a] of Object.entries(assigned)) {
+    if (!notes.has(name)) continue
+    if (a.confidence === "low") stats.topics.review++
+    if (a.confidence === "none") stats.topics.none++
+    if (a.confidence !== "high") continue
+    for (const hub of a.hubs ?? []) {
+      if (!hubs.has(hub)) {
+        console.warn(`  ! garden.assignments.json: '${hub}' 허브가 가든에 없습니다 (${name})`)
+        continue
+      }
+      if (!additions.has(hub)) additions.set(hub, [])
+      additions.get(hub).push(name)
+    }
+  }
+  for (const [hub, names] of additions) {
+    const file = hubs.get(hub)
+    const text = fs.readFileSync(file, "utf8")
+    const already = linkTargets(text)
+    const extra = names
+      .filter((n) => !already.has(n))
+      .map((n) => ({ n, t: aliasText(String(assigned[n].title ?? n)) }))
+      .sort((a, b) => a.t.localeCompare(b.t, "ko"))
+    if (!extra.length) continue
+    stats.topics.applied += extra.length
+    const list = extra.map(({ n, t }) => `- [[${n}|${t}]]`).join("\n")
+    fs.writeFileSync(
+      file,
+      `${text.trimEnd()}\n\n## 이 주제의 다른 노트\n\n<p class="auto-topic-note">내용을 보고 이 주제로 분류한 노트입니다.</p>\n\n${list}\n`,
+    )
+  }
+}
+
+// Notes no hub links to and nobody has classified yet: list them for Claude Code.
+function reportUnassigned(stats) {
+  const assigned = readJson(path.join(ROOT, "garden.assignments.json")).notes ?? {}
+  const notes = contentNotes()
+  const hubs = hubFiles()
+  const covered = new Set()
+  for (const file of hubs.values()) for (const t of linkTargets(fs.readFileSync(file, "utf8"))) covered.add(t)
+  const pending = [...notes.keys()].filter((n) => !hubs.has(n) && !covered.has(n) && !(n in assigned))
+  stats.topics.unassigned = pending.length
+
+  const outFile = path.join(ROOT, ".garden", "unassigned.md")
+  fs.mkdirSync(path.dirname(outFile), { recursive: true })
+  const lines = pending.map((n) => {
+    const parsed = matter(fs.readFileSync(notes.get(n), "utf8"))
+    const folder = toPosix(path.relative(contentDir, path.dirname(notes.get(n))))
+    const excerpt = parsed.content
+      .replace(/\[\[([^\]|]*\|)?([^\]]*)\]\]/g, "$2")
+      .replace(/[#>*`]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 220)
+    return `- **${n}** (${folder})\n  - 제목: ${parsed.data.title ?? n}\n  - 앞부분: ${excerpt}`
+  })
+  fs.writeFileSync(
+    outFile,
+    `# 미분류 노트 ${pending.length}개\n\n` +
+      `허브: ${[...hubs.keys()].join(", ")}\n\n` +
+      (lines.length ? lines.join("\n") : "없음") +
+      "\n",
+  )
+}
+
+// Fill the home page's "최근에 수정한 글" with the most recently edited notes.
+function writeRecentSection(recent, limit = 8) {
+  const index = path.join(contentDir, "index.md")
+  if (!fs.existsSync(index)) return
+  const text = fs.readFileSync(index, "utf8")
+  const re = /(<!-- recent:start[^>]*-->)[\s\S]*?(<!-- recent:end -->)/
+  if (!re.test(text)) return
+  const pad = (n) => String(n).padStart(2, "0")
+  const fmt = (d) => `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`
+  const md = [...recent]
+    .sort((a, b) => b.when - a.when)
+    .slice(0, limit)
+    .map((r) => `- [[${r.name}|${aliasText(r.title)}]] <span class="recent-date">${fmt(r.when)}</span>`)
+    .join("\n")
+  fs.writeFileSync(index, text.replace(re, (_, start, end) => `${start}\n\n${md}\n\n${end}`))
+}
+
+// Fill the home page's topic section from garden.topics.json.
+function writeTopicSection() {
+  const index = path.join(contentDir, "index.md")
+  if (!fs.existsSync(index)) return
+  const text = fs.readFileSync(index, "utf8")
+  const re = /(<!-- topics:start[^>]*-->)[\s\S]*?(<!-- topics:end -->)/
+  if (!re.test(text)) return
+  const hubs = [...hubFiles().keys()]
+  const groups = (topicsConfig.groups ?? []).map((g) => {
+    for (const h of g.hubs) {
+      if (!hubs.includes(h)) console.warn(`  ! garden.topics.json의 '${h}' 허브 노트가 가든에 없습니다.`)
+    }
+    return { name: g.name, hubs: g.hubs.filter((h) => hubs.includes(h)) }
+  })
+  const placed = new Set(groups.flatMap((g) => g.hubs))
+  const rest = hubs.filter((h) => !placed.has(h)).sort((a, b) => a.localeCompare(b, "ko"))
+  if (rest.length) groups.push({ name: "그 밖의 주제", hubs: rest })
+  const md = groups
+    .filter((g) => g.hubs.length)
+    .map((g) => `### ${g.name}\n\n${g.hubs.map((h) => `- [[${h}]]`).join("\n")}`)
+    .join("\n\n")
+  fs.writeFileSync(index, text.replace(re, (_, start, end) => `${start}\n\n${md}\n\n${end}`))
+}
+
 function* walkDirs(dir) {
   yield dir
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -396,6 +592,7 @@ if (CHECK_ONLY) {
 
 const state = {
   seen: new Set(),
+  recent: [],
   stats: {
     copied: 0,
     unflagged: 0,
@@ -406,11 +603,18 @@ const state = {
     duplicates: [],
     missingAttachments: [],
     timing: [],
+    topics: { applied: 0, review: 0, none: 0, unassigned: 0 },
   },
 }
 if (!DRY_RUN) await cleanContent()
 for (const source of config.sources) syncSource(source, state)
-if (!DRY_RUN) writeFolderIndexes()
+if (!DRY_RUN) {
+  applyAssignments(state.stats)
+  reportUnassigned(state.stats)
+  writeFolderIndexes()
+  writeTopicSection()
+  writeRecentSection(state.recent)
+}
 
 const { stats } = state
 console.log(
@@ -420,4 +624,13 @@ for (const [src, n] of Object.entries(stats.bySource)) console.log(`  ${src}: ${
 console.log(`  걸린 시간: ${stats.timing.join(", ")}`)
 for (const file of stats.broken) console.warn(`  ! 머리말(frontmatter) 형식이 깨져 건너뜀: ${file}`)
 for (const name of stats.missingAttachments) console.warn(`  ! 첨부 파일을 찾지 못함: ${name}`)
+if (!DRY_RUN) {
+  const t = stats.topics
+  console.log(
+    `주제 분류: 자동 반영 ${t.applied}개 · 확인 대기 ${t.review}개 · 맞는 주제 없음 ${t.none}개 · 미분류 ${t.unassigned}개`,
+  )
+  if (t.unassigned > 0) {
+    console.log("  → Claude Code에 '미분류 정리해 줘'라고 하면 분류합니다. (목록: .garden/unassigned.md)")
+  }
+}
 if (!DRY_RUN && !privacyCheck()) process.exit(1)

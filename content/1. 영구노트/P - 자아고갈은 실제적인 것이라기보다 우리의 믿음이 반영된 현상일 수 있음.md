@@ -2,6 +2,8 @@
 publish: true
 created: '2022-09-07'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 자아고갈은 실제적인 것이라기보다 우리의 믿음이 반영된 현상일 수 있음
 ---
 
 >Taken together, the findings suggest that reduced self-control after a depleting task or during demanding periods may reflect people's beliefs about the availability of willpower rather than true resource depletion.

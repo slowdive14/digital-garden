@@ -13,6 +13,7 @@ import {
 } from "d3-force"
 import { select } from "d3-selection"
 import { zoom as d3zoom, zoomIdentity, type ZoomTransform } from "d3-zoom"
+import topicsConfig from "../garden.topics.json"
 
 type IndexEntry = { title?: string; links?: string[] }
 declare const fetchData: Promise<Record<string, IndexEntry>>
@@ -43,7 +44,7 @@ const CATS: { key: Cat; label: string; cssVar: string }[] = [
   { key: "hub", label: "주제 허브", cssVar: "--gm-hub" },
   { key: "permanent", label: "영구 노트", cssVar: "--gm-permanent" },
   { key: "opinion", label: "의견·글", cssVar: "--gm-opinion" },
-  { key: "clinical", label: "임상·심리치료", cssVar: "--gm-clinical" },
+  { key: "clinical", label: "임상·상담 메모", cssVar: "--gm-clinical" },
   { key: "other", label: "책·프로젝트·기타", cssVar: "--gm-other" },
 ]
 
@@ -261,7 +262,15 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     label.className = "garden-map__topics-label"
     label.textContent = "주제로 보기"
     topics.append(label)
-    const hubs = layout.nodes.filter((n) => n.cat === "hub").sort((a, b) => b.degree - a.degree)
+    // Same order as the topic menu (garden.topics.json), then the rest by size.
+    const order = topicsConfig.groups.flatMap((g) => g.hubs)
+    const rank = (n: GNode) => {
+      const i = order.indexOf(n.title)
+      return i === -1 ? order.length : i
+    }
+    const hubs = layout.nodes
+      .filter((n) => n.cat === "hub")
+      .sort((a, b) => rank(a) - rank(b) || b.degree - a.degree)
     for (const hub of hubs) {
       const btn = document.createElement("button")
       btn.type = "button"

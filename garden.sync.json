@@ -6,7 +6,8 @@
     {
       "path": "site",
       "dest": ".",
-      "requireFlag": true
+      "requireFlag": true,
+      "recent": false
     },
     {
       "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey",
@@ -17,6 +18,7 @@
       "path": "D:/slowdive/notes",
       "dest": ".",
       "requireFlag": true,
+      "recent": false,
       "exclude": ["Digital Garden of 잔향.md"]
     },
     {

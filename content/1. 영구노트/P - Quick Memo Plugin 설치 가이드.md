@@ -2,6 +2,8 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: Quick Memo Plugin 설치 가이드
 ---
 # Quick Memo Plugin 설치 가이드 📝✨
 

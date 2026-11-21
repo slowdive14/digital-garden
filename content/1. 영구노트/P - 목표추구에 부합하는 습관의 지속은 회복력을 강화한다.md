@@ -1,8 +1,9 @@
 ---
-title: P - 목표추구에 부합하는 습관의 지속은 회복력을 강화한다
+title: 목표추구에 부합하는 습관의 지속은 회복력을 강화한다
 publish: true
 created: '2022-01-29'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >In fact, the capacity to envision a desired future state (visually, if possible) is an executive function that recruits all of the other executive functions in the course of getting things done. (Other executive functions that follow include marshaling resources toward the goal, monitoring progress toward the goal, inhibiting alternative pursuits that will interfere, <u>and maintaining a level of cognitive flexibility that facilitates problem solving in the face of various obstacles</u>.)
@@ -17,4 +18,4 @@ modified: '2024-12-11'
 - 이처럼 습관 형성의 과정은 회복력을 촉진하는 과정과 동일하고, 자신에게 유익이 되는 사소한 습관의 실천이 위기 상황에서 회복력을 강화하는 방식으로 행동할 수 있게 하는 이유일 수 있음.
 
 #### 연결
-- [[P - 지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다]]
+- [[P - 지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다|지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다]]

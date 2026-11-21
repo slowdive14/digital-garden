@@ -1,8 +1,9 @@
 ---
-title: P - 최고의 생산성은 쓸데없는 일을 줄이는 것
+title: 최고의 생산성은 쓸데없는 일을 줄이는 것
 publish: true
 created: '2022-08-01'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Sometimes the most productive thing you can do is eliminate the task.
@@ -14,4 +15,4 @@ modified: '2024-12-11'
 - 
 
 #### 연결
-- [[P - 정보가 쌓여갈수록 핵심만 남기고 지우는 과정이 중요]]
+- [[P - 정보가 쌓여갈수록 핵심만 남기고 지우는 과정이 중요|정보가 쌓여갈수록 핵심만 남기고 지우는 과정이 중요]]

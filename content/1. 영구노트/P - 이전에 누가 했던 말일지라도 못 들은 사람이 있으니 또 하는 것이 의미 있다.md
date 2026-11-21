@@ -1,8 +1,9 @@
 ---
-title: P - 이전에 누가 했던 말일지라도 못 들은 사람이 있으니 또 하는 것이 의미 있다
+title: 이전에 누가 했던 말일지라도 못 들은 사람이 있으니 또 하는 것이 의미 있다
 publish: true
 created: '2022-07-19'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Everything that needs to be said has already been said. But, since no one was listening, everything needs be said again.
@@ -14,4 +15,4 @@ modified: '2024-12-11'
 - 창작을 저해하는 자기의심에 대한 해법 중 하나 
 
 #### 연결
-- [[O - 앞으로 이 행복이 몇 번이나 남았을까#^7dae19]]
+- [[O - 앞으로 이 행복이 몇 번이나 남았을까#^7dae19|앞으로 이 행복이 몇 번이나 남았을까]]

@@ -1,8 +1,9 @@
 ---
-title: P - 마음챙김 훈련은 마음을 위한 푸시업
+title: 마음챙김 훈련은 마음을 위한 푸시업
 publish: true
 created: '2022-09-14'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Mindfulness training gave our soldiers push-ups for the mind.
@@ -18,4 +19,4 @@ modified: '2024-12-11'
     - 2021년 메타분석 결과: Regular physical exercise training, especially aerobic exercise and mind-body exercise, had positive benefit for improving working memory, cognitive flexibility and inhibitory control of executive function in cognively healthy older adults. - [APA PsycNet](https://psycnet.apa.org/record/2021-10981-001)
 
 #### 연결
-- [[P - 삶을 충실히 살기 위한 주의조절]]
+- [[P - 삶을 충실히 살기 위한 주의조절|삶을 충실히 살기 위한 주의조절]]

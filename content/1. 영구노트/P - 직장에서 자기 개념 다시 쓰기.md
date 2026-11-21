@@ -2,6 +2,8 @@
 publish: true
 created: '2024-07-01'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 직장에서 자기 개념 다시 쓰기
 ---
 
 
@@ -24,6 +26,6 @@ modified: '2024-12-11'
 - [To Make a Change at Work, Tell Yourself a Different Story](https://hbr.org/2018/08/to-make-a-change-at-work-tell-yourself-a-different-story?utm_medium=social&utm_campaign=hbr&utm_source=twitter&tpcc=orgsocial_edit)
 
 #### 연결
-- [[P - 어떤 인생 이야기를 쓰고 있는가]]
+- [[P - 어떤 인생 이야기를 쓰고 있는가|어떤 인생 이야기를 쓰고 있는가]]
 
 키워드::

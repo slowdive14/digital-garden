@@ -2,6 +2,8 @@
 created: '2023-09-16T12:48'
 updated: '2025-01-08T22:55'
 publish: true
+noteType: 임상·상담 메모
+title: 선택적 함구증과 사회불안장애 감별
 ---
 > [!summary]
 > Selective mutism and social anxiety disorder are separate conditions, but they share similar symptoms and may share a connection. Some experts believe that ==selective mutism may represent a more severe form of social anxiety disorder.==

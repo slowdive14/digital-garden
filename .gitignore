@@ -16,4 +16,6 @@ quartz/cli/tui/dist/
 # garden sync
 .garden-denylist.txt
 garden.local.json
-.claude/
+.claude/*
+!.claude/skills/
+.garden/

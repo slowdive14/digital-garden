@@ -3,6 +3,7 @@ title: CHAPTER 10 Commitment and Commitment Strategies
 publish: true
 created: '2022-03-25'
 modified: '2024-12-11'
+noteType: 프로젝트
 ---
 
 # INTRO

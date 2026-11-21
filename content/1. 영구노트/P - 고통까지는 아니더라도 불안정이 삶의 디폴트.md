@@ -1,8 +1,9 @@
 ---
-title: P - 고통까지는 아니더라도 불안정이 삶의 디폴트
+title: 고통까지는 아니더라도 불안정이 삶의 디폴트
 publish: true
 created: '2022-06-09'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >There’s no scrambling up to the safety of the riverbank when the river is you. And so insecurity and vulnerability are the default state—because in each of the moments that you inescapably are, anything could happen, from an urgent email that scuppers your plans for the morning to a bereavement that shakes your world to its foundations.

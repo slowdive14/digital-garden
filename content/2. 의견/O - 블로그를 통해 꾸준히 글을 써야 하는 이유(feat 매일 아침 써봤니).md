@@ -2,6 +2,8 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
+title: 블로그를 통해 꾸준히 글을 써야 하는 이유(feat 매일 아침 써봤니)
 ---
 ## 블로그를 왜 해야 하나
 
@@ -48,7 +50,7 @@ modified: '2024-12-11'
 
 [^1]: [How to Write Every Day - YouTube](https://youtu.be/S0b_Q4r7vro?t=142)
 [^2]: [How to Take Digital Notes and Build Your Second Brain in 2021 (With Tiago Forte) - YouTube](https://www.youtube.com/watch?v=MlBQhdqmaQc&t=3523s)
-[^3]: [[P - 창의성의 두 차원, 인지적 유연성과 인지적 끈기]]
+[^3]: [[P - 창의성의 두 차원, 인지적 유연성과 인지적 끈기|창의성의 두 차원, 인지적 유연성과 인지적 끈기]]
 [^4]: 어떻게 생각은 글이 되는가 / 박주용
 [^5]: [How To Take Smart Notes (3 methods no one's talking about) - YouTube](https://www.youtube.com/watch?v=5O46Rqh5zHE)
 [^6]: [Zettelkasten for Creatives: Grow Ideas for Blog and Youtube - YouTube](https://youtu.be/3gytNdMaRzw?t=257)

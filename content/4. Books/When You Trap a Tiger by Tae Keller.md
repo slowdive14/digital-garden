@@ -3,6 +3,7 @@ title: When You Trap a Tiger by Tae Keller
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 책
 ---
 
 >I tell them that life is about deciding which stories to listen to and which ones need an edit. And that it's worth the effort to go through a revision because there's nothing more important to the quality of our lives than the stories we tell ourselves about them. I say that when it comes to the stories of our lives, we should be aiming for our own personal Pulitzer Prize.[^1]

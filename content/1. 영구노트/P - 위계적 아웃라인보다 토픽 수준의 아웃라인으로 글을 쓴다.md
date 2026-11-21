@@ -1,8 +1,9 @@
 ---
-title: P - 위계적 아웃라인보다 토픽 수준의 아웃라인으로 글을 쓴다
+title: 위계적 아웃라인보다 토픽 수준의 아웃라인으로 글을 쓴다
 publish: true
 created: '2022-04-01'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >1.  **Don’t build a hierarchical outline.** Instead, list the topics you want to tackle in the order you want to tackle.
@@ -19,4 +20,4 @@ modified: '2024-12-11'
 - 처음부터 끝까지 읽어보며 수정한다.
 
 #### 연결
-- [[P - 질문을 중심으로 메모를 엮는다]]
+- [[P - 질문을 중심으로 메모를 엮는다|질문을 중심으로 메모를 엮는다]]

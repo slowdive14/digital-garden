@@ -1,8 +1,9 @@
 ---
-title: P - 창의적 사고를 위해서 현재 자신에게 도움이 되지 않는 것들을 정리함으로써 제로베이스를 만든다
+title: 창의적 사고를 위해서 현재 자신에게 도움이 되지 않는 것들을 정리함으로써 제로베이스를 만든다
 publish: true
 created: '2022-02-23'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Luckily, as hard as it is to cut out the activities that no longer bring reward, the results are worth it. You’ll come out with more time, more energy and an enormous sense of relief. 
@@ -17,4 +18,4 @@ modified: '2024-12-11'
 - 기존 맥락에서 벗어나 새로운 맥락에서 상황을 조망하여 통찰을 얻는 것은 [[제텔카스텐]]의 방식이기도 함 
 
 #### 연결
-- [[P - 날마다 버림으로써 중요한 것만 남긴다]]
+- [[P - 날마다 버림으로써 중요한 것만 남긴다|날마다 버림으로써 중요한 것만 남긴다]]

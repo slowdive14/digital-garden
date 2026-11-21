@@ -3,6 +3,7 @@ title: "Four Thousand Weeks by\_Oliver Burkeman"
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 책
 ---
 
 

@@ -2,6 +2,7 @@
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 [How to Beat Distraction, Expand Your Time, and Focus on What Matters Most, Talks at Google - YouTube](https://youtu.be/MhB-vr9a4ms)
 

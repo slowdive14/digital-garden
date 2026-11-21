@@ -2,6 +2,8 @@
 publish: true
 created: '2023-05-14'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: '탁월함은, 너무 잘하려 하지 말고 적당히 하되 반복에 반복 거듭한 결과'
 ---
 
 when you actually look at people who attain
@@ -26,5 +28,5 @@ they're great at is being really freaking consistent
     - [Derek Sivers — The Joys of an Un-Optimized Life, Finding Paths Less Traveled, Creating Tech Independence (and Risks of the Cloud), Taking Giant Leaps, and Picking the Right “Game of Life” (#668) - The Blog of Author Tim Ferriss](https://tim.blog/2023/04/21/derek-sivers/)
 
 #### 연결
-- [[P - 탁월성의 필요조건 중 하나는 지루함과 사랑에 빠지는 것]]
-- [[P - 꾸준히 오래 하는 사람이 살아남는다]]
+- [[P - 탁월성의 필요조건 중 하나는 지루함과 사랑에 빠지는 것|탁월성의 필요조건 중 하나는 지루함과 사랑에 빠지는 것]]
+- [[P - 꾸준히 오래 하는 사람이 살아남는다|꾸준히 오래 하는 사람이 살아남는다]]

@@ -2,6 +2,8 @@
 publish: true
 created: '2022-09-09'
 modified: '2024-12-11'
+noteType: 영구 노트
+title: 가치 있게 여기는 일에 시간을 사용하는 사람이 부자
 ---
 
 >So, once you make more money and move into a nicer neighborhood, then there's neighbors that are also making more money. And, there's always someone that's going to make more. When you use time as your metric. And again, because it is more reflective of your intrinsic values, then you're not subject to the social comparison.
@@ -14,6 +16,6 @@ modified: '2024-12-11'
     - 외부 대상과의 비교가 아니라 자기 내적 가치에 맞게 살고 있는지가 중요함.
 
 #### 연결
-- [[O - 품위 있는 사람이 되고 싶습니다]]
-- [[P - 지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다.]]
-- [[P - 가치 있는 것에 시간을 쓰기 위해 삶을 디자인]]
+- [[O - 품위 있는 사람이 되고 싶습니다|품위 있는 사람이 되고 싶습니다]]
+- [[P - 지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다.|지금 당장 잘하는 것을 찾지 못하더라도 어제보다 더 나은 자신이 되기 위해 좋은 습관을 형성해 나가는 것이 발전이다.]]
+- [[P - 가치 있는 것에 시간을 쓰기 위해 삶을 디자인|가치 있는 것에 시간을 쓰기 위해 삶을 디자인]]

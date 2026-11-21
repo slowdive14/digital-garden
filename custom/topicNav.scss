@@ -1,0 +1,119 @@
+.topic-nav {
+  width: 100%;
+  margin-top: 0.5rem;
+
+  summary {
+    display: none;
+  }
+
+  h3 {
+    margin: 1.1rem 0 0.35rem;
+    color: var(--gray);
+    font-family: var(--bodyFont);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .topic-nav__group:first-child h3 {
+    margin-top: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.22rem 0.5rem;
+    border-radius: 6px;
+    background: none;
+    color: var(--darkgray);
+    font-size: 0.92rem;
+    line-height: 1.5;
+
+    &:hover {
+      background: var(--highlight);
+      color: var(--secondary);
+    }
+
+    // The note you are reading belongs to this topic.
+    &.is-related {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    &.is-current {
+      background: var(--highlight);
+      color: var(--secondary);
+      font-weight: 600;
+    }
+  }
+
+  .topic-nav__count {
+    color: var(--gray);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// Phones: a "주제" button whose list drops down over the page.
+@media (max-width: 800px) {
+  .topic-nav {
+    position: relative;
+    flex-shrink: 0;
+    width: auto;
+    margin: 0;
+
+    summary {
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--lightgray);
+      border-radius: 999px;
+      color: var(--darkgray);
+      font-size: 0.85rem;
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::after {
+        content: "▾";
+        font-size: 0.7rem;
+      }
+    }
+
+    details[open] summary::after {
+      content: "▴";
+    }
+
+    .topic-nav__body {
+      position: absolute;
+      top: calc(100% + 0.4rem);
+      right: 0;
+      z-index: 50;
+      width: min(86vw, 340px);
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: 0.9rem 0.8rem;
+      border: 1px solid var(--lightgray);
+      border-radius: 12px;
+      background: var(--light);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+  }
+}

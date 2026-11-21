@@ -9,6 +9,7 @@ tags:
   - 프로그래밍
 publish: true
 modified: '2025-06-16'
+noteType: 글
 ---
 
 # **AI가 분석해주는 개인 맞춤형 마음 돌봄 및 자기 성찰 플랫폼**

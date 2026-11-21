@@ -35,10 +35,22 @@ article h2 {
 
 // Keep the site title on one line next to the mobile toolbar.
 @media #{$mobile} {
-  .page-title {
-    font-size: 1.35rem;
+  .page-title,
+  .page-title a {
+    font-size: 1.2rem;
     white-space: nowrap;
   }
+
+  .page-title {
+    flex-shrink: 0;
+  }
+}
+
+// Caption under the "이 주제의 다른 노트" section on hub pages.
+.auto-topic-note {
+  margin-top: -0.4rem;
+  color: var(--gray);
+  font-size: 0.85rem;
 }
 
 // ---------------------------------------------------------------------------
@@ -121,8 +133,18 @@ body[data-slug="index"] {
     line-height: 1.7;
   }
 
-  // Topic hubs as a grid of quiet tiles.
-  h2#정원-둘러보기 + ul {
+  // Topic groups (generated from garden.topics.json): a small label per group.
+  h2#주제로-둘러보기 ~ h3 {
+    margin: 1.4rem 0 0.55rem;
+    color: var(--gray);
+    font-family: var(--bodyFont);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  // Topic hubs in each group as a grid of quiet tiles.
+  h2#주제로-둘러보기 ~ h3 + ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
     gap: 0.6rem;
@@ -154,8 +176,16 @@ body[data-slug="index"] {
     }
   }
 
-  // Recently tended notes as a plain list with hairlines.
-  h2#최근에-손본-글 + ul {
+  // Recently modified notes as a plain list with hairlines.
+  .recent-date {
+    margin-left: 0.5rem;
+    color: var(--gray);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  h2#최근에-수정한-글 + ul {
     padding: 0;
     list-style: none;
 

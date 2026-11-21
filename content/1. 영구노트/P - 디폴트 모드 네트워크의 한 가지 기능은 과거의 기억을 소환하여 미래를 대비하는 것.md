@@ -1,8 +1,9 @@
 ---
-title: P - 디폴트 모드 네트워크의 한 가지 기능은 과거의 기억을 소환하여 미래를 대비하는 것
+title: 디폴트 모드 네트워크의 한 가지 기능은 과거의 기억을 소환하여 미래를 대비하는 것
 publish: true
 created: '2022-04-08'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >So it took us some time to realize that the main role of memory is not really for us to reminisce on a good or bad memories, but it's really to serve the future. We constantly reach to our memory to get ready for things that are ahead of us. We actually want to know as much as possible about what's coming next. 

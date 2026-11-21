@@ -3,6 +3,7 @@ title: CHAPTER 12 Validation
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 프로젝트
 ---
 
 # INTRO

@@ -1,8 +1,9 @@
 ---
-title: P - ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련
+title: ADHD는 디폴트 모드 네트워크를 억제하는 능력의 부족과 관련
 publish: true
 created: '2022-04-08'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >Ability to sustain default mode suppression is reduced in adult ADHD.
@@ -17,4 +18,4 @@ modified: '2024-12-11'
 - 노트테이킹을 통해서 내적 참조 체계를 외부로 끌어낼 수 있다면, 디폴트 모드 네트워크를 suppression하는 게 한결 수월해지고, goal-oriented attention-demanding tasks에 좀 더 잘 대처하게 만들 수 있지 않을까?
 
 #### 연결
-- [[P - 디폴트 모드 네트워크의 한 가지 기능은 과거의 기억을 소환하여 미래를 대비하는 것]]
+- [[P - 디폴트 모드 네트워크의 한 가지 기능은 과거의 기억을 소환하여 미래를 대비하는 것|디폴트 모드 네트워크의 한 가지 기능은 과거의 기억을 소환하여 미래를 대비하는 것]]

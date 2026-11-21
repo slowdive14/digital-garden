@@ -1,8 +1,9 @@
 ---
-title: P - 우리의 믿음은 현실이 아니다
+title: 우리의 믿음은 현실이 아니다
 publish: true
 created: '2022-03-18'
 modified: '2024-12-11'
+noteType: 영구 노트
 ---
 
 >They start out with an emotional commitment to a certain idea, and then they use their formidable cognitive powers to organize facts to support what they want to believe. Anyhow, so the partisan affiliation comes first, and then the reasoning process by which you justify it comes second. And unfortunately, i think affects all of us. We tend to see the world and cherry pick facts that support our version of the world. And it takes a really big external shock that just clearly proves you wrong.
@@ -16,4 +17,4 @@ modified: '2024-12-11'
 - 우리의 믿음은 언제나 reality나 fact와는 거리가 멀 수 있음을 겸허히 받아들이고자 평생 노력해야 하는 것 아닐지.
 
 #### 연결
-- [[P - 뱀이 허물 벗듯이 사례개념화도 새로운 정보에 맞게 변화를 거듭해야 함]]
+- [[P - 뱀이 허물 벗듯이 사례개념화도 새로운 정보에 맞게 변화를 거듭해야 함|뱀이 허물 벗듯이 사례개념화도 새로운 정보에 맞게 변화를 거듭해야 함]]

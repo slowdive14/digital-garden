@@ -1,8 +1,9 @@
 ---
-title: O - 아직도 의지력을 탓하는 당신에게
+title: 아직도 의지력을 탓하는 당신에게
 publish: true
 created: '2024-12-11'
 modified: '2024-12-11'
+noteType: 의견
 ---
 
 ## 의지력은 고갈되는 자원이다.
@@ -65,4 +66,4 @@ modified: '2024-12-11'
 
 [^1]: [Have We Been Thinking About Willpower the Wrong Way for 30 Years?](https://hbr.org/2016/11/have-we-been-thinking-about-willpower-the-wrong-way-for-30-years)
 [^2]: [You Can't Deplete Your Willpower](https://elemental.medium.com/dont-worry-you-can-t-deplete-your-willpower-a6007b79a4f)
-[^3]: [[O - 주의의 효율적 배분을 통해 창의적 사고를 촉진하는 세컨드 브레인]]
+[^3]: [[O - 주의의 효율적 배분을 통해 창의적 사고를 촉진하는 세컨드 브레인|주의의 효율적 배분을 통해 창의적 사고를 촉진하는 세컨드 브레인]]

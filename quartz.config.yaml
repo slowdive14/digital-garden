@@ -160,8 +160,9 @@ plugins:
     enabled: true
   - source: "@quartz-community/tag-page"
     enabled: true
+  # Replaced by the topic menu (custom/TopicNav.tsx, wired in quartz.ts).
   - source: "@quartz-community/explorer"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 50
@@ -198,8 +199,9 @@ plugins:
       position: beforeBody
       priority: 20
       condition: not-index
+  # Topics, not tags, are how this site is navigated.
   - source: "@quartz-community/tag-list"
-    enabled: true
+    enabled: false
     layout:
       position: beforeBody
       priority: 30
@@ -220,8 +222,9 @@ plugins:
       position: left
       priority: 35
       group: toolbar
+  # Folder paths stay internal; NoteMeta shows note type and topics instead.
   - source: "@quartz-community/breadcrumbs"
-    enabled: true
+    enabled: false
     options:
       rootName: 홈
     layout:
