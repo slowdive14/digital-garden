@@ -676,16 +676,3 @@ a.garden-ego__link {
     line-height: 1.45;
   }
 }
-
-// Desktop: the right sidebar scrolls on its own when the panel is taller than the
-// screen (layout.sidebars.right: scroll), but a second scrollbar next to the
-// page's own looked cluttered. Keep the scrolling, hide the bar.
-@media (min-width: 1200px) {
-  #quartz-body .sidebar.right {
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-}

@@ -285,10 +285,11 @@ plugins:
       exportPadding: 20
     order: 50
 layout:
-  # The right sidebar ("연결된 노트") can be taller than the screen; let it scroll
-  # on its own instead of cutting off the bottom.
+  # The right sidebar ("연결된 노트") can be taller than the screen. It scrolls
+  # away with the page (one scrollbar, nothing cut off) instead of scrolling on
+  # its own behind a hidden bar, which looked cut off.
   sidebars:
-    right: scroll
+    right: static
   groups:
     toolbar:
       priority: 35
