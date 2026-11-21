@@ -6,7 +6,7 @@ publish: true
 
 <div class="garden-hero">
 <p class="garden-eyebrow">DIGITAL GARDEN · SINCE 2022</p>
-<p class="garden-lead">읽고, 상담하고, 쓰면서 마음에 대해 배운 것을 기르는 정원입니다.</p>
+<p class="garden-lead">마음과 성장, 일과 글쓰기에 관해 읽고 상담하며 배운 것을 메모로 이어 가는 정원입니다.</p>
 <p class="garden-sub">완성된 글보다 자라는 중인 생각이 더 많습니다. 링크를 따라 천천히 걸어 보세요.</p>
 </div>
 
