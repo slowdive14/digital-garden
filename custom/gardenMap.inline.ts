@@ -15,7 +15,7 @@ import { select } from "d3-selection"
 import { zoom as d3zoom, zoomIdentity, type ZoomTransform } from "d3-zoom"
 import topicsConfig from "../garden.topics.json"
 
-type IndexEntry = { title?: string; links?: string[] }
+type IndexEntry = { title?: string; links?: string[]; content?: string }
 declare const fetchData: Promise<Record<string, IndexEntry>>
 
 type Cat = "hub" | "permanent" | "opinion" | "clinical" | "other"
@@ -27,6 +27,7 @@ interface GNode extends SimulationNodeDatum {
   degree: number
   r: number
   depth: number
+  excerpt: string
 }
 
 interface GLink {
@@ -74,6 +75,7 @@ function loadGraph(): Promise<Graph> {
         degree: 0,
         r: 0,
         depth: 0,
+        excerpt: makeExcerpt(entry.content ?? ""),
       })
     }
     const adj = new Map<string, Set<string>>()
@@ -90,6 +92,38 @@ function loadGraph(): Promise<Graph> {
     return { nodes, adj }
   })
   return graphPromise
+}
+
+// First lines of the note for the preview card, skipping short section headings
+// ("생각", "발췌", "References") that open many notes.
+function makeExcerpt(text: string): string {
+  const lines = text
+    .split(/\n+/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 14)
+  const joined = lines.join(" ").replace(/\s+/g, " ").trim()
+  return joined.length > 130 ? joined.slice(0, 129).trimEnd() + "…" : joined
+}
+
+const THREE_D_SRC = "https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.1/dist/3d-force-graph.min.js"
+let threeLib: Promise<unknown> | undefined
+
+// The 3D library is large, so it loads only when someone asks for the 3D view.
+function loadThree(): Promise<unknown> {
+  threeLib ??= new Promise((resolve, reject) => {
+    const g = window as unknown as { ForceGraph3D?: unknown }
+    if (g.ForceGraph3D) return resolve(g.ForceGraph3D)
+    const el = document.createElement("script")
+    el.src = THREE_D_SRC
+    el.async = true
+    el.onload = () => resolve(g.ForceGraph3D)
+    el.onerror = () => {
+      threeLib = undefined
+      reject(new Error("3D 그래프를 불러오지 못했습니다"))
+    }
+    document.head.append(el)
+  })
+  return threeLib
 }
 
 // Relative path from the current page to the site root (Quartz uses relative links).
@@ -225,11 +259,15 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   resetBtn.textContent = "전체 보기"
   tools.append(resetBtn)
   let expandBtn: HTMLButtonElement | undefined
+  let threeBtn: HTMLButtonElement | undefined
   if (mode === "global") {
+    threeBtn = document.createElement("button")
+    threeBtn.type = "button"
+    threeBtn.textContent = "3D로 보기"
     expandBtn = document.createElement("button")
     expandBtn.type = "button"
     expandBtn.textContent = "크게 보기"
-    tools.append(expandBtn)
+    tools.append(threeBtn, expandBtn)
   }
   frame.append(canvas, tooltip, tools)
 
@@ -565,6 +603,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     .on("zoom", (e) => {
       transform = e.transform
       draw()
+      if (cardNode && !tooltip.hidden && !threeView) placeCard(...dotOnScreen(cardNode))
     })
   const sel = select(canvas)
   sel.call(zoomBehavior)
@@ -602,24 +641,85 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     return best
   }
 
-  function showTooltip(n: GNode | undefined, clientX = 0, clientY = 0) {
-    if (!n) {
-      tooltip.hidden = true
-      return
+  // ---- Preview card: title, opening lines and a link to read on.
+  let cardNode: GNode | undefined
+  let pinned: GNode | undefined
+  let hideTimer = 0
+  tooltip.classList.add("garden-map__card")
+
+  function showCard(n: GNode, x: number, y: number) {
+    window.clearTimeout(hideTimer)
+    cardNode = n
+    const cat = CATS.find((c) => c.key === n.cat)!
+    tooltip.replaceChildren()
+    const chip = document.createElement("p")
+    chip.className = "garden-map__card-chip"
+    const sw = document.createElement("span")
+    sw.className = "garden-map__swatch"
+    sw.style.background = `var(${cat.cssVar})`
+    chip.append(sw, `${cat.label} · 연결 ${n.degree}개`)
+    const title = document.createElement("p")
+    title.className = "garden-map__card-title"
+    title.textContent = n.title
+    tooltip.append(chip, title)
+    if (n.excerpt && n.cat !== "hub") {
+      const ex = document.createElement("p")
+      ex.className = "garden-map__card-excerpt"
+      ex.textContent = n.excerpt
+      tooltip.append(ex)
     }
-    const label = CATS.find((c) => c.key === n.cat)!.label
-    tooltip.innerHTML = ""
-    const t = document.createElement("strong")
-    t.textContent = n.title
-    const meta = document.createElement("span")
-    meta.textContent = `${label} · 연결 ${n.degree}개`
-    tooltip.append(t, meta)
+    if (n === layout.center) {
+      const here = document.createElement("p")
+      here.className = "garden-map__card-hint"
+      here.textContent = "지금 보고 있는 노트"
+      tooltip.append(here)
+    } else {
+      const a = document.createElement("a")
+      a.className = "internal garden-map__card-link"
+      a.href = rootPrefix() + n.id
+      a.dataset.noPopover = "true"
+      a.textContent = n.cat === "hub" ? "주제 페이지 열기 →" : "노트 읽기 →"
+      tooltip.append(a)
+    }
     tooltip.hidden = false
-    const rect = frame.getBoundingClientRect()
-    const x = Math.min(clientX - rect.left + 12, rect.width - tooltip.offsetWidth - 8)
-    const y = Math.min(clientY - rect.top + 12, rect.height - tooltip.offsetHeight - 8)
-    tooltip.style.transform = `translate(${Math.max(x, 8)}px, ${Math.max(y, 8)}px)`
+    placeCard(x, y)
   }
+
+  // x, y: the dot's position inside the frame. The card sits beside it, inside the frame.
+  function placeCard(x: number, y: number) {
+    const fw = frame.clientWidth
+    const fh = frame.clientHeight
+    const cw = tooltip.offsetWidth
+    const ch = tooltip.offsetHeight
+    let left = x + 14
+    if (left + cw > fw - 8) left = x - 14 - cw
+    let top = y + 14
+    if (top + ch > fh - 8) top = y - 14 - ch
+    left = Math.max(8, Math.min(left, fw - cw - 8))
+    top = Math.max(8, Math.min(top, fh - ch - 8))
+    tooltip.style.transform = `translate(${left}px, ${top}px)`
+  }
+
+  function hideCard(delay = 0) {
+    window.clearTimeout(hideTimer)
+    const run = () => {
+      tooltip.hidden = true
+      cardNode = undefined
+      pinned = undefined
+    }
+    if (delay) hideTimer = window.setTimeout(run, delay)
+    else run()
+  }
+  // Moving from the dot onto the card keeps it open, so its link can be clicked.
+  tooltip.addEventListener("mouseenter", () => window.clearTimeout(hideTimer))
+  tooltip.addEventListener("mouseleave", () => {
+    if (!pinned) hideCard(250)
+  })
+
+  const dotOnScreen = (n: GNode): [number, number] => [
+    transform.x + n.x! * transform.k,
+    transform.y + n.y! * transform.k,
+  ]
 
   let lastPointerType = "mouse"
   const onMove = (e: PointerEvent) => {
@@ -632,26 +732,40 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       draw()
       syncListHover()
     }
-    showTooltip(n, e.clientX, e.clientY)
+    if (n) {
+      if (n !== cardNode) showCard(n, ...dotOnScreen(n))
+      else window.clearTimeout(hideTimer)
+    } else if (cardNode && !pinned) hideCard(250)
   }
   const onLeave = (e?: PointerEvent) => {
     if (e?.pointerType === "touch") return
-    hovered = undefined
-    showTooltip(undefined)
+    hovered = pinned
+    if (!pinned) hideCard(250)
     draw()
     syncListHover()
   }
   const onClick = (e: MouseEvent) => {
-    // A tap opens the note at once: touch has no hover to preview with, and
-    // lifting the finger fires pointerleave, which cleared any preview anyway.
     const touch = lastPointerType !== "mouse"
     const n = nodeAt(e.clientX, e.clientY, touch ? 18 : 6)
     if (!n) {
-      if (hovered) onLeave()
+      hovered = undefined
+      hideCard()
+      draw()
+      syncListHover()
       return
     }
-    if (n === layout.center) return
-    goTo(n.id)
+    // Mouse: the card already showed on hover, so a click opens the note.
+    // Touch: the first tap shows the card with its link; tapping the same dot again opens it.
+    if (!touch || pinned === n) {
+      if (n !== layout.center) goTo(n.id)
+      return
+    }
+    hideCard()
+    pinned = n
+    hovered = n
+    draw()
+    syncListHover()
+    showCard(n, ...dotOnScreen(n))
   }
   canvas.addEventListener("pointermove", onMove)
   canvas.addEventListener("pointerdown", onMove)
@@ -661,6 +775,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   const syncPressed = () => {
     for (const [c, b] of chips) b.setAttribute("aria-pressed", String(c === catFocus))
     for (const [id, b] of topicChips) b.setAttribute("aria-pressed", String(id === topicFocus?.id))
+    threeView?.refresh()
   }
 
   for (const [cat, btn] of chips) {
@@ -698,6 +813,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
 
   const onExpand = () => {
     const expanded = root.classList.toggle("garden-map--expanded")
+    if (!expanded && threeView) leaveThree()
     expandBtn!.textContent = expanded ? "닫기" : "크게 보기"
     document.documentElement.classList.toggle("garden-map-lock", expanded)
     resize()
@@ -708,9 +824,200 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   }
   document.addEventListener("keydown", onKey)
 
+  // ---- 3D view (home map, "3D로 보기"): drag to turn, wheel or pinch to zoom.
+  type T3 = { id: string; node: GNode; x?: number; y?: number; z?: number }
+  type FG = {
+    width(n: number): FG
+    height(n: number): FG
+    backgroundColor(c: string): FG
+    graphData(d: unknown): FG
+    nodeVal(f: (n: T3) => number): FG
+    nodeRelSize(n: number): FG
+    nodeOpacity(n: number): FG
+    nodeResolution(n: number): FG
+    nodeColor(f: (n: T3) => string): FG
+    nodeLabel(f: () => string): FG
+    linkColor(f: (l: { source: T3; target: T3 }) => string): FG
+    linkOpacity(n: number): FG
+    showNavInfo(b: boolean): FG
+    warmupTicks(n: number): FG
+    cooldownTicks(n: number): FG
+    onNodeHover(f: (n: T3 | null) => void): FG
+    onNodeClick(f: (n: T3) => void): FG
+    onBackgroundClick(f: () => void): FG
+    onEngineStop(f: () => void): FG
+    cameraPosition(p: object, look?: object, ms?: number): FG
+    graph2ScreenCoords(x: number, y: number, z: number): { x: number; y: number }
+    zoomToFit(ms?: number, pad?: number): FG
+    _destructor(): void
+  }
+  type FGFactory = (opts?: object) => (el: HTMLElement) => FG
+  let threeView: { refresh(): void; destroy(): void } | undefined
+
+  async function enterThree() {
+    if (!root.classList.contains("garden-map--expanded")) onExpand()
+    threeBtn!.disabled = true
+    threeBtn!.textContent = "불러오는 중…"
+    let make: FGFactory
+    try {
+      make = (await loadThree()) as FGFactory
+    } catch {
+      threeBtn!.disabled = false
+      threeBtn!.textContent = "3D를 불러오지 못함"
+      return
+    }
+    hideCard()
+    hovered = undefined
+    const box = document.createElement("div")
+    box.className = "garden-map__three"
+    const labels = document.createElement("div")
+    labels.className = "garden-map__three-labels"
+    frame.prepend(box, labels)
+    canvas.hidden = true
+    root.classList.add("garden-map--3d")
+
+    const nodes: T3[] = layout.nodes.map((n) => ({ id: n.id, node: n }))
+    const byId = new Map(nodes.map((n) => [n.id, n]))
+    const links = layout.links.map((l) => ({ source: l.source.id, target: l.target.id }))
+    const inFocus = (n: T3) => {
+      const f = focusSet()
+      return !f || f.has(n.id)
+    }
+    let pointer: [number, number] = [0, 0]
+    const onPointer = (e: PointerEvent) => {
+      const r = frame.getBoundingClientRect()
+      pointer = [e.clientX - r.left, e.clientY - r.top]
+    }
+    box.addEventListener("pointermove", onPointer)
+
+    const recolor = () => g.nodeColor(nodeColor).linkColor(linkColor)
+    const nodeColor = (n: T3) => (inFocus(n) ? colors.cat[n.node.cat] : colors.edge)
+    const linkColor = (l: { source: T3; target: T3 }) =>
+      inFocus(l.source) && inFocus(l.target) ? colors.edgeStrong : colors.edge
+    // Fly the camera to a node, keeping the same direction from the centre.
+    const flyTo = (n: T3, dist: number) => {
+      const len = Math.hypot(n.x ?? 0, n.y ?? 0, n.z ?? 1) || 1
+      const k = 1 + dist / len
+      g.cameraPosition({ x: (n.x ?? 0) * k, y: (n.y ?? 0) * k, z: (n.z ?? 1) * k }, n, 700)
+    }
+
+    const g = make({ controlType: "orbit" })(box)
+      .width(frame.clientWidth)
+      .height(frame.clientHeight)
+      .backgroundColor(colors.surface)
+      .showNavInfo(false)
+      .nodeLabel(() => "")
+      .nodeRelSize(1.6)
+      .nodeResolution(12)
+      .nodeVal((n) => n.node.r ** 2)
+      .nodeOpacity(0.95)
+      .nodeColor(nodeColor)
+      .linkColor(linkColor)
+      .linkOpacity(0.4)
+      .warmupTicks(80)
+      .cooldownTicks(120)
+      .graphData({ nodes, links })
+      .onNodeHover((n) => {
+        box.style.cursor = n ? "pointer" : "grab"
+        if (pinned) return
+        hovered = n?.node
+        if (n) showCard(n.node, ...pointer)
+        else hideCard(250)
+        recolor()
+      })
+      // Like the reference garden: a click flies to the note and keeps its card open.
+      .onNodeClick((n) => {
+        hideCard()
+        pinned = n.node
+        hovered = n.node
+        recolor()
+        flyTo(n, 90)
+        window.setTimeout(() => {
+          if (pinned !== n.node) return
+          const p = g.graph2ScreenCoords(n.x ?? 0, n.y ?? 0, n.z ?? 0)
+          showCard(n.node, p.x, p.y)
+        }, 720)
+      })
+      .onBackgroundClick(() => {
+        hovered = undefined
+        hideCard()
+        recolor()
+      })
+    let fitted = false
+    g.onEngineStop(() => {
+      if (fitted) return
+      fitted = true
+      g.zoomToFit(400, 30)
+    })
+
+    // Topic names float next to their hubs.
+    const tags = new Map<string, HTMLSpanElement>()
+    for (const n of nodes) {
+      if (n.node.cat !== "hub") continue
+      const t = document.createElement("span")
+      t.textContent = n.node.title
+      labels.append(t)
+      tags.set(n.id, t)
+    }
+    let raf = 0
+    const tick = () => {
+      const fw = frame.clientWidth
+      const fh = frame.clientHeight
+      for (const [id, t] of tags) {
+        const n = byId.get(id)!
+        const p = g.graph2ScreenCoords(n.x ?? 0, n.y ?? 0, n.z ?? 0)
+        const show = inFocus(n) && p.x > 0 && p.y > 0 && p.x < fw && p.y < fh
+        t.hidden = !show
+        if (show) t.style.transform = `translate(${Math.round(p.x)}px, ${Math.round(p.y + 6)}px) translateX(-50%)`
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    const ro = new ResizeObserver(() => g.width(frame.clientWidth).height(frame.clientHeight))
+    ro.observe(frame)
+
+    threeView = {
+      refresh() {
+        g.backgroundColor(colors.surface)
+        recolor()
+        const hub = topicFocus && byId.get(topicFocus.id)
+        if (hub) flyTo(hub, 170)
+      },
+      destroy() {
+        cancelAnimationFrame(raf)
+        ro.disconnect()
+        box.removeEventListener("pointermove", onPointer)
+        g._destructor()
+        box.remove()
+        labels.remove()
+      },
+    }
+    threeBtn!.disabled = false
+    threeBtn!.textContent = "2D로 보기"
+    resetBtn.hidden = true
+  }
+
+  function leaveThree() {
+    threeView?.destroy()
+    threeView = undefined
+    canvas.hidden = false
+    root.classList.remove("garden-map--3d")
+    hideCard()
+    hovered = undefined
+    threeBtn!.textContent = "3D로 보기"
+    resetBtn.hidden = false
+    resize()
+  }
+
+  threeBtn?.addEventListener("click", () => {
+    if (threeView) leaveThree()
+    else void enterThree()
+  })
+
   const onTheme = () => {
     colors = readColors(root)
     draw()
+    threeView?.refresh()
   }
   document.addEventListener("themechange", onTheme)
 
@@ -719,6 +1026,9 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   resize()
 
   window.addCleanup(() => {
+    threeView?.destroy()
+    threeView = undefined
+    window.clearTimeout(hideTimer)
     observer.disconnect()
     document.removeEventListener("themechange", onTheme)
     document.removeEventListener("keydown", onKey)

@@ -29,8 +29,31 @@ function setup() {
   }
 }
 
+// Reader mode (Quartz plugin) hides both sidebars behind a bare book icon. Say what
+// it does on the button, and give a visible way back: on phones the header itself
+// sits in the hidden sidebar, so the icon disappears along with it.
+const READER_TIP = "집중 읽기: 양옆 메뉴를 숨기고 본문만 보여 줍니다"
+
+function setupReader() {
+  for (const btn of document.querySelectorAll<HTMLButtonElement>("button.readermode")) {
+    btn.setAttribute("aria-label", READER_TIP)
+    btn.dataset.tip = "집중 읽기"
+    btn.querySelector("title")?.replaceChildren(READER_TIP)
+  }
+  if (document.querySelector(".reader-exit")) return
+  const exit = document.createElement("button")
+  exit.type = "button"
+  exit.className = "reader-exit"
+  exit.textContent = "집중 읽기 끄기 · 메뉴 다시 보기"
+  exit.addEventListener("click", () => {
+    document.querySelector<HTMLButtonElement>("button.readermode")?.click()
+  })
+  document.body.append(exit)
+}
+
 const g = window as unknown as { __topicNavReady?: boolean }
 if (!g.__topicNavReady) {
   g.__topicNavReady = true
   document.addEventListener("nav", setup)
+  document.addEventListener("nav", setupReader)
 }

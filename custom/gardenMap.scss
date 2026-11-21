@@ -191,29 +191,127 @@
   }
 }
 
+// Preview card: shows on hover (tap on phones) beside the dot, with a link to read on.
 .garden-map__tooltip {
   position: absolute;
   top: 0;
   left: 0;
-  max-width: 240px;
-  padding: 0.45rem 0.65rem;
+  z-index: 3;
+  width: min(270px, calc(100% - 16px));
+  box-sizing: border-box;
+  padding: 0.7rem 0.85rem 0.75rem;
   border: 1px solid var(--lightgray);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--light);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   font-size: 0.8rem;
-  line-height: 1.45;
+  line-height: 1.5;
 
-  strong {
-    display: block;
+  p {
+    margin: 0;
+  }
+
+  .garden-map__card-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--gray);
+    font-size: 0.72rem;
+  }
+
+  .garden-map__card-title {
+    margin-top: 0.25rem;
     color: var(--dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.45;
+    word-break: keep-all;
+  }
+
+  .garden-map__card-excerpt {
+    display: -webkit-box;
+    margin-top: 0.35rem;
+    overflow: hidden;
+    color: var(--darkgray);
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .garden-map__card-hint {
+    margin-top: 0.45rem;
+    color: var(--gray);
+    font-size: 0.75rem;
+  }
+
+  .garden-map__card-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0;
+    background: none;
+    color: var(--secondary);
+    font-size: 0.8rem;
     font-weight: 600;
   }
+}
+
+// The small map beside a note: a compact card that leaves the map visible.
+.garden-map--local .garden-map__tooltip {
+  width: min(220px, calc(100% - 16px));
+  padding: 0.55rem 0.7rem 0.6rem;
+
+  .garden-map__card-title {
+    font-size: 0.82rem;
+  }
+
+  .garden-map__card-excerpt {
+    -webkit-line-clamp: 2;
+  }
+}
+
+// 3D view: the WebGL canvas fills the frame; hub names float above it.
+.garden-map__three {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+
+  canvas {
+    display: block;
+  }
+}
+
+.garden-map__three-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
 
   span {
-    color: var(--gray);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--light) 80%, transparent);
+    color: var(--dark);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
   }
+}
+
+// The category legend and topic list are 2D tools.
+.garden-map--3d {
+  .garden-map__legend,
+  .garden-map__list {
+    display: none;
+  }
+}
+
+.garden-map__tools {
+  z-index: 2;
 }
 
 .garden-map__topics {
