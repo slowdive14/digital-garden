@@ -302,8 +302,10 @@
   }
 }
 
-// The category legend and topic list are 2D tools.
+// The category legend and topic list are 2D tools. The 2D canvas must be hidden
+// here, not with the hidden attribute: its display: block would override that.
 .garden-map--3d {
+  .garden-map__canvas,
   .garden-map__legend,
   .garden-map__list {
     display: none;
