@@ -74,6 +74,16 @@ D:\digital-garden
 - **노트 종류 배지:** 노트 제목 아래의 "영구 노트", "의견" 같은 표시는 노트가 있는 맨 위 폴더 이름으로 정합니다(`garden.topics.json`의 `noteTypes`). 파일 이름 앞의 `P - `, `O - ` 같은 접두어는 사이트에서는 떼고 보여 줍니다. 볼트의 파일 이름은 그대로입니다.
 - **태그:** 사이트 탐색에는 쓰지 않습니다. 주제는 허브가 맡습니다.
 
+## 자동 실행 (매일 밤 11시)
+
+Windows 작업 스케줄러의 `DigitalGarden-Publish` 작업이 매일 밤 11시에 `scripts/publish-garden.mjs`를 실행합니다. PC가 꺼져 있었으면 다음에 켜질 때 실행합니다. 기록은 `.garden/publish.log`에 남습니다.
+
+1. 메인 볼트의 **`1. 문헌 메모`와 `2. 의견` 폴더만** 살펴봅니다. 가든에 올릴 노트는 이 두 폴더에 두고 머리말에 `publish: true`를 적습니다.
+2. 새 노트 중 어느 주제 허브에도 속하지 않은 노트는 **제미나이(Gemini) API**로 자동 분류해 `garden.assignments.json`에 기록합니다. 키는 뉴스레터 폴더의 `.env`에 있는 `GEMINI_API_KEY`를 읽어 옵니다(`garden.local.json`의 `gemini.envFile`). 분류에 실패하면 배포는 그대로 진행하고, 그 노트는 다음 실행에서 다시 분류합니다.
+3. 개인정보 검사를 통과하면 커밋·푸시하고, GitHub Actions가 사이트를 다시 배포합니다.
+
+수동으로 바로 실행하려면 `npm run garden:publish`, 분류만 하려면 `npm run garden:classify`를 쓰면 됩니다. 작업을 멈추려면 작업 스케줄러에서 `DigitalGarden-Publish`를 사용 안 함으로 바꾸면 됩니다.
+
 ## 미분류 노트 정리 (Claude Code에 맡기기)
 
 허브에 링크되지 않은 노트는 `garden.assignments.json`에 적힌 분류대로 사이트에서 허브에 붙습니다. 볼트의 허브 노트는 바뀌지 않습니다.

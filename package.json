@@ -24,7 +24,8 @@
     "version-packages": "changeset version && npm install --package-lock-only --ignore-scripts --no-audit --no-fund",
     "garden:sync": "node scripts/sync-garden.mjs",
     "garden:check": "node scripts/sync-garden.mjs --check",
-    "garden:publish": "node scripts/publish-garden.mjs"
+    "garden:publish": "node scripts/publish-garden.mjs",
+    "garden:classify": "node scripts/classify-garden.mjs"
   },
   "engines": {
     "npm": ">=10.9.2",

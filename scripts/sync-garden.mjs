@@ -509,17 +509,24 @@ function reportUnassigned(stats) {
 
   const outFile = path.join(ROOT, ".garden", "unassigned.md")
   fs.mkdirSync(path.dirname(outFile), { recursive: true })
-  const lines = pending.map((n) => {
+  const items = pending.map((n) => {
     const parsed = matter(fs.readFileSync(notes.get(n), "utf8"))
     const folder = toPosix(path.relative(contentDir, path.dirname(notes.get(n))))
-    const excerpt = parsed.content
+    const text = parsed.content
       .replace(/\[\[([^\]|]*\|)?([^\]]*)\]\]/g, "$2")
       .replace(/[#>*`]/g, " ")
       .replace(/\s+/g, " ")
       .trim()
-      .slice(0, 220)
-    return `- **${n}** (${folder})\n  - 제목: ${parsed.data.title ?? n}\n  - 앞부분: ${excerpt}`
+    return { name: n, title: String(parsed.data.title ?? n), folder, excerpt: text.slice(0, 220), text: text.slice(0, 1500) }
   })
+  // Machine-readable copy for scripts/classify-garden.mjs (Gemini).
+  fs.writeFileSync(
+    path.join(ROOT, ".garden", "unassigned.json"),
+    JSON.stringify({ hubs: [...hubs.keys()], notes: items }, null, 2),
+  )
+  const lines = items.map(
+    (i) => `- **${i.name}** (${i.folder})\n  - 제목: ${i.title}\n  - 앞부분: ${i.excerpt}`,
+  )
   fs.writeFileSync(
     outFile,
     `# 미분류 노트 ${pending.length}개\n\n` +

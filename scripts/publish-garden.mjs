@@ -13,7 +13,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const config = JSON.parse(fs.readFileSync(path.join(ROOT, "garden.sync.json"), "utf8"))
 const BRANCH = config.publishBranch ?? "main"
 // Only note-related paths are committed; code and config changes stay separate.
-const PUBLISH_PATHS = ["content", "site", "import", "garden.sync.json"]
+const PUBLISH_PATHS = ["content", "site", "import", "garden.sync.json", "garden.assignments.json"]
 
 // D: is not NTFS, so git refuses the repo unless it is marked safe. Do that per
 // process instead of touching the user's global git config.
@@ -41,9 +41,23 @@ function stop(message, code = 1) {
 }
 
 // 1. Sync + privacy check
+const sync = () => {
+  if (run(process.execPath, [path.join("scripts", "sync-garden.mjs")]).code !== 0) {
+    stop("✖ 동기화 또는 개인정보 검사에서 멈췄습니다. 위 메시지를 확인하세요.")
+  }
+}
 console.log("▶ 노트 동기화")
-if (run(process.execPath, [path.join("scripts", "sync-garden.mjs")]).code !== 0) {
-  stop("✖ 동기화 또는 개인정보 검사에서 멈췄습니다. 위 메시지를 확인하세요.")
+sync()
+
+// 1b. New notes that no hub covers yet: classify with Gemini, then sync again so
+//     the hub pages pick them up. A failed classification never blocks publishing;
+//     those notes simply wait for the next run.
+const pendingFile = path.join(ROOT, ".garden", "unassigned.json")
+const pending = fs.existsSync(pendingFile) ? JSON.parse(fs.readFileSync(pendingFile, "utf8")).notes ?? [] : []
+if (pending.length) {
+  console.log(`▶ 미분류 ${pending.length}개 자동 분류 (Gemini)`)
+  if (run(process.execPath, [path.join("scripts", "classify-garden.mjs")]).code === 0) sync()
+  else console.log("  ! 자동 분류에 실패했습니다. 다음 실행에서 다시 시도합니다.")
 }
 
 // 2. Make sure we push to the garden's own repository, never to Quartz upstream.

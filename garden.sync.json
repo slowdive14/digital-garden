@@ -10,8 +10,13 @@
       "recent": false
     },
     {
-      "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey",
-      "dest": ".",
+      "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey/1. 문헌 메모",
+      "dest": "1. 문헌 메모",
+      "requireFlag": true
+    },
+    {
+      "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey/2. 의견",
+      "dest": "2. 의견",
       "requireFlag": true
     },
     {
