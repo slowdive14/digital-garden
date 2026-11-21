@@ -940,6 +940,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     nodeColor(f: (n: T3) => string): FG
     nodeLabel(f: () => string): FG
     linkColor(f: (l: { source: T3; target: T3 }) => string): FG
+    linkVisibility(f: (l: { source: T3; target: T3 }) => boolean): FG
     linkOpacity(n: number): FG
     showNavInfo(b: boolean): FG
     warmupTicks(n: number): FG
@@ -993,7 +994,15 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     }
     box.addEventListener("pointermove", onPointer)
 
-    const recolor = () => g.nodeColor(nodeColor).linkColor(linkColor)
+    // With a note held (or a topic chosen), everything else shrinks to faint
+    // specks and unrelated links disappear, so the held note's links stand out.
+    const recolor = () =>
+      g.nodeColor(nodeColor).nodeVal(nodeVal).linkColor(linkColor).linkVisibility(linkVisible)
+    const nodeVal = (n: T3) => (inFocus(n) ? n.node.r ** 2 : Math.max(n.node.r ** 2 * 0.12, 0.6))
+    const linkVisible = (l: { source: T3; target: T3 }) => {
+      const f = focusSet()
+      return !f || (f.has(l.source.id) && f.has(l.target.id))
+    }
     const nodeColor = (n: T3) => (inFocus(n) ? colors.cat[n.node.cat] : colors.edge)
     const linkColor = (l: { source: T3; target: T3 }) =>
       inFocus(l.source) && inFocus(l.target) ? colors.edgeStrong : colors.edge
@@ -1063,7 +1072,8 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       .nodeLabel(() => "")
       .nodeRelSize(1.6)
       .nodeResolution(12)
-      .nodeVal((n) => n.node.r ** 2)
+      .nodeVal(nodeVal)
+      .linkVisibility(linkVisible)
       .nodeOpacity(0.95)
       .nodeColor(nodeColor)
       .linkColor(linkColor)
