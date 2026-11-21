@@ -1,7 +1,7 @@
 ---
-created: '2021-11-11T20:26'
-updated: '2025-02-03T22:00'
+created: '2026-11-12'
 publish: true
+modified: '2026-11-21'
 noteType: 문헌 메모
 title: 자비는 그 사람 전체를 미움 속에 가두지 않는 일
 ---

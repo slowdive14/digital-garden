@@ -1,7 +1,7 @@
 ---
-created: '2021-11-11T20:26'
-updated: '2025-02-03T22:00'
+created: '2026-11-11'
 publish: true
+modified: '2026-11-21'
 noteType: 문헌 메모
 title: 예측은 빗나갈 수밖에 없고 계속 움직이면서 새로운 방식으로 적응한다
 ---

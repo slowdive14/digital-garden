@@ -238,7 +238,14 @@ function normalizeBody(body, data, fileTitle) {
   // the top; move it into frontmatter so Quartz can show and sort by it.
   const created = out.match(/^(?:[^\n]*\n){0,5}?\s*Created(?: Time)?:\s*(\d{4}-\d{2}-\d{2})[^\n]*\n?/)
   if (created) {
-    if (!data.created) data.created = created[1]
+    // The line is written by hand when the note is made, so it wins over a
+    // frontmatter date that a template may have copied from another note.
+    data.created = created[1]
+    // Template leftovers can also leave an "updated" date earlier than that.
+    for (const key of ["updated", "modified", "lastmod"]) {
+      const d = data[key] && new Date(String(data[key]))
+      if (d && !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) < created[1]) delete data[key]
+    }
     out = out.replace(/^\s*Created(?: Time)?:\s*\d{4}-\d{2}-\d{2}[^\n]*\n?/m, "")
   }
   // Notes often repeat their title as the first heading; Quartz already shows it.
