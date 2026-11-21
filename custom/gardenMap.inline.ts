@@ -48,8 +48,6 @@ const CATS: { key: Cat; label: string; cssVar: string }[] = [
   { key: "other", label: "책·프로젝트·기타", cssVar: "--gm-other" },
 ]
 
-const HUB_LABEL_DEGREE = 9
-
 function category(slug: string): Cat {
   if (!slug.includes("/")) return "hub"
   const top = slug.split("/")[0]
@@ -167,12 +165,13 @@ function makeLayout(nodes: GNode[], graph: Graph, mode: "global" | "local", cent
       if (n.id < nb && byId.has(nb)) links.push({ source: n, target: byId.get(nb)! })
     }
   }
+  // Small dots: size hints at how connected a note is without covering its neighbours.
   for (const n of nodes) {
-    const base = mode === "global" ? 2.8 : 3.2
-    n.r = base + Math.sqrt(n.degree) * (mode === "global" ? 1.5 : 1)
-    if (n.cat === "hub") n.r = Math.max(n.r, mode === "global" ? 8 : 6)
+    const base = mode === "global" ? 2 : 2.6
+    n.r = base + Math.sqrt(n.degree) * (mode === "global" ? 0.95 : 0.75)
+    if (n.cat === "hub") n.r = Math.max(n.r, mode === "global" ? 5.5 : 4.5)
     if (mode === "local" && n.id === center) {
-      n.r = Math.max(n.r, 7)
+      n.r = Math.max(n.r, 5.5)
       n.fx = 0
       n.fy = 0
     }
@@ -182,17 +181,17 @@ function makeLayout(nodes: GNode[], graph: Graph, mode: "global" | "local", cent
       "link",
       forceLink<GNode, GLink>(links)
         // Leaves sit close to their hub; hub-to-hub links stay long.
-        .distance((l) => (mode === "global" ? 14 + Math.min(l.source.r, l.target.r) * 2.2 : 42))
+        .distance((l) => (mode === "global" ? 16 + Math.min(l.source.r, l.target.r) * 3 : 50))
         .strength(mode === "global" ? 0.55 : 0.6),
     )
     .force(
       "charge",
       forceManyBody<GNode>()
         // Hubs push each other apart so each topic gets its own territory.
-        .strength((d) => (mode === "global" ? -18 - d.degree * 7 : -110))
+        .strength((d) => (mode === "global" ? -20 - d.degree * 7 : -150))
         .distanceMax(mode === "global" ? 320 : 400),
     )
-    .force("collide", forceCollide<GNode>((d) => d.r + 2))
+    .force("collide", forceCollide<GNode>((d) => d.r + (mode === "global" ? 3.5 : 5)))
     .force("x", forceX<GNode>(0).strength(mode === "global" ? 0.07 : 0.08))
     .force("y", forceY<GNode>(0).strength(mode === "global" ? 0.09 : 0.08))
     .stop()
@@ -281,12 +280,21 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     }
   }
 
+  // Titles of the focused topic, next to the map: easier to read than labels on dots.
+  const body = document.createElement("div")
+  body.className = "garden-map__body"
+  const list = document.createElement("aside")
+  list.className = "garden-map__list"
+  list.hidden = true
+  body.append(frame, list)
+
   root.querySelector(".garden-map__topics")?.remove()
+  root.querySelector(".garden-map__body")?.remove()
   root.querySelector(".garden-map__frame")?.remove()
   root.querySelector(".garden-map__legend")?.remove()
   root.querySelector(".garden-map__more")?.remove()
   if (topics) root.append(topics)
-  root.append(frame, legend)
+  root.append(body, legend)
   if (mode === "local") {
     const more = document.createElement("a")
     more.className = "garden-map__more"
@@ -317,6 +325,76 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     if (catFocus) return new Set(layout.nodes.filter((n) => n.cat === catFocus).map((n) => n.id))
     return undefined
   }
+
+  // ---- Topic list (home map): every title of the focused topic, readable at once.
+  const listItems = new Map<string, HTMLAnchorElement>()
+
+  function renderList() {
+    listItems.clear()
+    list.replaceChildren()
+    if (!topicFocus) {
+      list.hidden = true
+      return
+    }
+    const hub = topicFocus
+    const members = layout.nodes
+      .filter((n) => n !== hub && neighbors.get(hub.id)!.has(n.id))
+      .sort((a, b) => a.title.localeCompare(b.title, "ko"))
+    const head = document.createElement("div")
+    head.className = "garden-map__list-head"
+    const hubLink = document.createElement("a")
+    hubLink.href = rootPrefix() + hub.id
+    hubLink.className = "internal"
+    hubLink.dataset.noPopover = "true"
+    hubLink.textContent = hub.title
+    const count = document.createElement("span")
+    count.textContent = `노트 ${members.length}개`
+    head.append(hubLink, count)
+    const ul = document.createElement("ul")
+    for (const n of members) {
+      const li = document.createElement("li")
+      const a = document.createElement("a")
+      a.href = rootPrefix() + n.id
+      a.className = "internal"
+      a.dataset.noPopover = "true"
+      const dot = document.createElement("span")
+      dot.className = "garden-map__swatch"
+      dot.style.background = `var(${CATS.find((c) => c.key === n.cat)!.cssVar})`
+      const t = document.createElement("span")
+      t.textContent = n.title
+      a.append(dot, t)
+      a.addEventListener("mouseenter", () => {
+        hovered = n
+        draw()
+        syncListHover()
+      })
+      a.addEventListener("mouseleave", () => {
+        hovered = undefined
+        draw()
+        syncListHover()
+      })
+      li.append(a)
+      ul.append(li)
+      listItems.set(n.id, a)
+    }
+    list.append(head, ul)
+    list.hidden = false
+  }
+
+  // Mirror the hovered dot in the list, scrolling only the list itself.
+  function syncListHover() {
+    for (const [id, a] of listItems) a.classList.toggle("is-hover", id === hovered?.id)
+    const a = hovered ? listItems.get(hovered.id) : undefined
+    if (!a || list.hidden) return
+    const lr = list.getBoundingClientRect()
+    const ar = a.getBoundingClientRect()
+    if (ar.top < lr.top) list.scrollTop -= lr.top - ar.top + 8
+    else if (ar.bottom > lr.bottom) list.scrollTop += ar.bottom - lr.bottom + 8
+  }
+
+  // Dots grow only slightly when zooming in, so zoom spreads them apart instead of
+  // making them bigger. World-space radius for the current zoom:
+  const radius = (n: GNode) => n.r / Math.pow(transform.k, 0.65)
 
   // ---- Drawing
   function draw() {
@@ -350,9 +428,10 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     // Nodes: small first so hubs sit on top; a surface ring separates overlaps.
     const ordered = [...layout.nodes].sort((a, b) => a.r - b.r)
     for (const n of ordered) {
+      const r = radius(n)
       ctx.globalAlpha = focus && !focus.has(n.id) ? 0.1 : 1
       ctx.beginPath()
-      ctx.arc(n.x!, n.y!, n.r, 0, Math.PI * 2)
+      ctx.arc(n.x!, n.y!, r, 0, Math.PI * 2)
       ctx.fillStyle = colors.cat[n.cat]
       ctx.fill()
       ctx.lineWidth = 1.5 / k
@@ -360,7 +439,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       ctx.stroke()
       if (n === layout.center || n === hovered) {
         ctx.beginPath()
-        ctx.arc(n.x!, n.y!, n.r + 3 / k, 0, Math.PI * 2)
+        ctx.arc(n.x!, n.y!, r + 3 / k, 0, Math.PI * 2)
         ctx.lineWidth = 2 / k
         ctx.strokeStyle = colors.accent
         ctx.stroke()
@@ -371,7 +450,14 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     drawLabels(focus)
   }
 
-  // Labels in screen space so they stay crisp; greedy placement avoids collisions.
+  // Labels in screen space so they stay crisp. Few of them, each placed in the
+  // first free spot around its dot (below, above, right, left) that covers no
+  // other label and no visible dot; if none is free, the label is skipped and
+  // the title is still one hover (or one list entry) away.
+  type Box = [number, number, number, number]
+  const overlaps = (a: Box, b: Box) =>
+    a[0] < b[0] + b[2] && b[0] < a[0] + a[2] && a[1] < b[1] + b[3] && b[1] < a[1] + a[3]
+
   function drawLabels(focus: Set<string> | undefined) {
     const k = transform.k
     const wanted: { n: GNode; prio: number }[] = []
@@ -380,38 +466,66 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       if (n === hovered) prio = 1000
       else if (n === layout.center || n === topicFocus) prio = 900
       else if (focus) {
-        if (focus.has(n.id) && (hovered || topicFocus || k > 1.6 || n.cat === "hub"))
-          prio = 500 + n.degree
-      } else if (mode === "local" && n.depth === 1) prio = 300 + n.degree
-      else if (n.cat === "hub" || n.degree >= HUB_LABEL_DEGREE) prio = 200 + n.degree
-      else if (k > 2.4) prio = n.degree
+        if (focus.has(n.id)) prio = 500 + n.degree
+      } else if (n.cat === "hub") prio = 300 + n.degree
+      else if (mode === "local" && n.depth === 1 && neighbors.get(layout.center!.id)!.size <= 6)
+        prio = 250 + n.degree
+      else if (mode === "global" && k > 2.6 && n.degree >= 2) prio = n.degree
       if (prio >= 0) wanted.push({ n, prio })
     }
     wanted.sort((a, b) => b.prio - a.prio)
+    const cap = mode === "global" ? 14 : 7
 
-    const placed: [number, number, number, number][] = []
-    ctx.textAlign = "center"
-    ctx.textBaseline = "top"
+    // Dots that are drawn at full strength act as obstacles for labels.
+    const dots = layout.nodes
+      .filter((n) => !focus || focus.has(n.id))
+      .map((n) => {
+        const r = radius(n) * k
+        const x = transform.x + n.x! * k
+        const y = transform.y + n.y! * k
+        return { n, box: [x - r - 1, y - r - 1, 2 * r + 2, 2 * r + 2] as Box }
+      })
+
+    const placed: Box[] = []
+    let shown = 0
+    ctx.textBaseline = "middle"
     for (const { n, prio } of wanted) {
+      if (shown >= cap && prio < 900) break
       const big = n.cat === "hub" || prio >= 900
       ctx.font = `${big ? 600 : 500} ${big ? 12.5 : 11.5}px ${colors.font}`
-      const max = mode === "local" ? 16 : 22
-      const text = n.title.length > max && prio < 1000 ? n.title.slice(0, max - 1) + "…" : n.title
-      const sx = transform.x + n.x! * k
-      const sy = transform.y + n.y! * k + n.r * k + 3
-      const w = ctx.measureText(text).width
-      const box: [number, number, number, number] = [sx - w / 2 - 2, sy - 1, w + 4, 16]
-      if (box[0] + box[2] < 0 || box[0] > width || box[1] > height || box[1] + box[3] < 0) continue
-      const hit = placed.some(
-        (p) => p[0] < box[0] + box[2] && box[0] < p[0] + p[2] && p[1] < box[1] + box[3] && box[1] < p[1] + p[3],
-      )
-      if (hit && prio < 1000) continue
+      const max = prio >= 1000 ? 40 : mode === "local" ? 12 : 16
+      const text = n.title.length > max ? n.title.slice(0, max - 1) + "…" : n.title
+      const w = ctx.measureText(text).width + 10
+      const h = 18
+      const cx = transform.x + n.x! * k
+      const cy = transform.y + n.y! * k
+      const gap = radius(n) * k + 3
+      const spots: Box[] = [
+        [cx - w / 2, cy + gap, w, h],
+        [cx - w / 2, cy - gap - h, w, h],
+        [cx + gap, cy - h / 2, w, h],
+        [cx - gap - w, cy - h / 2, w, h],
+      ]
+      const inside = (b: Box) => b[0] >= 2 && b[1] >= 2 && b[0] + b[2] <= width - 2 && b[1] + b[3] <= height - 2
+      const free = (b: Box) =>
+        inside(b) && !placed.some((p) => overlaps(p, b)) && !dots.some((d) => d.n !== n && overlaps(d.box, b))
+      let box = spots.find(free)
+      // Hovered and centre labels must show even when crowded.
+      if (!box && prio >= 900) box = spots.find(inside) ?? spots[0]
+      if (!box) continue
       placed.push(box)
-      ctx.lineWidth = 3
-      ctx.strokeStyle = colors.surface
-      ctx.strokeText(text, sx, sy)
+      shown++
+
+      ctx.globalAlpha = 0.88
+      ctx.fillStyle = colors.surface
+      ctx.beginPath()
+      if (ctx.roundRect) ctx.roundRect(box[0], box[1], box[2], box[3], 5)
+      else ctx.rect(box[0], box[1], box[2], box[3])
+      ctx.fill()
+      ctx.globalAlpha = 1
       ctx.fillStyle = colors.ink
-      ctx.fillText(text, sx, sy)
+      ctx.textAlign = "left"
+      ctx.fillText(text, box[0] + 5, box[1] + h / 2 + 0.5)
     }
   }
 
@@ -478,7 +592,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     let bestD = Infinity
     for (const n of layout.nodes) {
       const d = Math.hypot(n.x! - x, n.y! - y)
-      const reach = n.r + 6 / transform.k
+      const reach = radius(n) + 6 / transform.k
       if (d < reach && d < bestD) {
         best = n
         bestD = d
@@ -515,6 +629,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     if (n !== hovered) {
       hovered = n
       draw()
+      syncListHover()
     }
     showTooltip(n, e.clientX, e.clientY)
   }
@@ -522,6 +637,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     hovered = undefined
     showTooltip(undefined)
     draw()
+    syncListHover()
   }
   const onClick = (e: MouseEvent) => {
     const n = nodeAt(e.clientX, e.clientY)
@@ -554,6 +670,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       catFocus = catFocus === cat ? undefined : cat
       topicFocus = undefined
       syncPressed()
+      renderList()
       sel.call(zoomBehavior.transform, fit())
     })
   }
@@ -564,6 +681,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       topicFocus = topicFocus === hub ? undefined : hub
       catFocus = undefined
       syncPressed()
+      renderList()
       const members = topicFocus
         ? layout.nodes.filter((n) => n === hub || neighbors.get(hub.id)!.has(n.id))
         : undefined
@@ -575,6 +693,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     topicFocus = undefined
     catFocus = undefined
     syncPressed()
+    renderList()
     sel.call(zoomBehavior.transform, fit())
   }
   resetBtn.addEventListener("click", onReset)

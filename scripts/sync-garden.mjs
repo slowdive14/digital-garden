@@ -488,9 +488,11 @@ function applyAssignments(stats) {
     if (!extra.length) continue
     stats.topics.applied += extra.length
     const list = extra.map(({ n, t }) => `- [[${n}|${t}]]`).join("\n")
+    // Site-only hubs have no list of their own, so "다른" would read oddly there.
+    const heading = already.size ? "이 주제의 다른 노트" : "이 주제의 노트"
     fs.writeFileSync(
       file,
-      `${text.trimEnd()}\n\n## 이 주제의 다른 노트\n\n<p class="auto-topic-note">내용을 보고 이 주제로 분류한 노트입니다.</p>\n\n${list}\n`,
+      `${text.trimEnd()}\n\n## ${heading}\n\n<p class="auto-topic-note">내용을 보고 이 주제로 분류한 노트입니다.</p>\n\n${list}\n`,
     )
   }
 }

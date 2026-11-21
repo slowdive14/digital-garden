@@ -1,6 +1,15 @@
 .topic-nav {
   width: 100%;
   margin-top: 0.5rem;
+  // The left sidebar is one screen tall (Quartz's default "fit" mode): the
+  // title and search stay put and this list scrolls on its own, like the explorer did.
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lightgray) transparent;
 
   summary {
     display: none;
@@ -70,9 +79,12 @@
 @media (max-width: 800px) {
   .topic-nav {
     position: relative;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     width: auto;
     margin: 0;
+    padding-bottom: 0;
+    // The dropdown below must not be clipped by the scroll area used on wide screens.
+    overflow: visible;
 
     summary {
       white-space: nowrap;
