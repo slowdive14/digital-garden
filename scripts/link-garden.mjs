@@ -3,6 +3,8 @@
 // chosen by Gemini from the vault folders the garden reads (1. 문헌 메모, 2. 의견).
 //
 // - Only notes with `publish: true` whose "연결" section has no [[link]] yet.
+// - Links to notes already on the garden get a 🌱 after them (kept up to date
+//   on later runs); the site itself drops the mark.
 // - Each note is filled once (recorded in .garden/linked.json); if you later
 //   delete or change the links, they are left alone.
 // - The note is backed up to .garden/backup/ before it is changed, and only the
@@ -48,6 +50,9 @@ function walk(dir) {
   }
   return out
 }
+
+// Marks a link whose note is on the garden (stripped from the site by sync-garden).
+const MARK = "🌱"
 
 const displayTitle = (name) => name.replace(/^[A-Z]\s*-\s+/, "").trim()
 const isPublished = (data) => data.publish === true || data["dg-publish"] === true
@@ -104,6 +109,42 @@ async function main() {
     notes.push({ file, name, title: displayTitle(String(parsed.data.title ?? name)), raw, parsed })
   }
 
+  // Notes on the garden: last sync's content/ plus notes marked to publish now.
+  const published = new Set(notes.filter((n) => isPublished(n.parsed.data)).map((n) => n.name))
+  const contentDir = path.join(ROOT, "content")
+  if (fs.existsSync(contentDir)) {
+    for (const f of walk(contentDir)) if (path.basename(f) !== "index.md") published.add(path.basename(f, ".md"))
+  }
+  const linkLine = (name) => `- [[${name}]]${published.has(name) ? ` ${MARK}` : ""}`
+
+  // Keep the 🌱 marks on links this script added in step with the garden: a
+  // linked note may have been published or taken down since. Links written by
+  // hand are never touched.
+  if (!DRY) {
+    for (const n of notes) {
+      const links = state[n.file]?.links
+      if (!links?.length) continue
+      const eol = n.raw.includes("\r\n") ? "\r\n" : "\n"
+      const lines = n.raw.split(/\r?\n/)
+      const sec = findSection(lines)
+      if (!sec) continue
+      let changed = false
+      for (let i = sec.start + 1; i < sec.end; i++) {
+        const m = lines[i].match(/^- \[\[([^\]]+)\]\](?: 🌱)?\s*$/)
+        if (!m || !links.includes(m[1])) continue
+        const want = linkLine(m[1])
+        if (lines[i] !== want) {
+          lines[i] = want
+          changed = true
+        }
+      }
+      if (changed) {
+        fs.writeFileSync(n.file, lines.join(eol))
+        console.log(`  ~ ${n.title}: 가든 표시(${MARK}) 갱신`)
+      }
+    }
+  }
+
   const targets = notes.filter((n) => {
     if (!isPublished(n.parsed.data) || state[n.file]) return false
     const lines = n.raw.split(/\r?\n/)
@@ -149,14 +190,14 @@ async function main() {
     const sec = findSection(lines)
     // Keep anything already written in the section except empty bullets.
     const kept = lines.slice(sec.start + 1, sec.end).filter((l) => l.trim() && !/^\s*[-*]\s*$/.test(l))
-    const added = picks.flatMap((p) => [`- [[${p.name}]]`, ...(p.reason ? [`    - ${p.reason}`] : [])])
+    const added = picks.flatMap((p) => [linkLine(p.name), ...(p.reason ? [`    - ${p.reason}`] : [])])
     // Only the section changes; one blank line before whatever follows it.
     const rest = lines.slice(sec.end)
     const gap = rest.length && rest[0].trim() ? [""] : []
     const out = [...lines.slice(0, sec.start + 1), ...kept, ...added, ...gap, ...rest].join(eol)
 
     console.log(`  + ${note.title}`)
-    for (const p of picks) console.log(`      → ${displayTitle(p.name)} — ${p.reason}`)
+    for (const p of picks) console.log(`      → ${displayTitle(p.name)}${published.has(p.name) ? ` ${MARK}` : ""} — ${p.reason}`)
     if (DRY) continue
 
     const stamp = new Date().toISOString().slice(0, 10)

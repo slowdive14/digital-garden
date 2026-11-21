@@ -234,6 +234,9 @@ function normalizeBody(body, data, fileTitle) {
     const hit = path.posix.basename(target.trim()).match(PREFIX)
     return hit ? `[[${target}${anchor}|${hit[2]}]]` : m
   })
+  // link-garden marks links to notes on the garden with 🌱 for the vault; on the
+  // site every working link is such a note, so the mark is noise there.
+  out = out.replace(/\]\] 🌱/g, "]]")
   // Many notes keep their creation date on a line near the top: "Created:
   // 2023-10-03", "### 작성일 : 2023-10-03" or just "2024-03-11". That line is
   // written by hand when the note is made, so it wins over any frontmatter date
