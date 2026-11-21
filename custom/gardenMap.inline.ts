@@ -140,13 +140,6 @@ function rootPrefix(): string {
   return depth > 0 ? "../".repeat(depth) : "./"
 }
 
-function goTo(slug: string, hash = "") {
-  const url = new URL(rootPrefix() + slug + hash, window.location.href)
-  const nav = (window as unknown as { spaNavigate?: (u: URL) => void }).spaNavigate
-  if (nav) nav(url)
-  else window.location.assign(url)
-}
-
 function readColors(el: HTMLElement) {
   const css = getComputedStyle(el)
   const v = (name: string) => css.getPropertyValue(name).trim()
@@ -731,23 +724,95 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   ]
 
   let lastPointerType = "mouse"
+  // A dot clicked closed stays closed while the pointer is still on it.
+  let dismissed: GNode | undefined
+  let focusTimer = 0
+  let focusTarget: GNode | undefined
+  let anim = 0
+
+  // Smoothly move the view to `to`.
+  function animateTo(to: ZoomTransform) {
+    cancelAnimationFrame(anim)
+    const from = transform
+    const start = performance.now()
+    const step = (now: number) => {
+      const t = Math.min((now - start) / 450, 1)
+      const e = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2
+      const k = from.k + (to.k - from.k) * e
+      const x = from.x + (to.x - from.x) * e
+      const y = from.y + (to.y - from.y) * e
+      sel.call(zoomBehavior.transform, zoomIdentity.translate(x, y).scale(k))
+      if (t < 1) anim = requestAnimationFrame(step)
+    }
+    anim = requestAnimationFrame(step)
+  }
+
+  // Hold a note: keep its card and highlight, and bring every note linked to it
+  // into view when some of them are off screen.
+  function focusNode(n: GNode) {
+    pinned = n
+    hovered = n
+    draw()
+    syncListHover()
+    if (cardNode !== n) showCard(n, ...dotOnScreen(n))
+    const members = layout.nodes.filter((m) => m === n || neighbors.get(n.id)!.has(m.id))
+    const pad = 24
+    const offScreen = members.some((m) => {
+      const [x, y] = dotOnScreen(m)
+      return x < pad || y < pad || x > width - pad || y > height - pad
+    })
+    if (offScreen) animateTo(fit(members))
+  }
+  const cancelFocus = () => {
+    window.clearTimeout(focusTimer)
+    focusTarget = undefined
+  }
+  // Resting on a dot for a moment holds it (a quick pass over dots does not).
+  const scheduleFocus = (n: GNode) => {
+    if (focusTarget === n || pinned === n) return
+    cancelFocus()
+    focusTarget = n
+    focusTimer = window.setTimeout(() => {
+      focusTarget = undefined
+      if (hovered === n) focusNode(n)
+    }, 350)
+  }
+  const release = () => {
+    cancelFocus()
+    hideCard()
+    pinned = undefined
+    hovered = undefined
+    draw()
+    syncListHover()
+  }
+
   const onMove = (e: PointerEvent) => {
     lastPointerType = e.pointerType
     if (e.pointerType === "touch") return
-    const n = nodeAt(e.clientX, e.clientY)
+    let n = nodeAt(e.clientX, e.clientY)
     canvas.style.cursor = n ? "pointer" : "grab"
-    if (n !== hovered) {
-      hovered = n
+    if (n !== dismissed) dismissed = undefined
+    else n = undefined
+    const want = n ?? pinned
+    if (want !== hovered) {
+      hovered = want
       draw()
       syncListHover()
     }
     if (n) {
       if (n !== cardNode) showCard(n, ...dotOnScreen(n))
       else window.clearTimeout(hideTimer)
-    } else if (cardNode && !pinned) hideCard(250)
+      scheduleFocus(n)
+    } else {
+      cancelFocus()
+      if (pinned) {
+        if (cardNode !== pinned) showCard(pinned, ...dotOnScreen(pinned))
+      } else if (cardNode) hideCard(250)
+    }
   }
   const onLeave = (e?: PointerEvent) => {
     if (e?.pointerType === "touch") return
+    cancelFocus()
     hovered = pinned
     if (!pinned) hideCard(250)
     draw()
@@ -757,25 +822,20 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     const touch = lastPointerType !== "mouse"
     const n = nodeAt(e.clientX, e.clientY, touch ? 18 : 6)
     if (!n) {
-      hovered = undefined
-      hideCard()
-      draw()
-      syncListHover()
+      release()
       return
     }
-    // Mouse: the card already showed on hover, so a click opens the note.
-    // Touch: the first tap shows the card with its link; tapping the same dot again opens it.
-    if (!touch || pinned === n) {
-      if (n !== layout.center) goTo(n.id)
+    // Clicking (or tapping) the dot whose card is open closes it again; the note
+    // itself opens from the card's "노트 읽기" link.
+    if (cardNode === n && !tooltip.hidden) {
+      release()
+      dismissed = touch ? undefined : n
       return
     }
-    hideCard()
-    pinned = n
-    hovered = n
-    draw()
-    syncListHover()
-    showCard(n, ...dotOnScreen(n))
+    cancelFocus()
+    focusNode(n)
   }
+  canvas.addEventListener("pointerdown", () => cancelAnimationFrame(anim))
   canvas.addEventListener("pointermove", onMove)
   canvas.addEventListener("pointerdown", onMove)
   canvas.addEventListener("pointerleave", onLeave)
@@ -938,6 +998,13 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       })
       // Like the reference garden: a click flies to the note and keeps its card open.
       .onNodeClick((n) => {
+        // Clicking the held note again lets it go.
+        if (pinned === n.node) {
+          hideCard()
+          hovered = undefined
+          recolor()
+          return
+        }
         hideCard()
         pinned = n.node
         hovered = n.node
@@ -1080,16 +1147,15 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
   if (target) {
     arrival = layout.nodes.filter((n) => n === target || neighbors.get(target.id)!.has(n.id))
     sel.call(zoomBehavior.transform, fit(arrival))
-    pinned = target
-    hovered = target
-    draw()
-    showCard(target, ...dotOnScreen(target))
+    focusNode(target)
   }
 
   window.addCleanup(() => {
     threeView?.destroy()
     threeView = undefined
     window.clearTimeout(hideTimer)
+    window.clearTimeout(focusTimer)
+    cancelAnimationFrame(anim)
     observer.disconnect()
     document.removeEventListener("themechange", onTheme)
     document.removeEventListener("keydown", onKey)
