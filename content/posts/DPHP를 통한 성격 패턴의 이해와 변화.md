@@ -8,7 +8,6 @@ tags:
   - DPHP
   - 심리치료
 publish: true
-modified: '2025-05-09'
 noteType: 글
 ---
 # 읽고 이해한 바를 정리 

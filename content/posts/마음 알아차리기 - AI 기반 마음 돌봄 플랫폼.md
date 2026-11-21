@@ -8,7 +8,6 @@ tags:
   - 정신건강
   - 프로그래밍
 publish: true
-modified: '2025-06-16'
 noteType: 글
 ---
 

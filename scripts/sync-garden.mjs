@@ -358,7 +358,11 @@ function syncSource(source, state) {
     // A source may name the day its files were copied; that date says nothing
     // about when a note was written.
     if (ownDate && source.copyDate && isoDate(ownDate) === source.copyDate) ownDate = undefined
-    fillDates(data, stat)
+    // Files kept in this repository (site/, import/) get fresh file times on every
+    // clone or checkout, so those times say nothing about the note: such sources
+    // set "fileTimes": false and only dates written in the note are used.
+    const fileTimes = source.fileTimes !== false
+    if (fileTimes) fillDates(data, stat)
     for (const ref of attachmentRefs(body)) wanted.add(ref)
 
     seen.add(base)
@@ -383,13 +387,17 @@ function syncSource(source, state) {
       // time and any updated/modified date in its frontmatter. Sources whose file
       // times are copy times, not edits, opt out with "recent": false.
       if (source.recent !== false) {
-        const stamps = [data.updated, data.modified, data.lastmod]
+        let stamps = [data.updated, data.modified, data.lastmod]
           .map(toDate)
           .filter(Boolean)
           .map((d) => d.getTime())
-        const when = new Date(Math.max(stat.mtimeMs, ...stamps))
-        state.recent.push({ name: fileBase, title: String(data.title ?? fileBase), when })
-        state.dates.set(fileBase, when)
+        if (!fileTimes && !stamps.length && ownDate) stamps = [ownDate.getTime()]
+        if (fileTimes) stamps.push(stat.mtimeMs)
+        if (stamps.length) {
+          const when = new Date(Math.max(...stamps))
+          state.recent.push({ name: fileBase, title: String(data.title ?? fileBase), when })
+          state.dates.set(fileBase, when)
+        }
       } else {
         // Copy times are meaningless here; the written date is the best we have.
         if (ownDate) state.dates.set(fileBase, ownDate)

@@ -5,7 +5,7 @@ Obsidian Digital Garden 플러그인 없이, 폴더 동기화 스크립트와 Qu
 ## 구조
 
 ```
-D:\digital-garden
+C:\Users\user\digital-garden
 ├─ garden.sync.json       어떤 폴더의 노트를 가져올지 정하는 설정
 ├─ garden.local.json      열어 보지 않을 폴더 목록 (git에 올라가지 않음)
 ├─ scripts/sync-garden.mjs    노트 복사 + 개인정보 검사
@@ -117,11 +117,8 @@ Windows 작업 스케줄러의 `DigitalGarden-Publish` 작업이 매일 밤 11�
 
 ## Windows에서 알아 둘 점
 
-- D 드라이브가 파일 소유자를 기록하지 않는 형식이라 git이 저장소를 거부합니다. 한 번만 아래 명령을 실행해 두면 됩니다.
-
-  ```
-  git config --global --add safe.directory D:/digital-garden
-  ```
+- 2026-11-21에 프로젝트를 USB(`D:\digital-garden`)에서 `C:\Users\user\digital-garden`으로 옮겼습니다. 작업 스케줄러의 `DigitalGarden-Publish`도 이 폴더에서 실행됩니다. USB에 남은 옛 사본은 더 이상 쓰지 않습니다.
+- `site/`와 `import/` 안의 파일은 저장소를 새로 받을 때마다 파일 시각이 바뀌므로, `garden.sync.json`에서 `"fileTimes": false`로 두어 노트에 적힌 날짜만 씁니다.
 
 - `npx quartz build --serve`가 켜진 상태에서 `custom.scss`나 설정을 바꾸면, 재빌드 중에 `public` 폴더를 지우지 못해 서버가 꺼질 수 있습니다. 그때는 서버를 다시 켜면 됩니다. GitHub Actions(Linux)에서는 생기지 않는 문제입니다.
 - Node 24의 `fs.rmSync`는 한글 파일명을 지울 때 오류 메시지 없이 프로세스를 끝내 버립니다. 스크립트를 고칠 때는 `fs.promises.rm`을 쓰세요.

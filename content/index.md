@@ -2,8 +2,6 @@
 title: 잔향의 마음 로그
 description: '심리치료와 글쓰기, 마음에 대해 읽고 생각한 것을 천천히 기르는 디지털 가든'
 publish: true
-created: '2026-11-21'
-modified: '2026-11-21'
 ---
 
 <div class="garden-hero">

@@ -7,7 +7,8 @@
       "path": "site",
       "dest": ".",
       "requireFlag": true,
-      "recent": false
+      "recent": false,
+      "fileTimes": false
     },
     {
       "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey/1. 문헌 메모",
@@ -25,15 +26,28 @@
       "dest": ".",
       "requireFlag": true,
       "recent": false,
-      "exclude": ["Digital Garden of 잔향.md"]
+      "exclude": [
+        "Digital Garden of 잔향.md"
+      ],
+      "fileTimes": false
     },
     {
       "path": "import/hugo-posts",
       "dest": "posts",
-      "requireFlag": false
+      "requireFlag": false,
+      "fileTimes": false
     }
   ],
-  "blockedPathSegments": [".obsidian", ".trash", ".git", "Templates", "templates", "private"],
+  "blockedPathSegments": [
+    ".obsidian",
+    ".trash",
+    ".git",
+    "Templates",
+    "templates",
+    "private"
+  ],
   "denylistFile": ".garden-denylist.txt",
-  "allowSensitive": ["posts/마음 알아차리기 - AI 기반 마음 돌봄 플랫폼.md"]
+  "allowSensitive": [
+    "posts/마음 알아차리기 - AI 기반 마음 돌봄 플랫폼.md"
+  ]
 }
