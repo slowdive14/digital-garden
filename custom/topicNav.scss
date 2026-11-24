@@ -198,3 +198,11 @@ button.readermode {
   white-space: nowrap;
   cursor: pointer;
 }
+
+// Total visits (GoatCounter), quiet text above the footer credit.
+footer .visit-count {
+  margin-bottom: 0.2rem;
+  color: var(--gray);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}

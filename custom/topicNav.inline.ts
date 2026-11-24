@@ -67,10 +67,30 @@ async function refreshIfStale() {
   }
 }
 
+// Total visits in the footer, from GoatCounter's public counter
+// (spacekatb.goatcounter.com; "allow visitor counts" is on in its settings).
+let visits: Promise<string | undefined> | undefined
+function showVisits() {
+  visits ??= fetch("https://spacekatb.goatcounter.com/counter/TOTAL.json")
+    .then((r) => (r.ok ? r.json() : undefined))
+    .then((j) => (j?.count ? String(j.count).replace(/\s/g, "") : undefined))
+    .catch(() => undefined)
+  void visits.then((count) => {
+    const footer = document.querySelector("footer")
+    if (!count || !footer || footer.querySelector(".visit-count")) return
+    const n = Number(count.replace(/,/g, ""))
+    const p = document.createElement("p")
+    p.className = "visit-count"
+    p.textContent = `지금까지 방문 ${Number.isFinite(n) ? n.toLocaleString("ko-KR") : count}`
+    footer.prepend(p)
+  })
+}
+
 const g = window as unknown as { __topicNavReady?: boolean }
 if (!g.__topicNavReady) {
   g.__topicNavReady = true
   document.addEventListener("nav", setup)
   document.addEventListener("nav", setupReader)
+  document.addEventListener("nav", showVisits)
   void refreshIfStale()
 }
