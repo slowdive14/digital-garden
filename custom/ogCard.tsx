@@ -61,7 +61,15 @@ export const gardenCard: SocialImageOptions["imageStructure"] = ({ cfg, title, d
   const date = isHome ? undefined : fmtDate(fileData.dates?.created ?? fm.created)
   const heading = clip(title, 48)
   const big = heading.length <= 22
-  const desc = clip(String(description ?? "").replace(/\s+/g, " ").trim(), big ? 120 : 90)
+  // Generated excerpts start with section headings ("생각", "발췌"); drop them.
+  const desc = clip(
+    String(description ?? "")
+      .replace(/\s+/g, " ")
+      .replace(/(^|\s)(생각|발췌|요약|References?)(?=\s)/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+    big ? 110 : 80,
+  )
 
   const chip = (text: string, strong = false) => (
     <div
@@ -94,25 +102,35 @@ export const gardenCard: SocialImageOptions["imageStructure"] = ({ cfg, title, d
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          gap: 44,
           flex: 1,
-          padding: "56px 72px 52px 64px",
+          // X lays the page title over the bottom of the image; keep that band empty.
+          padding: "52px 72px 120px 64px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ display: "flex", width: 14, height: 14, borderRadius: 999, backgroundColor: C.green }} />
-          <div style={{ display: "flex", fontFamily: headerFont, fontSize: 30, color: C.green, fontWeight: 700 }}>
-            잔향의 마음 로그
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ display: "flex", width: 14, height: 14, borderRadius: 999, backgroundColor: C.green }} />
+            <div style={{ display: "flex", fontFamily: headerFont, fontSize: 30, color: C.green, fontWeight: 700 }}>
+              잔향의 마음 로그
+            </div>
           </div>
+          {date ? <div style={{ display: "flex", fontSize: 24, color: C.muted }}>{date}</div> : null}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+          {noteType || topics.length ? (
+            <div style={{ display: "flex", gap: 12 }}>
+              {noteType ? chip(noteType) : null}
+              {topics.map((t) => chip(t, true))}
+            </div>
+          ) : null}
           <div
             style={{
               display: "flex",
               fontFamily: headerFont,
               fontWeight: 700,
-              fontSize: big ? 64 : 52,
+              fontSize: big ? 60 : 48,
               lineHeight: 1.3,
               color: C.ink,
             }}
@@ -120,24 +138,8 @@ export const gardenCard: SocialImageOptions["imageStructure"] = ({ cfg, title, d
             {heading}
           </div>
           {desc ? (
-            <div style={{ display: "flex", fontSize: 28, lineHeight: 1.6, color: C.muted }}>{desc}</div>
+            <div style={{ display: "flex", fontSize: 27, lineHeight: 1.55, color: C.muted }}>{desc}</div>
           ) : null}
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderTop: `2px solid ${C.rule}`,
-            paddingTop: 24,
-          }}
-        >
-          <div style={{ display: "flex", gap: 12 }}>
-            {noteType ? chip(noteType) : null}
-            {topics.map((t) => chip(t, true))}
-          </div>
-          {date ? <div style={{ display: "flex", fontSize: 24, color: C.muted }}>{date}</div> : null}
         </div>
       </div>
     </div>
