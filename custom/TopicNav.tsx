@@ -14,10 +14,15 @@ import style from "./topicNav.scss"
 const TopicNav: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzComponentProps) => {
   const current = fileData.slug as FullSlug
   const currentSimple = simplifySlug(current)
-  const groups = topicGroups(allFiles)
-  if (!groups.length) return null
   // Count only links to published notes.
   const published = new Set(allFiles.map((f) => simplifySlug(f.slug as FullSlug) as string))
+  const countOf = (hub: (typeof allFiles)[number]) =>
+    new Set(((hub.links as string[] | undefined) ?? []).filter((l) => published.has(l))).size
+  // A topic shows up once it has notes (a new topic group can be set up ahead).
+  const groups = topicGroups(allFiles)
+    .map((g) => ({ ...g, hubs: g.hubs.filter((h) => countOf(h) > 0 || h.slug === current) }))
+    .filter((g) => g.hubs.length)
+  if (!groups.length) return null
 
   return (
     <nav class={`topic-nav ${displayClass ?? ""}`} aria-label="주제">
@@ -34,9 +39,7 @@ const TopicNav: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzC
                 {g.hubs.map((hub) => {
                   const isCurrent = hub.slug === current
                   const contains = (hub.links as string[] | undefined)?.includes(currentSimple)
-                  const count = new Set(
-                    ((hub.links as string[] | undefined) ?? []).filter((l) => published.has(l)),
-                  ).size
+                  const count = countOf(hub)
                   const cls = isCurrent ? "is-current" : contains ? "is-related" : ""
                   return (
                     <li>
