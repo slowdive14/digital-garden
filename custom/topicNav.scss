@@ -215,6 +215,6 @@ footer > p:not(.visit-count):not(.footer-message) {
 
 // The plugin pulls its link list up (-1rem) under the credit line hidden above;
 // without that line it would overlap the visit count.
-footer > ul {
+html body footer > ul {
   margin-top: 0.4rem;
 }
