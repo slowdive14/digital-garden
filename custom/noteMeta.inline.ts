@@ -10,6 +10,23 @@ const pageUrl = () => location.href.split("#")[0].split("?")[0]
 const noteTitle = () =>
   document.querySelector("h1.article-title")?.textContent?.trim() ?? document.title
 
+// twitter-text weighting: Latin and common punctuation count 1, the rest 2.
+const charWeight = (c: number) =>
+  c <= 4351 || (c >= 8192 && c <= 8205) || (c >= 8208 && c <= 8223) || (c >= 8242 && c <= 8247) ? 1 : 2
+const weight = (s: string) => [...s].reduce((n, ch) => n + charWeight(ch.codePointAt(0)!), 0)
+function fit(s: string, max: number): string {
+  if (weight(s) <= max) return s
+  let out = ""
+  let n = 0
+  for (const ch of s) {
+    const w = charWeight(ch.codePointAt(0)!)
+    if (n + w > max - 1) break
+    out += ch
+    n += w
+  }
+  return out.trimEnd() + "…"
+}
+
 let bubble: HTMLAnchorElement | undefined
 
 function hideBubble() {
@@ -33,10 +50,12 @@ function onSelect() {
     bubble.addEventListener("mousedown", (e) => e.preventDefault())
     document.body.append(bubble)
   }
-  // X counts a link as 23 characters; keep the post within 280.
-  const room = 280 - 23 - noteTitle().length - TAG.length - 10
-  const quote = text.length > room ? text.slice(0, room - 1) + "…" : text
-  bubble.href = intent(`“${quote}”\n— ${noteTitle()}\n${TAG}`, pageUrl())
+  // X allows 280 "weighted" characters: Korean and other CJK count 2, a link
+  // counts 23. Shorten a long title first, then the quote, to fit.
+  const title = fit(noteTitle(), 40)
+  const fixed = weight(`“”\n— ${title}\n${TAG}`) + 1 + 23 + 4
+  const quote = fit(text, 280 - fixed)
+  bubble.href = intent(`“${quote}”\n— ${title}\n${TAG}`, pageUrl())
   const rect = sel.getRangeAt(0).getBoundingClientRect()
   bubble.hidden = false
   const w = bubble.offsetWidth
