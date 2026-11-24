@@ -64,9 +64,25 @@ const skip = (slug: string) =>
   slug === "index" || slug === "404" || slug.endsWith("/index") || slug.startsWith("tags/")
 
 let graphPromise: Promise<Graph> | undefined
+let graphAt = 0
+
+// The first page's fetchData is reused for the whole visit (SPA navigation keeps
+// it). Fetch the index again once it is a couple of minutes old, so notes
+// published during a long visit show up in the maps without a reload.
+function freshIndex(): Promise<Record<string, IndexEntry>> {
+  if (!graphAt) return fetchData
+  const base = (window as unknown as { quartzStaticUrl?: string }).quartzStaticUrl ?? location.href
+  return fetch(new URL("contentIndex.json", base), { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : fetchData))
+    .catch(() => fetchData)
+}
 
 function loadGraph(): Promise<Graph> {
-  graphPromise ??= fetchData.then((index) => {
+  if (graphPromise && Date.now() - graphAt > 2 * 60 * 1000) graphPromise = undefined
+  if (graphPromise) return graphPromise
+  const index = freshIndex()
+  graphAt = Date.now()
+  graphPromise = index.then((index) => {
     const nodes = new Map<string, GNode>()
     for (const [slug, entry] of Object.entries(index)) {
       if (skip(slug)) continue

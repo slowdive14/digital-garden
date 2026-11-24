@@ -20,7 +20,7 @@ import { fetchCanonical } from "./util"
 type Mode = "viewport" | "hover"
 
 /** How long a fetched page is used before it is fetched again. */
-const MAX_AGE_MS = 5 * 60 * 1000
+const MAX_AGE_MS = 60 * 1000
 /** Pages kept in memory (the oldest go first). */
 const MAX_PAGES = 40
 /** Pages fetched at once from the viewport. */
@@ -70,7 +70,9 @@ function targetOf(a: HTMLAnchorElement): URL | undefined {
 
 async function load(url: URL, priority: "low" | "high"): Promise<PrefetchedPage | undefined> {
   try {
-    const res = await fetchCanonical(url, { priority } as RequestInit)
+    // no-cache: revalidate with the server (a cheap 304 when unchanged) instead of
+    // reusing a copy the browser may hold for 10 minutes after a deploy.
+    const res = await fetchCanonical(url, { priority, cache: "no-cache" } as RequestInit)
     if (!res.ok) return undefined
     const contentType = res.headers.get("content-type") ?? ""
     if (!contentType.startsWith("text/html")) {

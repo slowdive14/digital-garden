@@ -59,7 +59,7 @@ async function mouseEnterHandler(
   const prefetched = await window.quartzPrefetch?.load(targetUrl)
   const response = prefetched
     ? undefined
-    : await fetchCanonical(targetUrl).catch((err) => {
+    : await fetchCanonical(targetUrl, { cache: "no-cache" }).catch((err) => {
         console.error(err)
       })
 

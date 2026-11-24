@@ -51,9 +51,26 @@ function setupReader() {
   document.body.append(exit)
 }
 
+// GitHub Pages lets browsers reuse a page for 10 minutes, so right after a deploy
+// the first page opened can be an old copy (a new note missing from lists and
+// counts). Ask the server once whether it has a newer page; if so, swap it in
+// through the SPA router, without a visible reload.
+async function refreshIfStale() {
+  try {
+    const res = await fetch(location.href, { method: "HEAD", cache: "no-cache" })
+    const server = Date.parse(res.headers.get("last-modified") ?? "")
+    const mine = Date.parse(document.lastModified)
+    const nav = (window as unknown as { spaNavigate?: (u: URL, isBack?: boolean) => void }).spaNavigate
+    if (server && mine && server - mine > 1000 && nav) nav(new URL(location.href), true)
+  } catch {
+    // offline or blocked: keep the page as it is
+  }
+}
+
 const g = window as unknown as { __topicNavReady?: boolean }
 if (!g.__topicNavReady) {
   g.__topicNavReady = true
   document.addEventListener("nav", setup)
   document.addEventListener("nav", setupReader)
+  void refreshIfStale()
 }

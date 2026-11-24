@@ -85,7 +85,7 @@ async function _navigate(url: URL, isBack: boolean = false) {
   }
   const contents = prefetched
     ? prefetched.text
-    : await fetchCanonical(url)
+    : await fetchCanonical(url, { cache: "no-cache" })
         .then((res) => {
           if (res.url) {
             finalUrl = new URL(res.url)
