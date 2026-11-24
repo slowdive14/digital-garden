@@ -1822,8 +1822,17 @@
       ],
       "confidence": "high",
       "by": "gemini"
+    },
+    "예측모형 능력 진단": {
+      "title": "예측모형 능력 진단",
+      "hubs": [
+        "머신러닝과 AI",
+        "통계와 데이터 분석"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
   "restructuredAt": "2026-11-21",
-  "lastAutoClassified": "2026-11-24T11:55:56.676Z"
+  "lastAutoClassified": "2026-11-24T14:03:05.637Z"
 }
