@@ -21,6 +21,11 @@
       "requireFlag": true
     },
     {
+      "path": "G:/내 드라이브/DriveSyncFiles/Learning Journey/1.4. CS",
+      "dest": "1.4. CS",
+      "requireFlag": true
+    },
+    {
       "path": "import/old-garden",
       "copyDate": "2024-12-11",
       "dest": ".",
