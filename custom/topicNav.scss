@@ -206,3 +206,9 @@ footer .visit-count {
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
 }
+
+// Footer: no "Created with Quartz" line (MIT does not require one on the page);
+// just the visit count and links to the other channels.
+footer > p:not(.visit-count):not(.footer-message) {
+  display: none;
+}

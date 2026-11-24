@@ -248,7 +248,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/slowdive14
+        잔향 블로그: https://slowdive14.tistory.com/
+        잔향 심리학 뉴스레터: https://psy101.stibee.com/
+        요즘 마음사전 팟캐스트: https://www.youtube.com/@%EC%9A%94%EC%A6%98%EB%A7%88%EC%9D%8C%EC%82%AC%EC%A0%84
     layout:
       position: footer
       priority: 50
