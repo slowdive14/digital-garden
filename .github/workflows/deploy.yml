@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          # Always build the newest main: when two pushes land close together, a run
+          # for an older commit can finish last and would otherwise overwrite the site.
+          ref: main
       - uses: actions/setup-node@v6
         with:
           node-version: 24
