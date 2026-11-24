@@ -67,6 +67,13 @@ if (pending.length) {
   else console.log("  ! 자동 분류에 실패했습니다. 다음 실행에서 다시 시도합니다.")
 }
 
+// 1c. "함께 읽을 노트" by meaning: embed new or changed notes (Gemini) and write
+//     content/related.json. On failure the cached embeddings are still used.
+console.log("▶ 함께 읽을 노트 계산 (Gemini 임베딩)")
+if (run(process.execPath, [path.join("scripts", "embed-garden.mjs")]).code !== 0) {
+  console.log("  ! 임베딩 계산에 실패했습니다. 사이트는 링크 기준 추천으로 대신합니다.")
+}
+
 // 2. Make sure we push to the garden's own repository, never to Quartz upstream.
 const origin = run("git", ["remote", "get-url", "origin"], { capture: true })
 if (origin.code !== 0 || /jackyzha0\/quartz/i.test(origin.out)) {

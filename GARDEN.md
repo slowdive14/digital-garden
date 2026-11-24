@@ -90,7 +90,8 @@ Windows 작업 스케줄러의 `DigitalGarden-Publish` 작업이 매일 밤 11�
    - '연결' 구역 말고는 건드리지 않고, 고치기 전 원본을 `.garden/backup/`에 남깁니다.
    - 미리 보기만 하려면 `npm run garden:link -- --dry`를 씁니다.
 3. 새 노트 중 어느 주제 허브에도 속하지 않은 노트는 **제미나이(Gemini) API**로 자동 분류해 `garden.assignments.json`에 기록합니다. 키는 뉴스레터 폴더의 `.env`에 있는 `GEMINI_API_KEY`를 읽어 옵니다(`garden.local.json`의 `gemini.envFile`). 분류에 실패하면 배포는 그대로 진행하고, 그 노트는 다음 실행에서 다시 분류합니다.
-4. 개인정보 검사를 통과하면 커밋·푸시하고, GitHub Actions가 사이트를 다시 배포합니다.
+4. **함께 읽을 노트:** 공개 노트마다 제미나이 임베딩(`gemini-embedding-001`)으로 내용의 의미를 계산해, 노트마다 의미가 가까운 노트 목록을 `content/related.json`으로 만듭니다(`scripts/embed-garden.mjs`). 계산 결과는 `.garden/embeddings.json`에 저장해 두고, 새로 쓰거나 고친 노트만 다시 계산합니다. 노트 오른쪽의 '함께 읽을 노트'는 이 목록에서 이미 링크된 노트를 빼고 5개를 보여 줍니다. 목록이 없는 노트(주제 허브 등)는 링크 구조로 고릅니다. 무료 한도에 걸리면 1분씩 기다렸다 이어서 계산합니다.
+5. 개인정보 검사를 통과하면 커밋·푸시하고, GitHub Actions가 사이트를 다시 배포합니다.
 
 수동으로 바로 실행하려면 `npm run garden:publish`, 분류만 하려면 `npm run garden:classify`를 쓰면 됩니다. 작업을 멈추려면 작업 스케줄러에서 `DigitalGarden-Publish`를 사용 안 함으로 바꾸면 됩니다.
 

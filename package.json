@@ -26,7 +26,8 @@
     "garden:check": "node scripts/sync-garden.mjs --check",
     "garden:publish": "node scripts/publish-garden.mjs",
     "garden:classify": "node scripts/classify-garden.mjs",
-    "garden:link": "node scripts/link-garden.mjs"
+    "garden:link": "node scripts/link-garden.mjs",
+    "garden:embed": "node scripts/embed-garden.mjs"
   },
   "engines": {
     "npm": ">=10.9.2",

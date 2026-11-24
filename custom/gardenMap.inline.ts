@@ -15,7 +15,7 @@ import { select } from "d3-selection"
 import { zoom as d3zoom, zoomIdentity, type ZoomTransform } from "d3-zoom"
 import topicsConfig from "../garden.topics.json"
 
-type IndexEntry = { title?: string; links?: string[]; content?: string }
+type IndexEntry = { title?: string; links?: string[]; content?: string; filePath?: string }
 declare const fetchData: Promise<Record<string, IndexEntry>>
 
 type Cat = "hub" | "permanent" | "opinion" | "clinical" | "other"
@@ -40,6 +40,8 @@ interface Graph {
   adj: Map<string, Set<string>>
   // Direction kept for "이 노트가 링크" / "이 노트를 링크".
   out: Map<string, Set<string>>
+  // content-relative file path → slug, to read related.json
+  byPath: Map<string, string>
 }
 
 // Legend order is fixed; colors come from CSS variables (see gardenMap.scss).
@@ -84,8 +86,10 @@ function loadGraph(): Promise<Graph> {
   graphAt = Date.now()
   graphPromise = index.then((index) => {
     const nodes = new Map<string, GNode>()
+    const byPath = new Map<string, string>()
     for (const [slug, entry] of Object.entries(index)) {
       if (skip(slug)) continue
+      if (entry.filePath) byPath.set(entry.filePath, slug)
       nodes.set(slug, {
         id: slug,
         title: entry.title ?? slug,
@@ -112,7 +116,7 @@ function loadGraph(): Promise<Graph> {
       }
     }
     for (const [id, set] of adj) nodes.get(id)!.degree = set.size
-    return { nodes, adj, out }
+    return { nodes, adj, out, byPath }
   })
   return graphPromise
 }
@@ -1301,7 +1305,23 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
 // Beside a note: its direct connections with every title visible, a preview slot
 // that never covers them, and notes worth reading next.
 
-function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
+type Related = Record<string, [string, number][]>
+let relatedPromise: Promise<Related | undefined> | undefined
+let relatedAt = 0
+
+// Notes closest in meaning to each note (scripts/embed-garden.mjs, Gemini
+// embeddings), refreshed like the index during a long visit.
+function loadRelated(): Promise<Related | undefined> {
+  if (relatedPromise && Date.now() - relatedAt < 2 * 60 * 1000) return relatedPromise
+  relatedAt = Date.now()
+  const base = (window as unknown as { quartzStaticUrl?: string }).quartzStaticUrl ?? location.href
+  relatedPromise = fetch(new URL("../related.json", base), { cache: "no-cache" })
+    .then((r) => (r.ok ? (r.json() as Promise<Related>) : undefined))
+    .catch(() => undefined)
+  return relatedPromise
+}
+
+function mountLocal(root: HTMLElement, graph: Graph, center: string, semantic?: Related): boolean {
   const me = graph.nodes.get(center)
   const nbIds = [...(graph.adj.get(center) ?? [])]
   if (!me || !nbIds.length) return false
@@ -1339,11 +1359,21 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
       score.set(id, (score.get(id) ?? 0) + weight)
     }
   }
-  const related = [...score]
-    .map(([id, s]) => ({ n: graph.nodes.get(id)!, s }))
-    .sort((a, b) => b.s - a.s || b.n.degree - a.n.degree)
-    .slice(0, 5)
-    .map((r) => r.n)
+  // Preferred: notes closest in meaning (embeddings). Links only as a fallback
+  // for notes without an embedding (topic hubs, a note published minutes ago).
+  const myPath = [...graph.byPath].find(([, slug]) => slug === center)?.[0]
+  const byMeaning = myPath && semantic?.[myPath]
+  const related = byMeaning
+    ? byMeaning
+        .map(([p]) => graph.byPath.get(p))
+        .filter((id): id is string => !!id && !near.has(id) && graph.nodes.has(id))
+        .slice(0, 5)
+        .map((id) => graph.nodes.get(id)!)
+    : [...score]
+        .map(([id, s]) => ({ n: graph.nodes.get(id)!, s }))
+        .sort((a, b) => b.s - a.s || b.n.degree - a.n.degree)
+        .slice(0, 5)
+        .map((r) => r.n)
 
   for (const sel of [".garden-ego", ".garden-map__preview", ".garden-map__related", ".garden-map__more"]) {
     root.querySelector(sel)?.remove()
@@ -1506,7 +1536,9 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
     h.textContent = "함께 읽을 노트"
     const cap = document.createElement("p")
     cap.className = "garden-map__related-cap"
-    cap.textContent = "아직 링크되지 않았지만, 이 노트와 같은 주제·노트에 함께 연결된 노트입니다."
+    cap.textContent = byMeaning
+      ? "아직 링크되지 않았지만, 내용이 이 노트와 가까운 노트입니다."
+      : "아직 링크되지 않았지만, 이 노트와 같은 주제·노트에 함께 연결된 노트입니다."
     const ul = document.createElement("ul")
     ul.className = "garden-ego__list garden-ego__list--plain"
     for (const n of related) {
@@ -1532,13 +1564,13 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string): boolean {
 async function setupAll() {
   const roots = document.querySelectorAll<HTMLElement>(".garden-map")
   if (!roots.length) return
-  const graph = await loadGraph()
+  const [graph, semantic] = await Promise.all([loadGraph(), loadRelated()])
   const slug = document.body.dataset.slug ?? ""
   for (const root of roots) {
     const mode = root.dataset.mode === "global" ? "global" : "local"
     if (mode === "local") {
       // Nothing linked: hide the panel rather than show an empty box.
-      root.hidden = !mountLocal(root, graph, slug)
+      root.hidden = !mountLocal(root, graph, slug, semantic)
       continue
     }
     const layout = buildSubgraph(graph, mode, slug)
