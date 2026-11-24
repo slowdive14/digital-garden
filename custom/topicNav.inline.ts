@@ -69,12 +69,19 @@ async function refreshIfStale() {
 
 // Total visits in the footer, from GoatCounter's public counter
 // (spacekatb.goatcounter.com; "allow visitor counts" is on in its settings).
+// Ad and tracker blockers often block goatcounter.com; then fall back to the
+// count saved on this site at the last publish (visits.json).
 let visits: Promise<string | undefined> | undefined
-function showVisits() {
-  visits ??= fetch("https://spacekatb.goatcounter.com/counter/TOTAL.json")
+const readCount = (url: string, init?: RequestInit) =>
+  fetch(url, init)
     .then((r) => (r.ok ? r.json() : undefined))
     .then((j) => (j?.count ? String(j.count).replace(/\s/g, "") : undefined))
     .catch(() => undefined)
+function showVisits() {
+  const base = (window as unknown as { quartzStaticUrl?: string }).quartzStaticUrl ?? location.href
+  visits ??= readCount("https://spacekatb.goatcounter.com/counter/TOTAL.json").then(
+    (live) => live ?? readCount(new URL("../visits.json", base).href, { cache: "no-cache" }),
+  )
   void visits.then((count) => {
     const footer = document.querySelector("footer")
     if (!count || !footer || footer.querySelector(".visit-count")) return

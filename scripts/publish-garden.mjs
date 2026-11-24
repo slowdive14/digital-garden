@@ -74,6 +74,20 @@ if (run(process.execPath, [path.join("scripts", "embed-garden.mjs")]).code !== 0
   console.log("  ! 임베딩 계산에 실패했습니다. 사이트는 링크 기준 추천으로 대신합니다.")
 }
 
+// 1d. Visit count for the footer, kept on the site itself for visitors whose
+//     blockers stop requests to goatcounter.com.
+try {
+  const res = await fetch("https://spacekatb.goatcounter.com/counter/TOTAL.json", {
+    signal: AbortSignal.timeout(15_000),
+  })
+  if (res.ok) {
+    const { count } = await res.json()
+    fs.writeFileSync(path.join(ROOT, "content", "visits.json"), JSON.stringify({ count }) + "\n")
+  }
+} catch {
+  // keep the previous visits.json
+}
+
 // 2. Make sure we push to the garden's own repository, never to Quartz upstream.
 const origin = run("git", ["remote", "get-url", "origin"], { capture: true })
 if (origin.code !== 0 || /jackyzha0\/quartz/i.test(origin.out)) {
