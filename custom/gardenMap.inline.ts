@@ -1424,7 +1424,10 @@ function mountLocal(root: HTMLElement, graph: Graph, center: string, semantic?: 
     preview.replaceChildren()
     const p = document.createElement("p")
     p.className = "garden-map__preview-hint"
-    p.textContent = "제목에 마우스를 올리거나 한 번 누르면 미리보기가 나옵니다."
+    // Touch screens have no hover: tap once to preview, again to open.
+    p.textContent = window.matchMedia("(hover: hover)").matches
+      ? "제목에 마우스를 올리면 미리보기가 나오고, 누르면 그 노트로 갑니다."
+      : "제목을 한 번 누르면 미리보기가 나오고, 한 번 더 누르면 그 노트로 갑니다."
     preview.append(p)
   }
   hint()
