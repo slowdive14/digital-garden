@@ -6,6 +6,10 @@ configuration:
   enablePopovers: true
   locale: ko-KR
   baseUrl: slowdive14.github.io/digital-garden
+  # Visit statistics: cookie-free GoatCounter (dashboard: spacekatb.goatcounter.com).
+  analytics:
+    provider: goatcounter
+    websiteId: spacekatb
   ignorePatterns:
     - private
     - templates
