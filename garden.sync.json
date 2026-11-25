@@ -1,6 +1,9 @@
 {
   "contentDir": "content",
-  "keep": [],
+  "keep": [
+    "related.json",
+    "visits.json"
+  ],
   "localConfig": "garden.local.json",
   "sources": [
     {
@@ -62,5 +65,8 @@
   ],
   "attachmentDirs": [
     "G:/내 드라이브/DriveSyncFiles/Learning Journey/7. Archive/Files"
+  ],
+  "templateDirs": [
+    "G:/내 드라이브/DriveSyncFiles/Learning Journey/Templates"
   ]
 }

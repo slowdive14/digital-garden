@@ -301,6 +301,30 @@ function attachmentRefs(text) {
 
 const isoDate = (d) => d.toISOString().slice(0, 10)
 
+// Date values written in the vault's templates (garden.sync.json → templateDirs):
+// a note whose property still holds one of them never had it set for itself.
+const stamp = (v) => (v instanceof Date ? v.toISOString().slice(0, 16) : String(v ?? "").trim().slice(0, 16))
+let templateDates
+function templateStamps() {
+  if (!templateDates) {
+    templateDates = new Set()
+    for (const dir of config.templateDirs ?? []) {
+      const root = path.resolve(ROOT, dir)
+      if (!fs.existsSync(root)) continue
+      for (const f of fs.readdirSync(root)) {
+        if (!f.endsWith(".md")) continue
+        try {
+          const { data } = matter(fs.readFileSync(path.join(root, f), "utf8"))
+          for (const k of ["created", "updated"]) if (data[k]) templateDates.add(stamp(data[k]))
+        } catch {
+          // a template with Templater syntax in its frontmatter: skip it
+        }
+      }
+    }
+  }
+  return templateDates
+}
+
 function toDate(value) {
   if (!value) return undefined
   const d = value instanceof Date ? value : new Date(String(value))
@@ -380,7 +404,19 @@ function syncSource(source, state) {
     data.publish = true
 
     const fileBase = path.basename(file, ".md")
+    const templateCreated = data.created
     const body = normalizeBody(parsed.content, data, fileBase)
+    // Vault notes: the written date is the date line in the body (picked up by
+    // normalizeBody); failing that, the `updated` property. The `created`
+    // property is the day the note's template was made, not the note.
+    // An `updated` still equal to a template's own value was never touched either;
+    // then the file's creation time (fillDates below) is the best guess.
+    if (path.isAbsolute(source.path) && data.created === templateCreated) {
+      const updated = templateStamps().has(stamp(data.updated)) ? undefined : toDate(data.updated)
+      if (updated) data.created = isoDate(updated)
+      else delete data.created
+      if (!updated) delete data.updated
+    }
     // The note's own written date (frontmatter or a "Created:" line), before
     // fillDates falls back to file times, which for some sources are copy times.
     let ownDate = toDate(data.created ?? data.date)
