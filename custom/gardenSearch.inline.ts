@@ -154,7 +154,8 @@ function build() {
 }
 
 function open() {
-  if (!panel) build()
+  // SPA navigation replaces <body>, taking the panel with it: build it again.
+  if (!panel || !panel.isConnected) build()
   panel!.hidden = false
   document.documentElement.classList.add("gsearch-lock")
   input.select()
@@ -163,6 +164,7 @@ function open() {
 }
 
 function close() {
+  document.documentElement.classList.remove("gsearch-lock")
   if (!panel) return
   panel.hidden = true
   document.documentElement.classList.remove("gsearch-lock")
