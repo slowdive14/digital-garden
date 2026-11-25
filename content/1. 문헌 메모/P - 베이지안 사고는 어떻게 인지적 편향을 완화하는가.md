@@ -1,7 +1,7 @@
 ---
-created: '2021-11-11T20:26'
-updated: '2025-02-03T22:00'
 publish: true
+created: '2025-10-28'
+modified: '2026-11-25'
 noteType: 문헌 메모
 title: 베이지안 사고는 어떻게 인지적 편향을 완화하는가
 ---

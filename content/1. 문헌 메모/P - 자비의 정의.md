@@ -1,5 +1,5 @@
 ---
-created: '2023-09-04T22:13'
+created: '2023-09-04'
 updated: '2023-09-04T22:33'
 publish: true
 noteType: 문헌 메모
