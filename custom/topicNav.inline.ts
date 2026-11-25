@@ -125,11 +125,17 @@ async function filterResults(container: Element) {
   }
   filtering = false
 }
-function watchSearch() {
-  const container = document.querySelector(".results-container")
-  if (!container || (container as HTMLElement).dataset.koFilter) return
-  ;(container as HTMLElement).dataset.koFilter = "on"
-  new MutationObserver(() => void filterResults(container)).observe(container, { childList: true })
+// The results list is (re)built by the search plugin when the search opens, so
+// attach to it when someone types rather than on page load.
+function watchSearch(e: Event) {
+  if (!(e.target instanceof HTMLInputElement) || !e.target.classList.contains("search-bar")) return
+  const container = document.querySelector<HTMLElement>(".results-container")
+  if (!container) return
+  if (!container.dataset.koFilter) {
+    container.dataset.koFilter = "on"
+    new MutationObserver(() => void filterResults(container)).observe(container, { childList: true })
+  }
+  window.setTimeout(() => void filterResults(container), 0)
 }
 
 const g = window as unknown as { __topicNavReady?: boolean }
@@ -138,6 +144,6 @@ if (!g.__topicNavReady) {
   document.addEventListener("nav", setup)
   document.addEventListener("nav", setupReader)
   document.addEventListener("nav", showVisits)
-  document.addEventListener("nav", watchSearch)
+  document.addEventListener("input", watchSearch, true)
   void refreshIfStale()
 }
