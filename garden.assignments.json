@@ -1864,8 +1864,25 @@
       ],
       "confidence": "high",
       "by": "gemini"
+    },
+    "포인터로 메모리 참조하기": {
+      "title": "포인터로 메모리 참조하기",
+      "hubs": [
+        "프로그래밍과 알고리즘",
+        "컴퓨터 시스템"
+      ],
+      "confidence": "high",
+      "by": "gemini"
+    },
+    "함수의 원형": {
+      "title": "함수의 원형",
+      "hubs": [
+        "프로그래밍과 알고리즘"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
   "restructuredAt": "2026-11-21",
-  "lastAutoClassified": "2026-11-25T04:37:08.004Z"
+  "lastAutoClassified": "2026-11-25T08:51:56.727Z"
 }
