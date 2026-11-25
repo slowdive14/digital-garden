@@ -15,6 +15,14 @@
     display: none;
   }
 
+  // Wide screens: the list shows even before the script opens <details>.
+  @media (min-width: 801px) {
+    .topic-nav__toggle::details-content {
+      display: contents;
+      content-visibility: visible;
+    }
+  }
+
   h3 {
     margin: 1.1rem 0 0.35rem;
     color: var(--gray);

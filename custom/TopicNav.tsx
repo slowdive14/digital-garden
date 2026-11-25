@@ -26,7 +26,9 @@ const TopicNav: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzC
 
   return (
     <nav class={`topic-nav ${displayClass ?? ""}`} aria-label="주제">
-      <details class="topic-nav__toggle" open>
+      {/* Closed in the HTML so phones never flash an open menu; wide screens show the
+          list regardless (topicNav.scss) and the script sets `open` there. */}
+      <details class="topic-nav__toggle">
         <summary>
           <span class="topic-nav__icon" aria-hidden="true">☰</span>
           <span>주제별로 노트 보기</span>
