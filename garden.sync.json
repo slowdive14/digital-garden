@@ -59,5 +59,8 @@
   "denylistFile": ".garden-denylist.txt",
   "allowSensitive": [
     "posts/마음 알아차리기 - AI 기반 마음 돌봄 플랫폼.md"
+  ],
+  "attachmentDirs": [
+    "G:/내 드라이브/DriveSyncFiles/Learning Journey/7. Archive/Files"
   ]
 }

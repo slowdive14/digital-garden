@@ -271,6 +271,21 @@ function normalizeBody(body, data, fileTitle) {
   return out
 }
 
+let sharedIndex
+function sharedAttachments() {
+  if (!sharedIndex) {
+    sharedIndex = new Map()
+    for (const dir of config.attachmentDirs ?? []) {
+      const root = path.resolve(ROOT, dir)
+      if (!fs.existsSync(root)) continue
+      for (const e of fs.readdirSync(root, { withFileTypes: true })) {
+        if (e.isFile() && ATTACHMENT_EXT.test(e.name)) sharedIndex.set(e.name, path.join(root, e.name))
+      }
+    }
+  }
+  return sharedIndex
+}
+
 function attachmentRefs(text) {
   const refs = new Set()
   for (const m of text.matchAll(/!\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]/g)) refs.add(m[1].trim())
@@ -430,9 +445,11 @@ function syncSource(source, state) {
     fs.utimesSync(dest, stat.atime, stat.mtime)
   }
 
-  // Copy only the attachments that published notes embed.
+  // Copy only the attachments that published notes embed. Obsidian keeps new
+  // attachments in one vault folder (garden.sync.json → attachmentDirs), so
+  // look there too when the note's own folder does not have the file.
   for (const name of wanted) {
-    const src = attachments.get(name)
+    const src = attachments.get(name) ?? sharedAttachments().get(name)
     if (!src) {
       stats.missingAttachments.push(name)
       continue
