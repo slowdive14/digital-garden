@@ -218,8 +218,3 @@ footer > p:not(.visit-count):not(.footer-message) {
 html body footer > ul {
   margin-top: 0.4rem;
 }
-
-// Search results dropped by the Korean word filter (topicNav.inline.ts).
-.results-container a.result-card[hidden] {
-  display: none !important;
-}

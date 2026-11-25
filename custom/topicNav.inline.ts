@@ -93,57 +93,11 @@ function showVisits() {
   })
 }
 
-// Search: the search plugin indexes Korean one syllable at a time, so "베이지안"
-// also matched notes that merely contain 베, 이, 지 and 안 somewhere. Keep only
-// results whose title or text contains each Korean word of the query as typed.
-const hangul = /[가-힯㄰-㆏]/
-const squash = (s: string) => s.toLowerCase().replace(/\s+/g, " ")
-let filtering = false
-async function filterResults(container: Element) {
-  if (filtering) return
-  const input = document.querySelector<HTMLInputElement>(".search-bar")
-  const words = squash(input?.value ?? "")
-    .split(" ")
-    .filter((w) => hangul.test(w))
-  const cards = [...container.querySelectorAll<HTMLElement>("a.result-card")]
-  if (!words.length) {
-    for (const c of cards) c.hidden = false
-    return
-  }
-  filtering = true
-  const index = await fetchData
-  for (const card of cards) {
-    const entry = index[decodeURIComponent(card.id)]
-    const text = entry ? squash(`${entry.title ?? ""} ${entry.content ?? ""}`) : ""
-    card.hidden = !!entry && !words.every((w) => text.includes(w))
-  }
-  // Keep keyboard focus and the preview on a result that is still shown.
-  const focused = container.querySelector<HTMLElement>("a.result-card.focus")
-  if (focused?.hidden) {
-    focused.classList.remove("focus")
-    cards.find((c) => !c.hidden)?.classList.add("focus")
-  }
-  filtering = false
-}
-// The results list is (re)built by the search plugin when the search opens, so
-// attach to it when someone types rather than on page load.
-function watchSearch(e: Event) {
-  if (!(e.target instanceof HTMLInputElement) || !e.target.classList.contains("search-bar")) return
-  const container = document.querySelector<HTMLElement>(".results-container")
-  if (!container) return
-  if (!container.dataset.koFilter) {
-    container.dataset.koFilter = "on"
-    new MutationObserver(() => void filterResults(container)).observe(container, { childList: true })
-  }
-  window.setTimeout(() => void filterResults(container), 0)
-}
-
 const g = window as unknown as { __topicNavReady?: boolean }
 if (!g.__topicNavReady) {
   g.__topicNavReady = true
   document.addEventListener("nav", setup)
   document.addEventListener("nav", setupReader)
   document.addEventListener("nav", showVisits)
-  document.addEventListener("input", watchSearch, true)
   void refreshIfStale()
 }

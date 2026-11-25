@@ -2,6 +2,7 @@ import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/conf
 import GardenMap from "./custom/GardenMap"
 import NoteMeta from "./custom/NoteMeta"
 import TopicNav from "./custom/TopicNav"
+import GardenSearch from "./custom/GardenSearch"
 import { CustomOgImages, CustomOgImagesEmitterName } from "@quartz-community/og-image"
 import { gardenCard } from "./custom/ogCard"
 
@@ -19,7 +20,7 @@ export default config
 const base = await loadQuartzLayout()
 export const layout = await loadQuartzLayout({
   defaults: {
-    left: [...(base.defaults.left ?? []), TopicNav()],
+    left: [...(base.defaults.left ?? []), TopicNav(), GardenSearch()],
     beforeBody: [...(base.defaults.beforeBody ?? []), NoteMeta()],
     right: [GardenMap(), ...(base.defaults.right ?? [])],
   },
