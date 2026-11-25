@@ -1831,8 +1831,32 @@
       ],
       "confidence": "high",
       "by": "gemini"
+    },
+    "바이오통계학 2장 연습문제 - 독립, 배반, 조건부확률": {
+      "title": "바이오통계학 2장 연습문제 - 독립, 배반, 조건부확률",
+      "hubs": [
+        "통계와 데이터 분석"
+      ],
+      "confidence": "high",
+      "by": "gemini"
+    },
+    "스피어맨 상관계수에서 순위는 왜 극단치의 영향을 덜 받을까": {
+      "title": "스피어맨 상관계수에서 순위는 왜 극단치의 영향을 덜 받을까",
+      "hubs": [
+        "통계와 데이터 분석"
+      ],
+      "confidence": "high",
+      "by": "gemini"
+    },
+    "오차와 잔차의 개념": {
+      "title": "오차와 잔차의 개념",
+      "hubs": [
+        "통계와 데이터 분석"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
   "restructuredAt": "2026-11-21",
-  "lastAutoClassified": "2026-11-24T14:03:05.637Z"
+  "lastAutoClassified": "2026-11-25T04:14:18.860Z"
 }

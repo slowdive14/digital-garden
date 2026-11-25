@@ -10,4 +10,4 @@ noteType: 주제
 
 <p class="auto-topic-note">최근에 수정한 노트부터 보여 줍니다.</p>
 
-- [[예측모형 능력 진단|예측모형 능력 진단]] <span class="new-badge">새 글</span> <span class="note-date">2026.11.24</span>
+- [[예측모형 능력 진단|예측모형 능력 진단]] <span class="new-badge">새 글</span> <span class="note-date">2026.11.25</span>
