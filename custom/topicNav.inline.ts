@@ -93,11 +93,22 @@ function showVisits() {
   })
 }
 
+// Links to other sites open in a new tab. Note bodies get this at build time
+// (links.openLinksInNewTab); this covers the footer and other component links.
+function externalInNewTab() {
+  for (const a of document.querySelectorAll<HTMLAnchorElement>("a[href^='http']")) {
+    if (a.host === location.host || a.target) continue
+    a.target = "_blank"
+    a.rel = "noopener"
+  }
+}
+
 const g = window as unknown as { __topicNavReady?: boolean }
 if (!g.__topicNavReady) {
   g.__topicNavReady = true
   document.addEventListener("nav", setup)
   document.addEventListener("nav", setupReader)
   document.addEventListener("nav", showVisits)
+  document.addEventListener("nav", externalInNewTab)
   void refreshIfStale()
 }

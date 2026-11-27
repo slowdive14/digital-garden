@@ -45,6 +45,8 @@ configuration:
         textHighlight: "#b3aa0266"
   links:
     markdownLinkResolution: shortest
+    # Links to other sites open in a new tab (notes stay in this one).
+    openLinksInNewTab: true
     # Mark links to notes that are not published so they can be styled as plain text.
     disableBrokenWikilinks: true
   contentIndex:
