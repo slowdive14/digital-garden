@@ -1897,8 +1897,16 @@
       ],
       "confidence": "high",
       "by": "gemini"
+    },
+    "데이터 영역, 스택 영역, 힙 영역": {
+      "title": "데이터 영역, 스택 영역, 힙 영역",
+      "hubs": [
+        "컴퓨터 시스템"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
   "restructuredAt": "2026-11-21",
-  "lastAutoClassified": "2026-11-26T06:25:17.571Z"
+  "lastAutoClassified": "2026-11-27T14:05:47.068Z"
 }
