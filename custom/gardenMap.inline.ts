@@ -18,7 +18,7 @@ import topicsConfig from "../garden.topics.json"
 type IndexEntry = { title?: string; links?: string[]; content?: string; filePath?: string }
 declare const fetchData: Promise<Record<string, IndexEntry>>
 
-type Cat = "hub" | "permanent" | "opinion" | "clinical" | "other"
+type Cat = "hub" | "permanent" | "opinion" | "clinical" | "cs" | "other"
 
 interface GNode extends SimulationNodeDatum {
   id: string
@@ -50,6 +50,7 @@ const CATS: { key: Cat; label: string; cssVar: string }[] = [
   { key: "permanent", label: "문헌 메모", cssVar: "--gm-permanent" },
   { key: "opinion", label: "의견·글", cssVar: "--gm-opinion" },
   { key: "clinical", label: "임상·상담 메모", cssVar: "--gm-clinical" },
+  { key: "cs", label: "CS·통계 메모", cssVar: "--gm-cs" },
   { key: "other", label: "책·프로젝트·기타", cssVar: "--gm-other" },
 ]
 
@@ -59,6 +60,7 @@ function category(slug: string): Cat {
   if (/영구|문헌/.test(top)) return "permanent"
   if (top === "posts" || /의견|개요/.test(top)) return "opinion"
   if (/임상|심리치료|평가|상담/.test(top)) return "clinical"
+  if (/^1\.4\.-cs$/i.test(top)) return "cs"
   return "other"
 }
 
@@ -304,7 +306,7 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
     const btn = document.createElement("button")
     btn.type = "button"
     btn.setAttribute("aria-pressed", "false")
-    btn.innerHTML = `<span class="garden-map__swatch" style="background: var(${c.cssVar})"></span>${c.label} <span class="garden-map__count">${count}</span>`
+    btn.innerHTML = `<span class="garden-map__swatch${c.key === "cs" ? " is-square" : ""}" style="background: var(${c.cssVar})"></span>${c.label} <span class="garden-map__count">${count}</span>`
     li.append(btn)
     legend.append(li)
     chips.set(c.key, btn)
@@ -492,7 +494,10 @@ function mount(root: HTMLElement, layout: Layout, mode: "global" | "local") {
       const r = radius(n)
       ctx.globalAlpha = focus && !focus.has(n.id) ? 0.1 : 1
       ctx.beginPath()
-      ctx.arc(n.x!, n.y!, r, 0, Math.PI * 2)
+      // CS·통계 notes are squares as well as teal, so they stay apart from the
+      // other kinds even where colours are hard to tell apart.
+      if (n.cat === "cs") ctx.rect(n.x! - r * 0.9, n.y! - r * 0.9, r * 1.8, r * 1.8)
+      else ctx.arc(n.x!, n.y!, r, 0, Math.PI * 2)
       ctx.fillStyle = colors.cat[n.cat]
       ctx.fill()
       ctx.lineWidth = 1.5 / k

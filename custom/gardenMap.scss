@@ -6,6 +6,7 @@
   --gm-permanent: #3b6fb6;
   --gm-opinion: #b97b14;
   --gm-clinical: #a8507c;
+  --gm-cs: #3aa89a;
   --gm-other: #a3a39b;
   --gm-edge: var(--lightgray);
   --gm-edge-strong: var(--gray);
@@ -40,6 +41,7 @@
   --gm-permanent: #5b8fd6;
   --gm-opinion: #c08526;
   --gm-clinical: #c47099;
+  --gm-cs: #52c4b5;
   --gm-other: #6e746f;
   --gm-edge: #3a403b;
   --gm-edge-strong: var(--gray);
@@ -401,6 +403,10 @@
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 50%;
+
+  &.is-square {
+    border-radius: 2px;
+  }
 }
 
 .garden-map__count {
