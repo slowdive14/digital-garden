@@ -1905,8 +1905,25 @@
       ],
       "confidence": "high",
       "by": "gemini"
+    },
+    "P - 정보의 출처가 중요한 게 아니라 어디 사용할지가 중요": {
+      "title": "정보의 출처가 중요한 게 아니라 어디 사용할지가 중요",
+      "hubs": [
+        "메모와 지식관리",
+        "조직화"
+      ],
+      "confidence": "high",
+      "by": "gemini"
+    },
+    "상속과 다형성": {
+      "title": "상속과 다형성",
+      "hubs": [
+        "프로그래밍과 알고리즘"
+      ],
+      "confidence": "high",
+      "by": "gemini"
     }
   },
   "restructuredAt": "2026-11-21",
-  "lastAutoClassified": "2026-11-27T14:05:47.068Z"
+  "lastAutoClassified": "2026-11-28T10:31:17.189Z"
 }
